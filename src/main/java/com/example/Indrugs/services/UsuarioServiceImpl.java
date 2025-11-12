@@ -17,13 +17,13 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
-public class UsuarioServiceImpl implements UsuarioService{
+public class UsuarioServiceImpl implements UsuarioService {
 
-    RolRepository rolRepository;
-    UsuarioRepository usuarioRepository;
-    BCryptPasswordEncoder passwordEncoder;
+    private final RolRepository rolRepository;
+    private final UsuarioRepository usuarioRepository;
+    private final BCryptPasswordEncoder passwordEncoder;
 
-    public UsuarioServiceImpl(RolRepository rolRepository, UsuarioRepository usuarioRepository, BCryptPasswordEncoder passwordEncoder ){
+    public UsuarioServiceImpl(RolRepository rolRepository, UsuarioRepository usuarioRepository, BCryptPasswordEncoder passwordEncoder) {
         this.rolRepository = rolRepository;
         this.usuarioRepository = usuarioRepository;
         this.passwordEncoder = passwordEncoder;
@@ -39,19 +39,22 @@ public class UsuarioServiceImpl implements UsuarioService{
 
     @Override
     public void crear(UsuarioCreateDTO userCreate) {
-
-        if(usuarioRepository.existsByCorreo(userCreate.getCorreo())){
-                throw new RuntimeException("Ya existe un usuario con ese correo");}
+        if (usuarioRepository.existsByCorreo(userCreate.getCorreo())) {
+            throw new RuntimeException("Ya existe un usuario con ese correo");
+        }
         if (usuarioRepository.existsByNumDoc(userCreate.getNumDoc())) {
             throw new RuntimeException("Ya existe un usuario con ese número de documento");
         }
+
         Usuario usuario = UsuarioMapper.mapNewToEntitie(userCreate);
         String passwordEncriptada = passwordEncoder.encode(userCreate.getPassword());
         usuario.setPassword(passwordEncriptada);
+
         Rol rol = rolRepository.findById(userCreate.getRol())
                 .orElseThrow(() -> new RuntimeException("Rol no encontrado"));
         usuario.setRol(rol);
         usuario.setEstado("ACTIVO");
+
         usuarioRepository.save(usuario);
     }
 
@@ -96,6 +99,7 @@ public class UsuarioServiceImpl implements UsuarioService{
         return usuario;
     }
 
+    @Override
     public UsuarioDTO findById(Long idUsuario) {
         Usuario usuario = usuarioRepository.findById(idUsuario)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
@@ -131,7 +135,7 @@ public class UsuarioServiceImpl implements UsuarioService{
         resumen.put("ACTIVOS", contarUsuariosActivos());
         return resumen;
     }
-//
+
     @Override
     public List<UsuarioDTO> obtenerUsuariosRecientes() {
         List<Usuario> usuarios = usuarioRepository.findTop5ByOrderByIdUsuarioDesc();
@@ -156,5 +160,7 @@ public class UsuarioServiceImpl implements UsuarioService{
                 .collect(Collectors.toList());
     }
 
-
+    public List<Usuario> listarPorRol(String nombreRol) {
+        return usuarioRepository.findByRol_nombreRol(nombreRol);
+    }
 }
