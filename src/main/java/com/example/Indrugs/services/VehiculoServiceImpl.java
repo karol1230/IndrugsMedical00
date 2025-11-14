@@ -19,43 +19,79 @@ public class VehiculoServiceImpl implements VehiculoService {
     public VehiculoServiceImpl(VehiculoRepository vehiculoRepository, UsuarioRepository usuarioRepository) {
         this.vehiculoRepository = vehiculoRepository;
         this.usuarioRepository = usuarioRepository;
-
     }
 
+    // Lista vehículos de un usuario específico
     @Override
-    public List<VehiculoDTO> read(Long IdUsuario) {
-
-        return vehiculoRepository.findByIdPropietario_IdUsuario(IdUsuario).stream()
+    public List<VehiculoDTO> read(Long idUsuario) {
+        return vehiculoRepository.findByIdPropietario_IdUsuario(idUsuario)
+                .stream()
                 .map(VehiculoMapper::mapToDto)
                 .collect(Collectors.toList());
     }
 
+    // Crear un vehículo
     @Override
     public void crear(VehiculoDTO vehiculoDTO) {
         Vehiculo vehiculo = VehiculoMapper.mapToEntity(vehiculoDTO);
         vehiculoRepository.save(vehiculo);
     }
 
+    // Actualizar vehículo existente
     @Override
     public void actualizar(Long idVehiculo, VehiculoDTO vehiculoDTO) {
         Vehiculo vehiculo = vehiculoRepository.findById(idVehiculo)
                 .orElseThrow(() -> new RuntimeException("Vehículo no encontrado"));
-        // Actualizar campos usando el mapper y el repositorio de usuarioç
 
-        VehiculoMapper.mapToEntity(vehiculoDTO);
+        vehiculo.setTipoVehiculo(vehiculoDTO.getTipoVehiculo());
+        vehiculo.setPlacaVehiculo(vehiculoDTO.getPlacaVehiculo());
+        vehiculo.setColorVehiculo(vehiculoDTO.getColorVehiculo());
+        vehiculo.setMarcaVehiculo(vehiculoDTO.getMarcaVehiculo());
+        vehiculo.setEstadoVehiculo(vehiculoDTO.getEstadoVehiculo());
+
         vehiculoRepository.save(vehiculo);
-
     }
 
+    // Eliminar vehículo
     @Override
     public void eliminar(Long idVehiculo) {
         vehiculoRepository.deleteById(idVehiculo);
     }
 
+    // Buscar vehículo por id
     @Override
     public VehiculoDTO findById(Long idVehiculo) {
         Vehiculo vehiculo = vehiculoRepository.findById(idVehiculo)
                 .orElseThrow(() -> new RuntimeException("Vehículo no encontrado"));
         return VehiculoMapper.mapToDto(vehiculo);
+    }
+
+    // Guardar vehículo (similar a crear)
+    @Override
+    public void guardar(VehiculoDTO vehiculoDTO) {
+        Vehiculo vehiculo = VehiculoMapper.mapToEntity(vehiculoDTO);
+        vehiculoRepository.save(vehiculo);
+    }
+
+    // ✅ Implementación correcta del método listarVehiculos()
+    @Override
+    public List<VehiculoDTO> listarVehiculos() {
+        return vehiculoRepository.findAll()
+                .stream()
+                .map(VehiculoMapper::mapToDto)
+                .collect(Collectors.toList());
+    }
+
+    // Método adicional: obtener vehículo por ID (entidad)
+    public Vehiculo obtenerPorId(Integer idVehiculo) {
+        return vehiculoRepository.findById(Long.valueOf(idVehiculo)).orElse(null);
+    }
+
+    // Método adicional: cambiar estado del vehículo
+    public void cambiarEstado(Long idVehiculo, String nuevoEstado) {
+        Vehiculo vehiculo = vehiculoRepository.findById(idVehiculo)
+                .orElseThrow(() -> new RuntimeException("Vehículo no encontrado"));
+        vehiculo.setEstadoVehiculo(nuevoEstado);
+        vehiculoRepository.save(vehiculo);
     }
 }

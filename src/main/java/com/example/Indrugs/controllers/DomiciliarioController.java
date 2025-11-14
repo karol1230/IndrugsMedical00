@@ -41,6 +41,9 @@ public class DomiciliarioController {
         Usuario usuario = (Usuario) session.getAttribute("usuarioLogueado");
         if (usuario == null) return "redirect:/login";
 
+        // 👇 NUEVA LÍNEA: pasamos el nombre del domiciliario al modelo
+        model.addAttribute("nombreDomiciliario", usuario.getNombre());
+
         Map<String, Object> dashboard = domicilioService.ObtenerResumen();
         model.addAttribute("totalDomiciliosActivos", dashboard.get("totalDomiciliosActivos"));
         model.addAttribute("domiciliosRecientes", dashboard.get("domiciliosRecientes"));
@@ -71,6 +74,8 @@ public class DomiciliarioController {
         domicilioService.actualizar(idDomicilio);
         return "redirect:/15.pagina_domicilio_domi";
     }
+
+
 
 
     @GetMapping("/24.pagina_pedidos_domiciliario")

@@ -4,10 +4,14 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Control</title>
+
     <script src="https://kit.fontawesome.com/14122cd484.js" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/formulario_control.css}">
     <link rel="stylesheet" th:href="@{/css/1.estilos_pagina_inicio.css}">
-    <link rel="stylesheet" th:href="@{/css/3.estilos_página_control.css}">
+    <link href="https://cdn.jsdelivr.net/npm/flatpickr@4.6.9/dist/flatpickr.min.css" rel="stylesheet"> <!-- Calendario Personalizado -->
+    <link href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 </head>
 
 <body>
@@ -15,92 +19,131 @@
 
 <main class="cuerpo_indrugs">
     <div th:insert="Layouts/header_footerPaciente :: error"></div>
-    <div class="contenido">
-        <h1 id="titulo_control">Control</h1>
 
-        <form method="post" th:action="@{/agregar_control}" th:object="${control}"   class="row mx-auto mt-3 g-3 needs-validation" novalidate>
-            <h2>Información personal</h2>
+    <div class="form-wrapper">
+        <h1 id="titulo_control">
+            <i class="fa-solid fa-prescription-bottle-medical icon-title"></i>
+            Registro de Control de Medicación
+        </h1>
 
-            <input type="hidden" name="idUsuario" th:value="${usuarioLogueado.idUsuario}" />
+        <form method="post" th:action="@{/agregar_control}" th:object="${control}" class="row g-4 needs-validation form-card" novalidate>
+
+            <input type="hidden" name="idUsuario" th:value="${usuarioLogueado.idUsuario}"/>
+
+            <!-- Información del Tratamiento -->
+            <h2 class="section-title">Información del Tratamiento</h2>
+
+            <div class="row mx-auto mt-3 g-3 needs-validation">
+                <!-- Fecha inicio tratamiento -->
+                <div class="col-md-6">
+                    <label for="iniciot">Fecha inicio tratamiento:</label>
+                    <input type="text" id="iniciot" name="fechaInicioTratamiento" class="form-control" required>
+                    <div class="valid-feedback">BIEN.</div>
+                    <div class="invalid-feedback">Por favor ingrese una fecha correcta.</div>
+                </div>
+
+                <!-- Fecha fin tratamiento -->
+                <div class="col-md-6">
+                    <label for="fint">Fecha fin tratamiento:</label>
+                    <input type="text" id="fint" name="fechaFinTratamiento" class="form-control" required>
+                    <div class="valid-feedback">BIEN.</div>
+                    <div class="invalid-feedback">Por favor ingrese una fecha correcta.</div>
+                </div>
+            </div>
+
+
+
+            <!-- Información Médica -->
+            <h2 class="section-title">Información Médica</h2>
 
             <div class="col-12">
-                <label for="iniciot">Fecha inicio tratamiento:</label>
-                <input type="datetime-local" id="iniciot" name="fechaInicioTratamiento" class="form-control" required>
-                <div class="valid-feedback">BIEN.</div>
-                <div class="invalid-feedback">Por favor ingrese una fecha correcta.</div>
+                <label class="form-label">Problema de salud</label>
+                <textarea name="problemaSalud" rows="3" class="form-control modern-input" required></textarea>
+                <div class="invalid-feedback">Describa su condición médica.</div>
             </div>
 
-            <div class="col-12">
-                <label for="fint">Fecha fin tratamiento:</label>
-                <input type="datetime-local" id="fint" name="fechaFinTratamiento" class="form-control" required>
-                <div class="valid-feedback">BIEN.</div>
-                <div class="invalid-feedback">Por favor ingrese una fecha correcta.</div>
+            <div class="col-md-6">
+                <label class="form-label">Cantidad medicamento</label>
+                <input type="text" name="cantidadMedic" class="form-control modern-input" required>
             </div>
 
-            <h2>Información médica</h2>
-
-            <div class="col-12">
-                <label for="problema">Problema de salud:</label>
-                <textarea id="problema" name="problemaSalud" class="form-control" rows="4" required></textarea>
-                <div class="valid-feedback">BIEN.</div>
-                <div class="invalid-feedback">Por favor ingrese su problema de salud.</div>
-            </div>
-
-            <div class="mt-3 col-6">
-                <label for="cantidad_frecuencia">Cantidad medicamento:</label>
-                <input type="text" name="cantidadMedic" class="form-control" id="cantidad_frecuencia" required>
-                <div class="valid-feedback">BIEN.</div>
-                <div class="invalid-feedback">Por favor ingrese la cantidad de medicamento.</div>
-            </div>
-
-            <div class="mt-3 col-6">
-                <label>Medicamento:</label>
-                <select th:field="*{idMedicamento}" class="form-select" required>
+            <div class="col-md-6">
+                <label class="form-label">Medicamento</label>
+                <select th:field="*{idMedicamento}" class="form-select modern-input" required>
                     <option value="" disabled selected>Seleccione un medicamento</option>
-                    <option th:each="med : ${medicamentos}"
-                            th:value="${med.idMedicamento}"
-                            th:text="${med.nombreMedicamento}">
-                    </option>
+                    <option th:each="med : ${medicamentos}" th:value="${med.idMedicamento}" th:text="${med.nombreMedicamento}"></option>
                 </select>
             </div>
 
-            <div class="mt-3 col-6">
-                <label for="frecuencia">Frecuencia:</label>
-                <input type="text" name="frecuenciaMedic" class="form-control" id="frecuencia" required>
-                <div class="valid-feedback">BIEN.</div>
-                <div class="invalid-feedback">Por favor ingrese la frecuencia.</div>
+            <div class="col-md-6">
+                <label class="form-label">Frecuencia</label>
+                <input type="text" name="frecuenciaMedic" class="form-control modern-input" required>
             </div>
 
+            <!-- Hora de alarma -->
             <div class="mt-3 col-6">
                 <label for="alarma">Hora de alarma:</label>
-                <input type="time" name="alarmaControl" class="form-control" id="alarma" required>
+                <input type="text" name="alarmaControl" id="alarma" class="form-control" required>
                 <div class="valid-feedback">BIEN.</div>
                 <div class="invalid-feedback">Por favor ingrese una hora.</div>
             </div>
 
-            <div class="mt-3 col-12">
-                <button class="btn btn-primary" type="submit">Agregar control</button>
+
+            <div class="col-12 mt-3">
+                <button class="btn-submit" type="submit">
+                    <i class="fa-solid fa-circle-check"></i> Guardar Control
+                </button>
             </div>
+
         </form>
     </div>
 </main>
 
 <footer th:insert="Layouts/header_footerPaciente :: footer"></footer>
 
+<!-- Librerías JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/flatpickr@4.6.9/dist/flatpickr.min.js"></script> <!-- Calendario Personalizado -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
 <script>
-    (() => {
-        'use strict';
-        const forms = document.querySelectorAll('.needs-validation');
-        Array.from(forms).forEach(form => {
-            form.addEventListener('submit', event => {
-                if (!form.checkValidity()) {
-                    event.preventDefault();
-                    event.stopPropagation();
-                }
-                form.classList.add('was-validated');
-            }, false);
-        });
-    })();
+    flatpickr("#iniciot", {
+        dateFormat: "d/m/Y",  // Formato visible dd/MM/yyyy
+        altInput: true,        // Usar un input alternativo
+        altFormat: "d/m/Y",    // Formato alternativo para mostrar
+        locale: "es",          // Español
+        allowInput: true,      // Permitir que el usuario ingrese la fecha manualmente
+        onChange: function(selectedDates, dateStr, instance) {
+            // Al cambiar la fecha, aseguramos que el valor sea el adecuado para enviar
+            let date = new Date(dateStr.split('/').reverse().join('/')); // Convertimos el formato dd/MM/yyyy a yyyy-MM-ddTHH:mm
+            instance.input.value = date.toISOString().slice(0, 16); // Formato ISO yyyy-MM-ddTHH:mm
+        }
+    });
+
+    flatpickr("#fint", {
+        dateFormat: "d/m/Y",  // Formato visible dd/MM/yyyy
+        altInput: true,        // Usar un input alternativo
+        altFormat: "d/m/Y",    // Formato alternativo para mostrar
+        locale: "es",          // Español
+        allowInput: true,      // Permitir que el usuario ingrese la fecha manualmente
+        onChange: function(selectedDates, dateStr, instance) {
+            // Al cambiar la fecha, aseguramos que el valor sea el adecuado para enviar
+            let date = new Date(dateStr.split('/').reverse().join('/')); // Convertimos el formato dd/MM/yyyy a yyyy-MM-ddTHH:mm
+            instance.input.value = date.toISOString().slice(0, 16); // Formato ISO yyyy-MM-ddTHH:mm
+        }
+    });
+    // Inicializar Flatpickr para el campo de hora (con reloj)
+    flatpickr("#alarma", {
+        enableTime: true,             // Habilitar el selector de tiempo
+        noCalendar: true,             // Desactivar el calendario (solo mostrar el reloj)
+        time_24hr: true,              // Usar formato de 24 horas
+        dateFormat: "H:i",            // Formato de hora: hora:minuto
+        minuteIncrement: 1,           // Incremento de minutos de 1
+        locale: "es",                 // Español
+        allowInput: true              // Permitir que se escriba directamente la hora si es necesario
+    });
 </script>
+
+
+
 </body>
 </html>

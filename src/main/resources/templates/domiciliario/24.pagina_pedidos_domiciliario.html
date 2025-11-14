@@ -20,13 +20,15 @@
 <main class="cuerpo_indrugs container mt-4">
     <div th:insert="Layouts/header_footerDomi :: error"></div>
 
-    <h1 class="text-center mb-4 fw-bold text-primary">Pedidos Asignados</h1>
+    <h1 class="text-center mb-4 fw-bold titulo">Pedidos Asignados</h1>
+
 
     <!-- 🧾 Tabla de pedidos -->
     <section class="tabla-pedidos">
         <div th:if="${pedidos != null and !pedidos.isEmpty()}">
             <table class="table table-striped table-hover align-middle text-center">
-                <thead class="table-dark">
+                <thead class="encabezado-verde">
+
                 <tr>
                     <th>Paciente</th>
                     <th>Dirección</th>

@@ -27,15 +27,20 @@ public class MedicControllerPaciente {
     }
 
     @GetMapping("/1.pagina_principal_paciente")
-    public String mostrarPaginaPaciente(HttpSession session) {
+    public String mostrarPaginaPaciente(HttpSession session, Model model) {
         Usuario usuario = (Usuario) session.getAttribute("usuarioLogueado");
 
         if (usuario == null) {
             return "redirect:/login"; // si no está logueado
         }
 
+        // ✅ Agregar el nombre al modelo
+        model.addAttribute("nombrePaciente", usuario.getNombre());
+
         return "pacientes/1.pagina_principal_paciente";
     }
+
+
 
     @GetMapping("/8.pagina_med")
     public String mostrarMedic(HttpSession session, Model model) {

@@ -68,4 +68,8 @@ public class ControlServiceImpl implements ControlService {
                 .map(ControlMapper::mapToDto)
                 .orElseThrow(() -> new RuntimeException("Control no encontrado"));
     }
+    @Override
+    public void eliminarControl(Long idControl) {
+        controlRepository.deleteById(idControl); // Suponiendo que ControlRepository tiene un método deleteById
+    }
 }

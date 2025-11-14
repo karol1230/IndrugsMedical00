@@ -1,133 +1,117 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>INDRUGS</title>
+    <title>Panel Domiciliario - INDRUGS</title>
     <script src="https://kit.fontawesome.com/14122cd484.js" crossorigin="anonymous"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <link th:href="@{/css/1.estilos_pagina_inicio.css}" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link th:href="@{/css/11.pagina_principal_domiciliario.css}" rel="stylesheet">
+    <link th:href="@{/css/1.estilos_pagina_inicio.css}" rel="stylesheet">
 </head>
 
 <body>
-<header th:insert="Layouts/header_footerDomi :: header"></header>
-
-<main class="cuerpo_indrugs">
-    <div class="contenido">
-        <section class="bienvenida-domiciliario">
-            <h1>¡Bienvenido, Domiciliario!</h1>
-            <p>Gestiona tus pedidos, consulta tus entregas y sigue mejorando cada día.</p>
+<header th:insert="~{Layouts/header_footerDomi :: header}"></header>
 
 
+<main class="cuerpo_indrugs py-4">
+    <div class="container">
+
+        <!-- Bienvenida -->
+        <section class="bienvenida text-center mb-5">
+            <div class="contenedor-bienvenida">
+                <h1 class="fw-bold">👋 ¡Bienvenido, <span th:text="${nombreDomiciliario}">Domiciliario</span>!</h1>
+                <p class="text-muted">Gestiona tus pedidos, revisa tus entregas y sigue creciendo con INDRUGS.</p>
+            </div>
         </section>
 
-        <section class="dashboard">
-            <div class="cards">
-                <div class="card">
-                    <a th:href="@{/15.pagina_domicilio_domi}">
-                        <div class="card_icono">
-                            <img th:src="@{/Iconos/icons8-entrega-puerta-a-puerta-100.png}" alt="Domicilios">
-                        </div>
-                        <div class="card_info">
-                            <span class="card_numeros" th:text="${totalDomiciliosActivos}">0</span>
-                            <p class="card_nombre">Domicilios</p>
-                        </div>
-                    </a>
+        <!-- Tarjetas de resumen -->
+        <section class="resumen row g-4 mb-5">
+            <div class="col-md-4">
+                <div class="tarjeta shadow-sm">
+                    <i class="fa-solid fa-motorcycle icono"></i>
+                    <h3 th:text="${totalDomiciliosActivos}">0</h3>
+                    <p>Domicilios activos</p>
                 </div>
-
-                <div class="card">
-                    <a th:href="@{/12.pagina_vehiculos}">
-                        <div class="card_icono">
-                            <img th:src="@{/Iconos/icons8-vehículo-90.png}" alt="Vehículos">
-                        </div>
-                        <div class="card_info">
-                            <span class="card_numeros">3</span>
-                            <p class="card_nombre">Vehículos</p>
-                        </div>
-                    </a>
+            </div>
+            <div class="col-md-4">
+                <div class="tarjeta shadow-sm">
+                    <i class="fa-solid fa-file-lines icono"></i>
+                    <h3 th:text="${cantidadOrdenes}">1</h3>
+                    <p>Órdenes activas</p>
                 </div>
-
-                <div class="card">
-                    <a th:href="@{/14.pagina_ordenes}">
-                        <div class="card_icono">
-                            <img th:src="@{/Iconos/icons8-clasificación-de-respuestas-80.png}" alt="Órdenes">
-                        </div>
-                        <div class="card_info">
-                            <span class="card_numeros" th:text="${cantidadOrdenes}">0</span>
-                            <p class="card_nombre">Órdenes</p>
-                        </div>
-                    </a>
+            </div>
+            <div class="col-md-4">
+                <div class="tarjeta shadow-sm">
+                    <i class="fa-solid fa-truck icono"></i>
+                    <h3>3</h3>
+                    <p>Vehículos asignados</p>
                 </div>
             </div>
         </section>
 
-
-        <div class="contenido_dash">
-
-                <div class="ordenes_recientes">
-                    <div class="cabeza1">
-                        <h2>Órdenes recientes</h2>
-                        <a th:href="@{/14.pagina_ordenes}">
-                            <input class="botonD" type="button" value="VER TODO">
-                        </a>
-                    </div>
-                    <table id="tabla1" class="table">
-                        <thead class="table-dark">
+        <!-- Tablas modernas (una debajo de la otra) -->
+        <section class="seccion-tablas">
+            <div class="card shadow border-0 rounded-4">
+                <div class="card-header bg-success text-white d-flex justify-content-between align-items-center rounded-top-4">
+                    <h5 class="m-0">Órdenes recientes</h5>
+                    <a th:href="@{/14.pagina_ordenes}" class="btn btn-light btn-sm">Ver todas</a>
+                </div>
+                <div class="card-body p-0">
+                    <table class="table align-middle mb-0">
+                        <thead>
                         <tr>
                             <th>ID</th>
-                            <th>Usurios</th>
-                            <th>Fecha de orden</th>
-                            <th>Estado de orden</th>
+                            <th>Usuario</th>
+                            <th>Fecha</th>
+                            <th>Estado</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr class="table" id="cuerpo_tabla" th:each="orden : ${ordenesRecientes}">
-                            <td th:text="${orden.idOrden}">ID</td>
-                            <td th:text="${orden.pacienteNombre}">Usuario</td>
-                            <td th:text="${orden.fechaEntrega}">FechaEntregaOrden</td>
-                            <td th:text="${orden.estadoOrden}">Estado</td>
-                            </td>
+                        <tr th:each="orden : ${ordenesRecientes}">
+                            <td th:text="${orden.idOrden}">1</td>
+                            <td th:text="${orden.pacienteNombre}">Juan Pérez</td>
+                            <td th:text="${orden.fechaEntrega}">2025-11-10</td>
+                            <td><span class="badge bg-success" th:text="${orden.estadoOrden}">Activo</span></td>
                         </tr>
                         </tbody>
                     </table>
                 </div>
+            </div>
 
-                <div class="domicilio">
-                    <div class="cabeza1">
-                        <h2>Domicilios recientes</h2>
-                        <a th:href="@{/15.pagina_domicilio_domi}">
-                            <input class="botonD" type="button" value="VER TODO">
-                        </a>
-                    </div>
-                    <table id="tabla2" class="table">
-                        <thead class="table-dark">
+            <div class="card shadow border-0 rounded-4">
+                <div class="card-header bg-success text-white d-flex justify-content-between align-items-center rounded-top-4">
+                    <h5 class="m-0">Pedidos recientes</h5>
+                    <a th:href="@{/24.pagina_pedidos_domiciliario}" class="btn btn-light btn-sm">Ver todos</a>
+                </div>
+                <div class="card-body p-0">
+                    <table class="table align-middle mb-0">
+                        <thead>
                         <tr>
                             <th>ID</th>
                             <th>Ubicación</th>
-                            <th>Fecha de Entrega</th>
-                            <th>Estado de Domicilio</th>
+                            <th>Entrega</th>
+                            <th>Estado</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr class="table" id="cuerpo_tabla2" th:each="domicilio : ${domiciliosRecientes}">
-                            <td th:text="${domicilio.idDomicilio}">ID</td>
-                            <td th:text="${domicilio.ubicacionDomicilio}">Ubicación</td>
-                            <td th:text="${domicilio.fechaEntregaDomicilio}">FechaEntregaDomicilio</td>
-                            <td th:text="${domicilio.estadoDomicilio}">Estado</td>
+                        <tr th:each="domicilio : ${domiciliosRecientes}">
+                            <td th:text="${domicilio.idDomicilio}">12</td>
+                            <td th:text="${domicilio.ubicacionDomicilio}">Calle 10 #15-24</td>
+                            <td th:text="${domicilio.fechaEntregaDomicilio}">2025-11-10</td>
+                            <td><span class="badge bg-warning text-dark" th:text="${domicilio.estadoDomicilio}">En curso</span></td>
                         </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
         </section>
+
     </div>
 </main>
 
-<footer th:insert="Layouts/header_footerDomi :: footer"></footer>
+<footer th:insert="~{Layouts/header_footerDomi :: footer}"></footer>
 
-<script th:src="@{/JAVA_SCRIPT/carrusel_domi.js}"></script>
+
 </body>
 </html>

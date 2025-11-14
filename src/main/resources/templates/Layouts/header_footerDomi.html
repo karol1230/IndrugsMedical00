@@ -29,7 +29,6 @@
       <nav class="menu">
         <ul class="barra_2">
           <li id="items_barra"><a th:href="@{/11.pagina_principal_domiciliario}" id="enlaces_barra">Inicio</a></li>
-          <li id="items_barra"><a th:href="@{/15.pagina_domicilio_domi}" id="enlaces_barra">Domicilio</a></li>
           <li id="items_barra"><a th:href="@{/12.pagina_vehiculos}" id="enlaces_barra">Vehículos</a></li>
           <li id="items_barra"><a th:href="@{/14.pagina_ordenes}" id="enlaces_barra">Órdenes</a></li>
           <li id="items_barra"><a th:href="@{/24.pagina_pedidos_domiciliario}" id="enlaces_barra">Pedidos</a></li>
@@ -38,6 +37,27 @@
       </nav>
     </div>
     <hr class="linea_separación">
+    <style>
+      body {
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      main {
+        flex: 1;
+      }
+
+      footer {
+        margin-top: auto;
+        min-height: auto !important;
+        padding: 20px 0;
+        text-align: center;
+      }
+    </style>
+
   </header>
 </div>
 <div th:fragment="error">
@@ -50,6 +70,20 @@
   </div>
 </div>>
 
+<div th:fragment="error">
+  <div th:if="${mensaje}" class="alert alert-success" role="alert">
+    <span th:text="${mensaje}"></span>
+  </div>
+
+  <div th:if="${error}" class="alert alert-danger" role="alert">
+    <span th:text="${error}"></span>
+  </div>
+</div>
+
+<main>
+  <!-- Aquí va el contenido de tu página -->
+</main>
+
 <footer th:fragment="footer"
         style="background: linear-gradient(180deg, #00796b 0%, #00695c 100%);
                color: #f1fffb;
@@ -61,7 +95,7 @@
   <div style="margin-bottom: 10px;">
     <img th:src="@{/imagenes/logo.png}" alt="Logo INDRUGS" style="width: 60px; margin-bottom: 5px;">
     <p style="font-size: 1em; font-weight: 500; margin: 0;">
-      © 2025 INDRUGS MEDICAL — Cuidado y bienestar para todos 💊
+      © 2025 INDRUGS  MEDICAL — Cuidado y bienestar para todos 💊
     </p>
   </div>
 
