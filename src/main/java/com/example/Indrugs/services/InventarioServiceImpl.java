@@ -12,12 +12,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class InventarioServiceImpl implements InventarioService{
+public class InventarioServiceImpl implements InventarioService {
 
-    private  InventarioRepository inventarioRepository;
-    private MedicamentoRepository medicamentoRepository;
+    private final InventarioRepository inventarioRepository;
+    private final MedicamentoRepository medicamentoRepository;
 
-    public InventarioServiceImpl(InventarioRepository inventarioRepository, MedicamentoRepository medicamentoRepository){
+    public InventarioServiceImpl(InventarioRepository inventarioRepository, MedicamentoRepository medicamentoRepository) {
         this.inventarioRepository = inventarioRepository;
         this.medicamentoRepository = medicamentoRepository;
     }
@@ -32,9 +32,9 @@ public class InventarioServiceImpl implements InventarioService{
 
     @Override
     public void crear(InventarioDTO inventarioDTO) {
-
         Medicamentos medicamentos = medicamentoRepository.findByNombreMedicamento(inventarioDTO.getNombreMedicamento())
-                .orElseThrow(() -> new RuntimeException("Medicamento no encontrado con el nombre" + inventarioDTO.getNombreMedicamento()));
+                .orElseThrow(() -> new RuntimeException("Medicamento no encontrado con el nombre " + inventarioDTO.getNombreMedicamento()));
+
         boolean existeEnInventario = inventarioRepository.existsByIdMedicamento_IdMedicamento(medicamentos.getIdMedicamento());
         if (existeEnInventario) {
             throw new RuntimeException("El medicamento ya se encuentra registrado en el inventario.");
@@ -47,7 +47,7 @@ public class InventarioServiceImpl implements InventarioService{
     @Override
     public void actualizar(Long idInventario, InventarioDTO inventarioDTO) {
         Inventario inventario = inventarioRepository.findById(idInventario)
-                .orElseThrow(()-> new RuntimeException("Inventario no encontrado"));
+                .orElseThrow(() -> new RuntimeException("Inventario no encontrado"));
         InventarioMapper.ToUpdate(inventarioDTO, inventario);
         inventarioRepository.save(inventario);
     }
@@ -71,5 +71,21 @@ public class InventarioServiceImpl implements InventarioService{
         return inventarios.stream()
                 .map(InventarioMapper::entiteToDto)
                 .collect(Collectors.toList());
+    }
+
+    // 🆕 NUEVO MÉTODO: Descontar stock al asignar medicamentos
+    @Override
+    public void descontarStock(Medicamentos medicamento, int cantidad) {
+        inventarioRepository.findTopByIdMedicamentoOrderByFechaEntradaDesc(medicamento)
+                .ifPresentOrElse(inventario -> {
+                    if (inventario.getStock() < cantidad) {
+                        throw new RuntimeException("No hay suficiente stock disponible para este medicamento.");
+                    }
+                    inventario.setStock(inventario.getStock() - cantidad);
+                    inventario.setFechaSalida(java.time.LocalDateTime.now());
+                    inventarioRepository.save(inventario);
+                }, () -> {
+                    throw new RuntimeException("No se encontró inventario para el medicamento seleccionado.");
+                });
     }
 }

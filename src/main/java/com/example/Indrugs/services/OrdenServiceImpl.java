@@ -35,11 +35,13 @@ public class OrdenServiceImpl implements OrdenService {
     private static final String UPLOAD_DIR = "uploads";
 
     @Autowired
-    public OrdenServiceImpl(OrdenRepository ordenRepository,
-                            MedicamentoRepository medicamentoRepository,
-                            UsuarioRepository usuarioRepository,
-                            DomicilioRepository domicilioRepository,
-                            EmailService emailService) {
+    public OrdenServiceImpl(
+            OrdenRepository ordenRepository,
+            MedicamentoRepository medicamentoRepository,
+            UsuarioRepository usuarioRepository,
+            DomicilioRepository domicilioRepository,
+            EmailService emailService
+    ) {
         this.ordenRepository = ordenRepository;
         this.medicamentoRepository = medicamentoRepository;
         this.usuarioRepository = usuarioRepository;
@@ -145,7 +147,7 @@ public class OrdenServiceImpl implements OrdenService {
                 String asunto = "Notificación: Orden eliminada";
                 String mensajeHtml = "<html><body style='font-family: Arial, sans-serif;'>" +
                         "<h2 style='color: #d32f2f;'>Estimado(a) " + nombrePaciente + ",</h2>" +
-                        "<p>Tu orden con ID <strong>" + idOrden + "</strong> ha sido eliminada del sistema de INDRUGS por motivo de posible fraude o formula vencida.</p>" +
+                        "<p>Tu orden con ID <strong>" + idOrden + "</strong> ha sido eliminada del sistema de INDRUGS por motivo de posible fraude o fórmula vencida.</p>" +
                         "<p>Si consideras que esto fue un error, por favor comunícate con el área de atención indrugsmedica@gmail.com.</p>" +
                         "<br><p style='color: #777;'>Atentamente,<br><strong>Equipo INDRUGS MÉDICA</strong></p>" +
                         "</body></html>";
@@ -167,8 +169,8 @@ public class OrdenServiceImpl implements OrdenService {
 
     @Override
     public List<OrdenDTO> ObtenerOrdenesRecientes() {
-        List<Orden> domicilio = ordenRepository.findTop4ByOrderByIdOrdenDesc();
-        return domicilio.stream().map(OrdenMapper::toDTO).collect(Collectors.toList());
+        List<Orden> ordenes = ordenRepository.findTop4ByOrderByIdOrdenDesc();
+        return ordenes.stream().map(OrdenMapper::toDTO).collect(Collectors.toList());
     }
 
     @Override
@@ -188,4 +190,8 @@ public class OrdenServiceImpl implements OrdenService {
         return OrdenMapper.toDTO(orden);
     }
 
+    @Override
+    public void asignarMedicamentoAOrden(Long idOrden, Long idMedicamento, int cantidad) {
+
+    }
 }

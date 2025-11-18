@@ -16,6 +16,8 @@ public interface OrdenService {
     List<OrdenDTO> ObtenerOrdenesRecientes();
     Map<String,Object> ObtenerResumenOrden();
     void crearDomicilioConOrden(Orden orden);
-
     OrdenDTO obtenerOrdenPorId(Long id);
+
+    // 🔹 Nuevo método para asignar medicamento y bajar stock
+    void asignarMedicamentoAOrden(Long idOrden, Long idMedicamento, int cantidad);
 }

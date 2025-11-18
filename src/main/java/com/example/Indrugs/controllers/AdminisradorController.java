@@ -28,36 +28,38 @@ public class AdminisradorController {
     private final InventarioService inventarioService;
     private final OrdenService ordenService;
 
-    public AdminisradorController(UsuarioService usuarioService, InventarioService inventarioService,OrdenService ordenService){
+    public AdminisradorController(UsuarioService usuarioService, InventarioService inventarioService, OrdenService ordenService) {
         this.usuarioService = usuarioService;
         this.inventarioService = inventarioService;
         this.ordenService = ordenService;
     }
 
     @GetMapping("/20.pagina_principal_administrador")
-    public String mostrarPaginaAdmin(HttpSession session, Model model){
+    public String mostrarPaginaAdmin(HttpSession session, Model model) {
         Usuario usuario = (Usuario) session.getAttribute("usuarioLogueado");
 
         if (usuario == null) {
             return "redirect:/login"; // si no está logueado
         }
 
-        //estadistica
+        // Estadísticas
         Map<String, Long> estadisticasUsuarios = usuarioService.obtenerResumenUsuarios();
         model.addAttribute("estadisticas", estadisticasUsuarios);
-        // resumen
+
+        // Usuarios recientes
         List<UsuarioDTO> usuariosRecientes = usuarioService.obtenerUsuariosRecientes();
         model.addAttribute("usuariosRecientes", usuariosRecientes);
 
+        // Inventario total
         model.addAttribute("cantidadInventario", inventarioService.totalUnidadesEnStock());
 
+        // Órdenes recientes
         List<OrdenDTO> ordenesRecientes = ordenService.ObtenerOrdenesRecientes();
         model.addAttribute("ordenesRecientes", ordenesRecientes);
 
-        Map<String,Object> dashboard=ordenService.ObtenerResumenOrden();
-//        model.addAttribute("ordenesRecientes",dashboard.get("ordenesRecientes"));
-        model.addAttribute("cantidadOrdenes",dashboard.get("totalOrdenesActivos"));
-
+        // Resumen del dashboard
+        Map<String, Object> dashboard = ordenService.ObtenerResumenOrden();
+        model.addAttribute("cantidadOrdenes", dashboard.get("totalOrdenesActivos"));
 
         return "administrador/20.pagina_principal_administrador";
     }
@@ -76,7 +78,7 @@ public class AdminisradorController {
 
         List<UsuarioDTO> usuarios;
 
-        // aplicar filtros
+        // Aplicar filtros
         if (rol != null && !rol.isEmpty() && estado != null && !estado.isEmpty()) {
             usuarios = usuarioService.findByRolNombreAndEstado(rol, estado);
         } else if (rol != null && !rol.isEmpty()) {
@@ -110,7 +112,6 @@ public class AdminisradorController {
             UsuarioUpdateDTO usuarioUpdate = UsuarioMapper.toUpdateDTO(usuariodto);
 
             model.addAttribute("usuario", usuarioUpdate);
-
             model.addAttribute("estados", List.of("ACTIVO", "INACTIVO"));
 
             return "administrador/actualizar_usuario";
@@ -124,12 +125,30 @@ public class AdminisradorController {
     public String actualizarUsuario(@RequestParam Long idUsuario,
                                     UsuarioUpdateDTO userUpdate,
                                     RedirectAttributes redirectAttributes) {
-        try{
+        try {
             usuarioService.actualizar(idUsuario, userUpdate);
             redirectAttributes.addFlashAttribute("mensaje", "Usuario actualizado correctamente");
-        }catch (Exception e){
+        } catch (Exception e) {
             redirectAttributes.addFlashAttribute("error", e.getMessage());
         }
         return "redirect:/21.pagina_usuarios";
+    }
+
+    // 🔹 NUEVO MÉTODO: Asignar medicamento y descontar stock
+    @PostMapping("/asignarMedicamento")
+    public String asignarMedicamento(
+            @RequestParam Long idOrden,
+            @RequestParam Long idMedicamento,
+            @RequestParam int cantidad,
+            RedirectAttributes redirectAttributes) {
+
+        try {
+            ordenService.asignarMedicamentoAOrden(idOrden, idMedicamento, cantidad);
+            redirectAttributes.addFlashAttribute("mensaje", "Medicamento asignado correctamente y stock actualizado.");
+        } catch (IllegalArgumentException e) {
+            redirectAttributes.addFlashAttribute("error", e.getMessage());
+        }
+
+        return "redirect:/20.pagina_principal_administrador";
     }
 }

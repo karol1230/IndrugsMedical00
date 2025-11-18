@@ -93,4 +93,5 @@ public class DomiciliarioController {
         pedidoService.actualizarEstado(idPedido, estado);
         return "redirect:/24.pagina_pedidos_domiciliario";
     }
+
 }

@@ -7,6 +7,7 @@ import com.example.Indrugs.entities.Usuario;
 import com.example.Indrugs.repositorios.OrdenRepository;
 import com.example.Indrugs.repositorios.PedidoRepository;
 import com.example.Indrugs.repositorios.UsuarioRepository;
+import jakarta.mail.MessagingException;   // ←←← FALTABA ESTE IMPORT
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +25,9 @@ public class PedidoServiceImpl {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
+
+    @Autowired
+    private EmailService emailService;  // ← NECESARIO PARA ENVIAR CORREO
 
     public PedidoServiceImpl(PedidoRepository pedidoRepository) {
         this.pedidoRepository = pedidoRepository;
@@ -65,11 +69,31 @@ public class PedidoServiceImpl {
     }
 
     // ========================
-    // Actualizar estado del pedido
+    // Actualizar estado del pedido + enviar correo si "He llegado"
     // ========================
-    public void actualizarEstado(Long idPedido, String estado) {
-        Pedido pedido = pedidoRepository.findById(idPedido)
-                .orElseThrow(() -> new RuntimeException("Pedido no encontrado con ID: " + idPedido));
+    public void actualizarEstado(Long id, String estado) {
+
+        Pedido pedido = pedidoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Pedido no encontrado"));
+
+        // Enviar correo SOLO cuando el domiciliario indique "He llegado"
+        if (estado.equalsIgnoreCase("He llegado")) {
+
+            Usuario cliente = pedido.getOrden().getPaciente(); // ← ESTE ES EL CLIENTE REAL
+
+            if (cliente != null && cliente.getCorreo() != null) {
+                try {
+                    emailService.enviarCorreo(
+                            cliente.getCorreo(),
+                            "Tu orden con medicamento ha llegado",
+                            "<p>Hola " + cliente.getNombre() + ", indrugs medical te informa que tu pedido acaba de llegar a tu lugar de vivienda.</p>"
+                    );
+                } catch (MessagingException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
         pedido.setEstado(estado);
         pedidoRepository.save(pedido);
     }

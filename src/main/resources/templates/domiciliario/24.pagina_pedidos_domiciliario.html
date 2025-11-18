@@ -57,15 +57,16 @@
                     </td>
 
                     <td>
-                        <form th:action="@{'/actualizar/pedido/' + ${pedido.id}}" method="post" class="d-flex justify-content-center gap-2">
-                            <button type="submit" name="estado" value="PENDIENTE" class="btn btn-outline-secondary btn-sm">
-                                🕓 Pendiente
+                        <form th:action="@{'/actualizar/pedido/' + ${pedido.id}}" method="post">
+
+                        <button type="submit" name="estado" value="EN CAMINO" class="btn btn-outline-warning btn-sm">
+                                 EN CAMINO
                             </button>
-                            <button type="submit" name="estado" value="EN_CAMINO" class="btn btn-outline-warning btn-sm">
-                                🚴 En camino
+                            <button type="submit" name="estado" value="HE LLEGADO" class="btn btn-outline-secondary btn-sm">
+                                HE LLEGADO
                             </button>
                             <button type="submit" name="estado" value="ENTREGADO" class="btn btn-outline-success btn-sm">
-                                ✅ Entregado
+                                 ENTREGADO
                             </button>
                         </form>
                     </td>
