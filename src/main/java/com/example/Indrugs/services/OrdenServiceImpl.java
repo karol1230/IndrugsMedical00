@@ -176,12 +176,22 @@ public class OrdenServiceImpl implements OrdenService {
     @Override
     public Map<String, Object> ObtenerResumenOrden() {
         Map<String, Object> dashboard = new HashMap<>();
-        long ordenesActivos = ordenRepository.countByEstadoOrden("ACTIVO");
+
+        // ✅ Contar órdenes activas sin importar mayúsculas o espacios
+        long ordenesActivos = ordenRepository.findAll().stream()
+                .filter(o -> o.getEstadoOrden() != null &&
+                        o.getEstadoOrden().trim().equalsIgnoreCase("ACEPTADA"))
+                .count();
+
         dashboard.put("totalOrdenesActivos", ordenesActivos);
+
+        // 🔹 Mantiene las 4 órdenes más recientes
         List<Orden> top4Orden = ordenRepository.findTop4ByOrderByIdOrdenDesc();
         dashboard.put("ordenesRecientes", top4Orden);
+
         return dashboard;
     }
+
 
     @Override
     public OrdenDTO obtenerOrdenPorId(Long id) {

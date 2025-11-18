@@ -14,4 +14,7 @@ public class VehiculoDTO {
     private String marcaVehiculo;
     private String colorVehiculo;
     private String estadoVehiculo;
+
+
+
 }

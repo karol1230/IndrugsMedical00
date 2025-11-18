@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -102,4 +103,20 @@ public class ControlController {
         }
         return "redirect:/17.pagina_control";
     }
+    // Método para eliminar el control
+    @PostMapping("/eliminar_control")
+    public String eliminarControl(@RequestParam Long idControl, RedirectAttributes redirectAttributes) {
+        controlService.eliminarControl(idControl);  // Eliminar el control
+
+        // Agregar el mensaje de éxito que será visible en la próxima solicitud
+        redirectAttributes.addFlashAttribute("mensajeExito", "Control eliminado exitosamente.");
+
+        // Redirigir de nuevo a la página donde se listan los controles
+        return "redirect:/24.pagina_control";
+    }
 }
+
+
+
+
+

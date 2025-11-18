@@ -21,6 +21,7 @@ public class ControlDTO {
     private LocalDateTime fechaInicioTratamiento;
     private LocalDateTime fechaFinTratamiento;
     private LocalTime alarmaControl;
+    private String estado;
 
 
     }

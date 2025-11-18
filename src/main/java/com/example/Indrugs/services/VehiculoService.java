@@ -1,6 +1,7 @@
 package com.example.Indrugs.services;
 
 import com.example.Indrugs.DTO.VehiculoDTO;
+
 import java.util.List;
 
 public interface VehiculoService {
@@ -9,4 +10,9 @@ public interface VehiculoService {
     void actualizar(Long idVehiculo, VehiculoDTO vehiculoDTO);
     void eliminar(Long idVehiculo);
     VehiculoDTO findById(Long idVehiculo);
+
+    void guardar(VehiculoDTO vehiculo);
+    List<VehiculoDTO> listarVehiculos();
+
+    void cambiarEstado(Long idVehiculo, String nuevoEstado);
 }

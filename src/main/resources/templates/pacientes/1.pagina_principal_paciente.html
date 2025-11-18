@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>INDRUGS | Paciente</title>
+    <title>Paciente - INDRUGS </title>
 
 
     <script src="https://kit.fontawesome.com/14122cd484.js" crossorigin="anonymous"></script>
@@ -240,6 +240,152 @@
     padding: 25px 0;
   }
   }
+
+/* === Sección de bienvenida del paciente (versión mejorada) === */
+.intro-paciente {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: linear-gradient(135deg, #e0f2f1, #ffffff);
+  border-radius: 25px;
+  padding: 60px 80px;
+  width: 90%;
+  margin: 40px auto;
+  box-shadow: 0 8px 20px rgba(0, 121, 107, 0.08);
+  flex-wrap: wrap;
+  animation: aparecer 0.7s ease-out;
+}
+
+/* --- Texto --- */
+.intro-texto {
+  flex: 1 1 400px;
+  max-width: 550px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.intro-texto h2 {
+  color: #00796b;
+  font-weight: 700;
+  margin-bottom: 15px;
+  font-size: 2rem;
+}
+
+.intro-texto p {
+  color: #004d40;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  margin-bottom: 25px;
+}
+
+/* --- Botón principal --- */
+.btn-explorar {
+  background: linear-gradient(135deg, #00796b, #009688);
+  color: white;
+  padding: 12px 35px;
+  border-radius: 40px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 121, 107, 0.3);
+  align-self: flex-start;
+}
+
+.btn-explorar:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(0, 121, 107, 0.45);
+}
+
+/* --- Bloque de íconos --- */
+.intro-beneficios {
+  flex: 1 1 400px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  text-align: center;
+  flex-wrap: wrap;
+  margin-top: 20px;
+  gap: 30px;
+}
+
+.beneficio-icono {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #00695c;
+  transition: transform 0.3s ease;
+  min-width: 120px;
+}
+
+.beneficio-icono i {
+  font-size: 2.5rem;
+  color: #00796b;
+  margin-bottom: 10px;
+}
+
+.beneficio-icono:hover {
+  transform: translateY(-6px);
+}
+
+.beneficio-icono span {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+/* --- Responsivo --- */
+@media (max-width: 950px) {
+  .intro-paciente {
+    flex-direction: column;
+    text-align: center;
+    padding: 50px 35px;
+  }
+
+  .intro-texto {
+    align-items: center;
+  }
+
+  .btn-explorar {
+    align-self: center;
+  }
+
+  .intro-beneficios {
+    margin-top: 35px;
+    gap: 25px;
+  }
+}
+        /* —— Acentos de color para los íconos intro —— */
+.icon-mostaza { color: #F59E0B !important; transition: transform 0.25s, filter 0.25s; }
+.icon-morado  { color: #8B5CF6 !important; transition: transform 0.25s, filter 0.25s; }
+.icon-rosa    { color: #EC4899 !important; transition: transform 0.25s, filter 0.25s; }
+
+
+/* Opcional: un pequeño fondo circular para resaltarlos */
+.bubble {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 62px;
+  height: 62px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.85);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+}
+
+/* Si quieres que el icono dentro cambie ligeramente al pasar el ratón */
+.bubble:hover i {
+  transform: translateY(-4px) scale(1.06);
+  filter: drop-shadow(0 6px 12px rgba(0,0,0,0.08));
+}
+
+/* Ajustes responsivos (si se usan bubbles) */
+@media (max-width: 600px) {
+  .bubble { width: 54px; height: 54px; }
+  .beneficio-icono i { font-size: 2.1rem; }
+}
+
+
+
     </style>
 </head>
 
@@ -248,24 +394,49 @@
 
 <main class="cuerpo_indrugs">
     <div class="container py-5">
-        <h1 class="titulo">Bienvenido Paciente</h1>
-        <p class="bienvenida">Gestiona tus solicitudes y consulta el estado de tus medicamentos.</p>
-        <!-- Sección de beneficios -->
-        <section class="beneficios-paciente">
-            <div class="beneficio">
-                <i class="fas fa-truck-medical"></i>
-                <p>Entrega rápida de medicamentos</p>
+        <h1 class="titulo">👋 ¡Bienvenido, <span th:text="${nombrePaciente}">Paciente</span>!</h1>
+
+
+        <!-- Sección de bienvenida visual -->
+        <section class="intro-paciente">
+            <div class="intro-texto">
+                <h2>Tu espacio personal de salud</h2>
+                <p>
+                    En INDRUGS, como paciente puedes gestionar tus medicamentos,
+                    llevar un control diario, recibir recordatorios y comunicarte fácilmente con el equipo médico.
+                    Todo desde un solo lugar, de manera segura y personalizada.
+                </p>
+                <a class="btn-explorar" th:onclick="|window.location.href='@{/8.pagina_med}'|">
+                    Explorar funcionalidades
+                </a>
             </div>
-            <div class="beneficio">
-                <i class="fas fa-clock"></i>
-                <p>Recordatorios automáticos</p>
+
+            <div class="intro-beneficios">
+                <div class="beneficio-icono" title="Control de medicamentos">
+                    <div class="bubble" aria-hidden="true">
+                        <i class="fa-solid fa-pills icon-mostaza" aria-hidden="true"></i>
+                    </div>
+                    <span>Control de medicamentos</span>
+                </div>
+
+                <div class="beneficio-icono" title="Recordatorios automáticos">
+                    <div class="bubble" aria-hidden="true">
+                        <i class="fa-solid fa-clock icon-morado" aria-hidden="true"></i>
+                    </div>
+                    <span>Recordatorios automáticos</span>
+                </div>
+
+                <div class="beneficio-icono" title="Pedidos a domicilio">
+                    <div class="bubble" aria-hidden="true">
+                        <i class="fa-solid fa-truck-medical icon-rosa" aria-hidden="true"></i>
+                    </div>
+                    <span>Pedidos a domicilio</span>
+                </div>
             </div>
-            <div class="beneficio">
-                <i class="fas fa-user-shield"></i>
-                <p>Datos personales protegidos</p>
-            </div>
+
         </section>
-        <hr class="separador">
+
+
 
         <!-- Sección Medicamentos -->
         <section class="medicamentos-destacados mt-4">
@@ -346,7 +517,7 @@
 
             <div class="card-opcion">
                 <i class="fa-solid fa-headset"></i>
-                <h5>Ayuda y Soporte</h5>
+                <h5>PQRS</h5>
                 <p>Contacta con el equipo de INDRUGS para resolver cualquier duda o inconveniente.</p>
                 <button class="btn-general" th:onclick="|window.location.href='@{/5.pagina_pqrs}'|">Contactar</button>
             </div>

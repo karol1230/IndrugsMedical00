@@ -1,82 +1,183 @@
 body {
-    font-family: 'Poppins', sans-serif;
-    background-color: #f5f9fc;
-    color: #333;
-    margin: 0;
-    padding: 0;
+    font-family: 'Poppins', sans-serif !important;
+    background-color: #f5f9fc !important;
+    color: #333 !important;
+    margin: 0 !important;
+    padding: 0 !important;
 }
 
+/* 🧭 Contenedor principal */
 .container {
-    width: 90%;
-    margin: 40px auto;
+    width: 90% !important;
+    margin: 40px auto !important;
 }
 
-.titulo {
-    text-align: center;
-    color: #004aad;
-    font-weight: 600;
-    margin-bottom: 30px;
+/* 🩵 Título */
+h1, .titulo {
+    text-align: center !important;
+    color: #004d40; !important;
+    font-weight: 600 !important;
+    margin-bottom: 30px !important;
+    letter-spacing: 0.5px !important;
 }
 
-table {
-    width: 100%;
-    border-collapse: collapse;
-    background-color: #fff;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    border-radius: 12px;
-    overflow: hidden;
+/* 🧾 Tabla de pedidos */
+.table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    background-color: #ffffff !important;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08) !important;
+    border-radius: 12px !important;
+    overflow: hidden !important;
 }
 
-th, td {
-    padding: 15px;
-    text-align: center;
-    border-bottom: 1px solid #e0e0e0;
+/* 🌿 Encabezado */
+.table thead {
+    background-color: #e8f1ff !important;
+    color: #004aad !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.03em !important;
 }
 
-th {
-    background-color: #e8f1ff;
-    color: #004aad;
-    font-weight: 600;
+.table th {
+    font-weight: 600 !important;
+    padding: 15px !important;
+    border-bottom: 2px solid #cddffb !important;
 }
 
-.estado-pendiente {
-    color: #ff9800;
-    font-weight: bold;
+/* 🌿 Celdas del cuerpo */
+.table td {
+    padding: 14px !important;
+    text-align: center !important;
+    vertical-align: middle !important;
+    border-bottom: 1px solid #e6e9ef !important;
 }
 
-.estado-camino {
-    color: #2196f3;
-    font-weight: bold;
+/* 🌈 Fila al pasar el mouse */
+.table tbody tr:hover {
+    background-color: #f2f6ff !important;
+    transition: background-color 0.3s ease !important;
 }
 
-.estado-entregado {
-    color: #4caf50;
-    font-weight: bold;
+/* 🔖 Etiquetas de estado */
+.badge {
+    font-size: 0.9rem !important;
+    padding: 8px 12px !important;
+    border-radius: 8px !important;
+    font-weight: 500 !important;
 }
 
+.badge.bg-success {
+    background-color: #4caf50 !important;
+}
+
+.badge.bg-warning {
+    background-color: #ffca28 !important;
+    color: #333 !important;
+}
+
+.badge.bg-secondary {
+    background-color: #9e9e9e !important;
+}
+
+/* ⚙️ Botones de acción */
 .btn {
-    border: none;
-    padding: 8px 12px;
-    border-radius: 8px;
-    margin: 2px;
-    color: white;
-    cursor: pointer;
-    font-size: 0.9rem;
-    transition: 0.3s;
+    border: none !important;
+    padding: 8px 12px !important;
+    border-radius: 8px !important;
+    margin: 2px !important;
+    color: white !important;
+    font-size: 0.9rem !important;
+    transition: 0.3s !important;
+    font-weight: 500 !important;
 }
 
-.btn-pendiente { background-color: #ff9800; }
-.btn-pendiente:hover { background-color: #e68900; }
-
-.btn-camino { background-color: #2196f3; }
-.btn-camino:hover { background-color: #0b7dda; }
-
-.btn-entregado { background-color: #4caf50; }
-.btn-entregado:hover { background-color: #3e8e41; }
-
-.acciones {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 5px;
+.btn-outline-secondary {
+    background-color: #a8a8a8 !important;
+    border: none !important;
 }
+.btn-outline-secondary:hover {
+    background-color: #8c8c8c !important;
+}
+
+.btn-outline-warning {
+    background-color: #ffb300 !important;
+    color: white !important;
+}
+.btn-outline-warning:hover {
+    background-color: #e09c00 !important;
+}
+
+.btn-outline-success {
+    background-color: #4caf50 !important;
+}
+.btn-outline-success:hover {
+    background-color: #3d8b40 !important;
+}
+
+/* 📱 Responsive */
+@media (max-width: 768px) {
+    .table thead {
+        display: none !important;
+    }
+
+    .table, .table tbody, .table tr, .table td {
+        display: block !important;
+        width: 100% !important;
+    }
+
+    .table tr {
+        margin-bottom: 15px !important;
+        background-color: #fff !important;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08) !important;
+        border-radius: 10px !important;
+        overflow: hidden !important;
+    }
+
+    .table td {
+        text-align: right !important;
+        padding-left: 50% !important;
+        position: relative !important;
+    }
+
+    .table td::before {
+        content: attr(data-label) !important;
+        position: absolute !important;
+        left: 10px !important;
+        width: 45% !important;
+        text-align: left !important;
+        font-weight: 600 !important;
+        color: #004aad !important;
+    }
+}
+
+/* 💚 Encabezado azul verdoso claro */
+.encabezado-verde {
+    background-color: #a9d9d4 !important; /* tono verde-agua suave */
+    color: #004d40 !important;            /* texto verde oscuro */
+}
+
+.encabezado-verde th {
+    font-weight: 600 !important;
+    text-transform: uppercase !important;
+    padding: 15px !important;
+    border-bottom: 2px solid #80cbc4 !important; /* línea suave entre encabezado y cuerpo */
+}
+
+.encabezado-verde {
+    background-color: #a9d9d4 !important; /* azul verdoso claro */
+    color: #004d40 !important;
+}
+
+.table thead.encabezado-verde th {
+    background-color: #a9d9d4 !important;
+    color: #004d40 !important;
+    font-weight: 600 !important;
+    text-transform: uppercase !important;
+    padding: 15px !important;
+    border-bottom: 2px solid #80cbc4 !important;
+}
+h1, .titulo {
+    color: #004d40; !important;
+}
+
