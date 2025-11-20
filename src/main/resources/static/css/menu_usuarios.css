@@ -1,50 +1,176 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600&display=swap');
 
-
-/*TABLA*//* typography */
-
-html {
-    font-family: Poppins;
-  }
-th{
-    text-align: center;
+/* -----------------------------------
+   BASE GENERAL
+----------------------------------- */
+html, body {
+    font-family: 'Nunito', sans-serif;
+    background: #f5f9f8;
 }
- 
-  
-  tbody td {
+
+.contenido{
+    width: 90%;
+    margin: auto;
+}
+
+/* Título */
+.tabla_usuarios {
     text-align: center;
-  }
+    font-weight: 600;
+    margin: 25px 0;
+    color: #006d62;
+    letter-spacing: 1px;
+}
 
-  .tabla_usuarios{
-    text-align:center;
-  }
+/* -----------------------------------
+   CONTENEDOR FORMULARIOS
+----------------------------------- */
 
-  
-  .tabla1 {
+.formularios {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 20px;
+}
 
-    background-color: #f8f7fc;
-    width: 100%;
-  } 
+/* -----------------------------------
+   FILTROS
+----------------------------------- */
 
-.btn{
-    width: 100%;
-    padding: 10px;
-    background-color: rgb(107, 209, 12);
+.filtrar-usuarios {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: #e3f3f1;
+    padding: 12px 20px;
+    border-radius: 12px;
+    border-left: 4px solid #1b8e85;
+}
+
+.filtrar-usuarios label {
+    font-weight: 500;
+    color: #004c43;
+}
+
+.filtrar-usuarios select {
+    padding: 7px 12px;
+    border-radius: 8px;
+    border: 1px solid #9bbfba;
+    background: white;
+    transition: .3s;
+}
+
+.filtrar-usuarios select:hover {
+    border-color: #1b8e85;
+}
+
+/* Botón FILTRAR */
+.butn_filtro {
+    background: #1b8e85;
     color: white;
     border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-   
+    padding: 8px 18px;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: .3s;
 }
 
-.btn:hover {
-    background-color:rgb(94, 180, 14) ; 
-
+.butn_filtro:hover {
+    background: #146a63;
 }
-h1{
+
+/* -----------------------------------
+   BOTÓN EXPORTAR (MORADO ELEGANTE)
+----------------------------------- */
+
+.btnform {
+    background: #6e3bbf !important;
+    color: white !important;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    border: none;
+    transition: .3s;
+}
+
+.btnform:hover {
+    background: #532c91 !important;
+}
+
+/* -----------------------------------
+   TABLA CENTRADA Y MODERNA
+----------------------------------- */
+
+.table {
+    width: 95%;
+    margin: 20px auto;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+
+/* Encabezado azul verdoso suave */
+.table thead {
+    background: #25a59d !important;
+}
+
+.table thead th {
+    color: white;
     text-align: center;
-    margin-bottom: 3%;
-    font-family: Quicksand;
+    font-weight: 600;
+    font-size: 15px;
+    padding: 14px 10px;
+}
+
+/* Celdas */
+.table tbody td {
+    text-align: center;
+    vertical-align: middle;
+    padding: 12px;
+}
+
+/* Hover fila */
+.table tbody tr:hover {
+    background: #eef7f6;
+}
+
+/* -----------------------------------
+   BOTÓN EDITAR
+----------------------------------- */
+
+.btn-primary {
+    background: #1b8e85 !important;
+    border: none !important;
+    font-weight: 600;
+    padding: 7px 16px;
+    border-radius: 8px;
+    transition: .3s;
+}
+
+.btn-primary:hover {
+    background: #146a63 !important;
+}
+
+/* -----------------------------------
+   MENSAJE SIN DATOS
+----------------------------------- */
+
+.sin-data p, p {
+    text-align: center;
+    font-size: 18px;
+    color: #777;
+    margin-top: 20px;
+}
+#tabla1 {
+    width: 100%;
+}
+
+.tabla-container {
+    width: 95%;
+    margin: 0 auto !important;
+    display: flex;
+    justify-content: center;
 }
 

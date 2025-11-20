@@ -8,57 +8,78 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" th:href="@{/css/1.estilos_pagina_inicio.css}" />
     <link rel="stylesheet" th:href="@{/css/menu_usuarios.css}" />
+    <link rel="stylesheet" th:href="@{/css/editar_usuario.css}">
+
 </head>
 <body>
 
 <header th:insert="Layouts/header_footerAdmin :: header"></header>
 
-<main class="cuerpo_indrugs">
-    <div th:insert="Layouts/header_footerAdmin :: error"></div>
-    <div class="contenido">
-        <h1>Editar usuario</h1>
+<main class="cuerpo_indrugs d-flex justify-content-center mt-5">
 
-        <form th:action="@{/actualizar}" method="post" class="row mt-3 col-12 g-3 needs-validation" novalidate th:object="${usuario}">
+    <div class="card shadow-lg p-4" style="width: 550px; border-radius: 15px;">
+
+        <h2 class="text-center mb-4" style="color: #0f766e; font-weight: 700;">
+            Editar Usuario
+        </h2>
+
+        <form th:action="@{/actualizar}" method="post"
+              class="row g-3 needs-validation" novalidate th:object="${usuario}">
 
             <input type="hidden" th:field="*{idUsuario}" />
 
-            <label for="nombre">Nombre:</label>
-            <input type="text" id="nombre" class="form-control" th:field="*{nombre}" required />
-            <div class="valid-feedback">BIEN.</div>
-            <div class="invalid-feedback">Por favor ingrese su nombre/s.</div>
+            <!-- Nombre -->
+            <div class="col-12">
+                <label for="nombre" class="form-label">Nombre completo</label>
+                <input type="text" id="nombre" class="form-control" th:field="*{nombre}" required />
+                <div class="invalid-feedback">Ingrese un nombre válido.</div>
+            </div>
 
-            <label for="direccion">Dirección:</label>
-            <input type="text" id="direccion" class="form-control" th:field="*{direccion}" required />
-            <div class="valid-feedback">BIEN.</div>
-            <div class="invalid-feedback">Por favor ingrese la dirección.</div>
+            <!-- Dirección -->
+            <div class="col-12">
+                <label for="direccion" class="form-label">Dirección</label>
+                <input type="text" id="direccion" class="form-control" th:field="*{direccion}" required />
+                <div class="invalid-feedback">Ingrese una dirección válida.</div>
+            </div>
 
-            <label for="telefono">Teléfono:</label>
-            <input type="text" id="telefono" class="form-control" th:field="*{telefono}" required />
-            <div class="valid-feedback">BIEN.</div>
-            <div class="invalid-feedback">Por favor ingrese el teléfono.</div>
+            <!-- Teléfono -->
+            <div class="col-md-6">
+                <label for="telefono" class="form-label">Teléfono</label>
+                <input type="text" id="telefono" class="form-control" th:field="*{telefono}" required />
+                <div class="invalid-feedback">Ingrese un teléfono válido.</div>
+            </div>
 
-            <label for="correo">Correo:</label>
-            <input type="email" id="correo" class="form-control" th:field="*{correo}" required />
-            <div class="valid-feedback">BIEN.</div>
-            <div class="invalid-feedback">Por favor ingrese un correo válido.</div>
+            <!-- Correo -->
+            <div class="col-md-6">
+                <label for="correo" class="form-label">Correo</label>
+                <input type="email" id="correo" class="form-control" th:field="*{correo}" required />
+                <div class="invalid-feedback">Ingrese un correo válido.</div>
+            </div>
 
-            <label for="estado">Estado:</label>
-            <select id="estado" class="form-control" th:field="*{estado}">
-                <option th:each="estadoItem : ${estados}"
-                        th:value="${estadoItem}"
-                        th:text="${estadoItem}">
-                </option>
-            </select>
-            <div class="valid-feedback">BIEN.</div>
-            <div class="invalid-feedback">Por favor seleccione un estado.</div>
+            <!-- Estado -->
+            <div class="col-12">
+                <label for="estado" class="form-label">Estado</label>
+                <select id="estado" class="form-select" th:field="*{estado}">
+                    <option th:each="estadoItem : ${estados}"
+                            th:value="${estadoItem}"
+                            th:text="${estadoItem}">
+                    </option>
+                </select>
+                <div class="invalid-feedback">Seleccione un estado.</div>
+            </div>
 
-            <div class="col-12 mt-3">
-                <button type="submit" class="btn btn-primary">Guardar</button>
+            <!-- Botón -->
+            <div class="col-12 text-center mt-3">
+                <button type="submit"
+                        class="btn px-4 py-2"
+                        style="background-color: #0f766e; color: white; font-size: 17px; border-radius: 10px;">
+                    Guardar
+                </button>
             </div>
 
         </form>
-
     </div>
+
 </main>
 
 <footer th:insert="Layouts/header_footerAdmin :: footer"></footer>

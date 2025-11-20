@@ -180,7 +180,7 @@ public class OrdenServiceImpl implements OrdenService {
         // ✅ Contar órdenes activas sin importar mayúsculas o espacios
         long ordenesActivos = ordenRepository.findAll().stream()
                 .filter(o -> o.getEstadoOrden() != null &&
-                        o.getEstadoOrden().trim().equalsIgnoreCase("ACEPTADA"))
+                        o.getEstadoOrden().trim().equalsIgnoreCase("ACTIVO"))
                 .count();
 
         dashboard.put("totalOrdenesActivos", ordenesActivos);

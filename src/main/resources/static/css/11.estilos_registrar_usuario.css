@@ -1,62 +1,86 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap');
 
-body, form, input, select, label, button, h1, h2, h3, h4, h5, h6, span, div, p {
-  font-family: 'Nunito', sans-serif !important;
-  font-weight: 400;
-  color: #0d3b36; /* tono verde oscuro similar al botón */
+/* ===== Estilos globales ===== */
+body, form, input, select, label, button, h1, div, p {
+    font-family: 'Nunito', sans-serif !important;
+    color: #0d3b36;
 }
+
 /* ===== Fondo general ===== */
 body {
-    font-family: 'Nunito', sans-serif !important;
-    background: url('/imagenes/Medicamento/fondologin.png') no-repeat center center fixed;!important;
-    background-size: 16px;
-    color: #222;
+    background: url('/imagenes/Medicamento/fondologin.png') no-repeat center center fixed !important;
+    background-size: cover !important;
     margin: 0;
     min-height: 100vh;
     display: flex;
     justify-content: center;
-    align-items: center; /* 🔹 Centrado vertical */
+    align-items: center;
 }
 
-/* ===== Contenedor principal ===== */
+/* ===== Contenedor general ===== */
 .cuerpo_indrugs {
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 60px 0; /* 🔹 Espacio arriba y abajo */
+    padding: 60px 15px;
 }
 
-/* ===== Tarjeta/formulario ===== */
+/* ===== Tarjeta del formulario ===== */
 .datos_registrarse {
-    background-color: rgba(255, 255, 255, 0.9);
-    border-radius: 15px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-    padding: 40px;
-    max-width: 450px;
-    width: 90%;
-    margin: auto;
+    background-color: rgba(255, 255, 255, 0.90);
+    border-radius: 20px;
+    padding: 40px 50px;
+    box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.15);
+    width: 900px; /* 🔹 Más ancho para dos columnas */
 }
 
 /* ===== Título ===== */
 .datos_registrarse h1 {
     text-align: center;
-    color: #003b31; /* Verde oscuro corporativo */
-    font-weight: 700;
+    color: #003b31;
+    font-size: 32px;
     margin-bottom: 25px;
+    font-weight: 700;
+}
+
+/* ===== Estilos del formulario en dos columnas ===== */
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* 🔹 Dos columnas */
+    gap: 20px 30px; /* espacio entre columnas y filas */
+}
+
+.form-grid .full {
+    grid-column: span 2; /* 🔹 Para elementos que deben ocupar todo el ancho */
+}
+
+/* ===== Inputs y selects ===== */
+.form-control, .form-select {
+    border-radius: 10px;
+    padding: 10px 14px;
+    border: 1px solid #c9d9d8;
+    font-size: 15px;
+    transition: border 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: #00796b;
+    box-shadow: 0 0 4px rgba(0, 121, 107, 0.4);
 }
 
 /* ===== Botón ===== */
 button.btn-primary {
-    background-color: #005f4b; /* Verde oscuro */
+    background-color: #005f4b;
     border: none;
-    width: 100%;
-    padding: 10px;
-    border-radius: 8px;
+    padding: 12px;
+    font-size: 17px;
     font-weight: 600;
-    transition: all 0.3s ease;
+    border-radius: 10px;
+    width: 100%;
+    transition: background 0.3s ease;
 }
 
 button.btn-primary:hover {
-    background-color: #008060; /* Verde más claro al pasar el mouse */
+    background-color: #008060;
 }

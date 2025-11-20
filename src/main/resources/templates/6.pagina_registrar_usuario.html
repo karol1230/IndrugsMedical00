@@ -16,144 +16,84 @@
 <main class="cuerpo_indrugs">
     <div class="contenido">
         <div class="datos_registrarse">
+            <form th:action="@{/registrar}" method="post" th:object="${usuarioNuevo}"
+                  class="form-grid needs-validation" novalidate>
 
+                <h1 class="full">Registrarse</h1>
 
-            <form th:action="@{/registrar}" method="post" id="registro" th:object="${usuarioNuevo}" class="row mt-3 g-3 needs-validation" novalidate>
-                <h1>Registrarse</h1>
-                <div th:if="${error}" class="col-12 alert alert-danger" role="alert">
+                <div th:if="${error}" class="full alert alert-danger">
                     <span th:text="${error}"></span>
                 </div>
-                <div th:if="${mensaje}" class="alert alert-success" role="alert">
+
+                <div th:if="${mensaje}" class="full alert alert-success">
                     <span th:text="${mensaje}"></span>
                 </div>
-                <div class="col-12">
-                    <label for="ROLES_USUARIOS" class="form-label">Rol:</label>
-                    <select id="ROLES_USUARIOS" class="form-select" th:field="*{rol}" required>
-                        <option value="" selected disabled>Elija su rol</option>
+
+                <!-- Rol -->
+                <div>
+                    <label class="form-label">Rol</label>
+                    <select class="form-select" th:field="*{rol}" required>
+                        <option value="" disabled selected>Elija su rol</option>
                         <option value="2">Paciente</option>
                         <option value="3">Domiciliario</option>
                     </select>
-                    <div class="valid-feedback">Correcto.</div>
-                    <div class="invalid-feedback">Por favor seleccione una opción.</div>
-                    <div th:if="${#fields.hasErrors('rol')}" class="text-danger">
-                        <small th:errors="*{rol}"></small>
-                    </div>
                 </div>
 
-                <div class="col-12">
-                    <label for="TIPODOC_USUARIOS" class="form-label">Tipo de documento:</label>
-                    <select id="TIPODOC_USUARIOS" class="form-select" th:field="*{tipoDoc}" required>
-                        <option value="" selected disabled>Elija tipo de documento</option>
+                <!-- Tipo doc -->
+                <div>
+                    <label class="form-label">Tipo de documento</label>
+                    <select class="form-select" th:field="*{tipoDoc}" required>
+                        <option value="" disabled selected>Seleccione</option>
                         <option value="CC">Cédula de ciudadanía</option>
                         <option value="TI">Tarjeta de identidad</option>
                     </select>
-                    <div class="valid-feedback">Correcto.</div>
-                    <div class="invalid-feedback">Por favor seleccione una opción.</div>
-                    <div th:if="${#fields.hasErrors('tipoDoc')}" class="text-danger">
-                        <small th:errors="*{tipoDoc}"></small>
-                    </div>
                 </div>
 
-                <div class="col-12">
-                    <label for="NUMDOC_USUARIOS" class="form-label">Número de documento:</label>
-                    <input
-                            type="number"
-                            class="form-control"
-                            th:field="*{numDoc}"
-                            id="NUMDOC_USUARIOS"
-                            required
-                            minlength="8"
-                    />
-                    <div class="valid-feedback">BIEN.</div>
-                    <div class="invalid-feedback">Por favor ingrese su documento.</div>
-                    <div th:if="${#fields.hasErrors('numDoc')}" class="text-danger">
-                        <small th:errors="*{numDoc}"></small>
-                    </div>
+                <!-- Documento -->
+                <div>
+                    <label class="form-label">Número de documento</label>
+                    <input type="number" class="form-control" th:field="*{numDoc}" required minlength="8">
                 </div>
 
-                <div class="col-12">
-                    <label for="NOMBRE_USUARIOS" class="form-label">Nombre completo:</label>
-                    <input type="text" id="NOMBRE_USUARIOS" th:field="*{nombre}" class="form-control" required />
-                    <div class="valid-feedback">BIEN.</div>
-                    <div class="invalid-feedback">Por favor ingrese su nombre/s.</div>
-                    <div th:if="${#fields.hasErrors('nombre')}" class="text-danger">
-                        <small th:errors="*{nombre}"></small>
-                    </div>
+                <!-- Nombre -->
+                <div>
+                    <label class="form-label">Nombre completo</label>
+                    <input type="text" class="form-control" th:field="*{nombre}" required>
                 </div>
 
-                <div class="col-12">
-                    <label for="CORREO_USUARIOS" class="form-label">Correo Electrónico:</label>
-                    <input
-                            id="CORREO_USUARIOS"
-                            class="form-control"
-                            th:field="*{correo}"
-                            type="email"
-                            required
-                    />
-                    <div class="valid-feedback">Hemos registrado su correo.</div>
-                    <div class="invalid-feedback">Por favor ingrese un correo válido.</div>
-                    <div th:if="${#fields.hasErrors('correo')}" class="text-danger">
-                        <small th:errors="*{correo}"></small>
-                    </div>
+                <!-- Correo (fila completa) -->
+                <div class="full">
+                    <label class="form-label">Correo electrónico</label>
+                    <input type="email" class="form-control" th:field="*{correo}" required>
                 </div>
 
-                <div class="col-12">
-                    <label for="DIRECCION_USUARIOS" class="form-label">Dirección de Domicilio:</label>
-                    <input
-                            type="text"
-                            class="form-control"
-                            id="DIRECCION_USUARIOS"
-                            th:field="*{direccion}"
-                            placeholder="Calle 123, Ciudad, País"
-                            required
-                    />
-                    <div class="valid-feedback">BIEN.</div>
-                    <div class="invalid-feedback">Por favor ingrese una dirección válida.</div>
-                    <div th:if="${#fields.hasErrors('direccion')}" class="text-danger">
-                        <small th:errors="*{direccion}"></small>
-                    </div>
+                <!-- Dirección (fila completa) -->
+                <div class="full">
+                    <label class="form-label">Dirección</label>
+                    <input type="text" class="form-control" th:field="*{direccion}" required>
                 </div>
 
-                <div class="col-12">
-                    <label for="TELEFONO_USUARIOS" class="form-label">Teléfono:</label>
-                    <input
-                            type="tel"
-                            id="TELEFONO_USUARIOS"
-                            th:field="*{telefono}"
-                            class="form-control"
-                            required
-                            minlength="7"
-                            maxlength="10"
-                    />
-                    <div class="valid-feedback">BIEN.</div>
-                    <div class="invalid-feedback">Por favor ingrese un número teléfono válido.</div>
-                    <div th:if="${#fields.hasErrors('telefono')}" class="text-danger">
-                        <small th:errors="*{telefono}"></small>
-                    </div>
+                <!-- Teléfono -->
+                <div>
+                    <label class="form-label">Teléfono</label>
+                    <input type="tel" class="form-control" th:field="*{telefono}" minlength="7" maxlength="10" required>
                 </div>
 
-                <div class="col-12">
-                    <label for="CONTRASEÑA_USUARIOS">Contraseña</label>
-                    <input
-                            id="CONTRASEÑA_USUARIOS"
-                            class="form-control"
-                            type="password"
-                            th:field="*{password}"
-                            required
-                            minlength="8"
-                            placeholder="Ingrese una contraseña"
-                    />
-                    <div class="valid-feedback">Hemos registrado su contraseña.</div>
-                    <div class="invalid-feedback">Por favor ingrese una contraseña de 8 caracteres.</div>
-                    <div th:if="${#fields.hasErrors('password')}" class="text-danger">
-                        <small th:errors="*{password}"></small>
-                    </div>
+                <!-- Contraseña -->
+                <div>
+                    <label class="form-label">Contraseña</label>
+                    <input type="password" class="form-control" th:field="*{password}" minlength="8" required>
                 </div>
 
-                <div class="col-12">
+                <!-- Botón (fila completa) -->
+                <div class="full">
                     <button class="btn btn-primary" type="submit">Registrarse</button>
                 </div>
+
             </form>
+
+
+
         </div>
     </div>
 </main>

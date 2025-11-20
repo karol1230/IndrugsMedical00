@@ -152,7 +152,7 @@ body {
    SECCIÓN HERO
 ===================================================== */
 .hero {
-  background-image: url('/imagenes/Medicamento/hero.jpg');
+  background-image: url('/imagenes/Medicamento/fondo.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -450,6 +450,6 @@ footer .contacto strong {
   .pie-pagina {
     width: 100%;
     background-color: rgb(2, 44, 92);
-    margin-top: 6rem;
+
   }
 }

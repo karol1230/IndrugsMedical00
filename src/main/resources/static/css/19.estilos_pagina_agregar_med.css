@@ -1,80 +1,92 @@
-@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300..700&display=swap');
 
-/* Contenedor principal */
+/* ===== CONTENEDOR PRINCIPAL ===== */
 #formuno {
-    width: 55%;
-    margin: 40px auto;
+    width: 60%;
+    margin: 50px auto;
     padding: 35px;
-    border-radius: 20px;
+    border-radius: 22px;
     background: #ffffff;
-    border: 1px solid #cfcfcf;
-    box-shadow: 0px 4px 15px rgba(0,0,0,0.15);
-    font-family: 'Quicksand', sans-serif;
-    animation: fadeIn .6s ease;
+    border: 1px solid #d8e2e1;
+    box-shadow: 0px 6px 20px rgba(0,0,0,0.12);
+    font-family: 'Nunito', sans-serif;
+    animation: fadeIn .5s ease;
+    max-width: 850px !important;
 }
 
-/* Título */
+/* ===== TITULO ===== */
 #titulo_domicilio {
     text-align: center;
-    color: #0e0e0e;
-    font-size: 28px;
+    color: #00695c;
+    font-size: 30px;
     font-weight: 700;
     margin-bottom: 25px;
+    letter-spacing: 1px;
 }
 
-/* Etiquetas */
-#form_text, #archivo_formula {
-    display: block;
+/* ===== ETIQUETAS ===== */
+.form-label {
     font-weight: 600;
-    margin: 10px 0 5px 5px;
+    color: #004d40;
 }
 
-/* Inputs */
-input, select, textarea {
+/* ===== INPUTS, SELECTS ===== */
+.custom-input {
     width: 100%;
-    padding: 12px 15px;
+    padding: 12px 14px;
     margin-bottom: 18px;
-    border: 1px solid #bdbdbd;
+    border: 1px solid #bcd5d1;
     border-radius: 12px;
+    background-color: #f8fdfc;
     font-size: 15px;
-    transition: 0.3s ease;
+    transition: 0.25s ease-in-out;
     font-family: 'Quicksand', sans-serif;
 }
 
-/* Efecto al enfocarse */
-input:focus, select:focus, textarea:focus {
-    border-color: #00796b;
-    box-shadow: 0px 0px 6px rgba(0,121,107,.5);
-    outline: none;
+/* Estilo de calendarios */
+input[type="date"],
+input[type="datetime-local"] {
+    background-color: #f7fbfa;
+    cursor: pointer;
 }
 
-/* Botón */
+/* ===== EFECTO FOCUS ===== */
+.custom-input:focus {
+    border-color: #009688;
+    background-color: #ffffff;
+    box-shadow: 0 0 8px rgba(0, 150, 136, 0.45);
+}
+
+/* ===== BOTÓN ===== */
 #enviar_solicitud {
     width: 100%;
     padding: 14px;
-    background-color: #00796b;
+    background-color: #009688;
     color: white;
     border: none;
     border-radius: 12px;
     cursor: pointer;
     font-size: 18px;
     font-weight: 700;
-    transition: 0.3s ease;
+    transition: 0.28s ease;
 }
 
-/* Hover del botón */
 #enviar_solicitud:hover {
-    background-color: #005f54;
+    background-color: #00796b;
     transform: translateY(-2px);
 }
 
-/* Evitar que el textarea cambie tamaño */
+/* Quitamos redimensionar textarea si lo hay */
 .form-control {
     resize: none;
 }
 
-/* Animación de entrada */
+/* ===== ANIMACIÓN ===== */
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
+    from { opacity: 0; transform: translateY(12px); }
     to   { opacity: 1; transform: translateY(0); }
 }
+
+
+
+

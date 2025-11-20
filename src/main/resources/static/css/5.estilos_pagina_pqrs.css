@@ -1,113 +1,135 @@
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
 
-.titulo_pqrs{
-    margin-left: 40%;
-    display: flex;
-    color:rgb(0, 0, 0); 
-    font-family:Quicksand;
-    margin-bottom: 30px; 
+body {
+    font-family: "Quicksand", sans-serif;
+    background-color: #e0f2f1; /* Fondo suave basado en el verde */
 }
 
-.solicitud{
-    margin-top: 6px;
-    margin-left:3%;
-    display: flex;
-    color:rgb(53, 53, 53);
-    font-family:Quicksand;
-    font-size: 20px;
-}
- 
-#lista{
-    width: 30%;
-    height:50px;
-    font-size:medium;
-    border-radius:7px; 
-    margin-bottom:3px;
-    margin-left: 0;
-    font-weight:10px;
-    font-family:Quicksand;
-}
-    .boton-siguiente{
-    width: 10%;
-    height: 50px;
-    border-radius: 7px;
-    padding: 14px 20px;
-    font-size: small;
-    background-color: #23c72b;
-    border:none;
-    color:#f5eded;
-    margin:8px 0;
-    cursor: pointer;
-    }
-    .boton-siguiente:hover{
-        background-color: #25b62c;
-        border: 2px seagreen;
-        color: #f5eded; 
-    }
-    
-.col-12{
-    width:100%;
-    height:50px;
-    font-size:medium;
-    border-radius:7px; 
-    font-weight:10px;
-    margin-left: 3%;
-    font-family:Quicksand;
-    margin-bottom: 3%;
+/* Contenedor general */
+.contenido-elegante {
+    max-width: 700px;
+    margin: 50px auto;
+    text-align: center;
+    padding: 10px;
 }
 
-.cuadro{
-    width: 25%;
+/* TITULOS */
+.titulo-pqrs {
+    font-size: 2.3rem;
+    font-weight: 700;
+    color: #00796b; /* Color principal */
+    margin-bottom: 5px;
+}
+
+.subtitulo {
+    font-size: 1.1rem;
+    color: #004d43; /* Verde oscuro suave */
+    margin-bottom: 25px;
+}
+
+/* TARJETA */
+.tarjeta-form {
+    background: #ffffff;
+    padding: 35px;
+    border-radius: 20px;
+    box-shadow: 0 4px 20px rgba(0, 121, 107, 0.15); /* Sombra en tono verde */
+    border: 1px solid #48a999; /* Borde verde claro */
+}
+
+/* LABEL elegante */
+.label-elegante {
+    font-weight: 600;
+    color: #005f55; /* Verde oscuro */
+    margin-bottom: 8px;
+}
+
+/* ===== CAMPOS DEL FORMULARIO MEJORADOS ===== */
+
+/* Select y Textarea limpios, elegantes */
+.control-elegante,
+.textarea-elegante {
+    border-radius: 12px;
+    border: 1.7px solid #9bbfba;  /* gris verdoso suave */
+    padding: 12px;
+    font-size: 1rem;
+    transition: all .25s ease-in-out;
     background-color: #ffffff;
-    height:30px;
-    font-size:medium;
-    border-radius:7px; 
-    margin-bottom:10px;
-    font-weight:10px;
-    margin-left: 3%;
-    font-family:Quicksand;
-}
-    .cuadro:hover {
-        border-color: #888;
-        background-color: #f1f1f1;
-    }
-    .cuadro:focus{
-        border-color: #cfeecf;
-        outline: none;
-        box-shadow: 0 0 5px #abebab
-    }
-#message{
-    height: 70px;
-    padding: 12px 20px;
-    box-sizing: border-box;
-    border-radius: 7px;
-    background-color: #ffffff;
-    resize: none;
-  }
-    #message:focus{
-        border-color: #cfeecf;
-        outline: none;
-        box-shadow: 0 0 5px #abebab
-    }
-    
-.btn{
-    width: 100%;
-    height: 50px;
-    border-radius: 7px;
-    font-size: small;
-    padding: 14px 20px;
-    background-color: #23c72b;
-    border:none;
-    color:#f5eded;
-    margin-top: 40px;
-    cursor: pointer;
 }
 
-.btn:hover{
-    background-color: #25b62c;
-    border: 2px seagreen;
-    color: #f5eded;
+/* Hover sutil */
+.control-elegante:hover,
+.textarea-elegante:hover {
+    border-color: #79aaa3; /* un poquito más oscuro */
 }
-.contenido{
-    align-items: center;
+
+/* Focus elegante sin brillo exagerado */
+.control-elegante:focus,
+.textarea-elegante:focus {
+    border-color: #00796b;  /* tu color principal */
+    box-shadow: 0 0 6px rgba(0, 121, 107, 0.28); /* sombra suave */
+    outline: none;
+}
+
+/* Borde del SELECT mejorado (Bootstrap aplica estilos propios, los neutralizamos) */
+select.control-elegante {
+    appearance: none;          /* quita estilo del navegador */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg fill='%2300796b' height='18' viewBox='0 0 24 24' width='18' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 16px;
+    padding-right: 40px;
+}
+
+/* Select al hacer focus */
+select.control-elegante:focus {
+    border-color: #00796b;
+}
+
+/* Textarea más suave */
+.textarea-elegante {
+    resize: vertical;
+    min-height: 140px; /* altura inicial más cómoda */
+}
+
+/* ===== TARJETA ===== */
+.tarjeta-form {
+    background: #ffffff;
+    padding: 35px;
+    border-radius: 20px;
+    box-shadow: 0 4px 20px rgba(0, 121, 107, 0.12); /* sombra con tu tono */
+    border: 1px solid rgba(0, 121, 107, 0.25);
+}
+/* ===== BOTÓN ENVIAR PQRS ===== */
+.btn-enviar {
+    background-color: #00796b;
+    color: #fff;
+    padding: 12px 28px;
+    border: none;
+    border-radius: 14px;
+    font-size: 1.05rem;
+    font-weight: 600;
+    letter-spacing: .5px;
+    cursor: pointer;
+    transition: all .25s ease-in-out;
+    box-shadow: 0 4px 12px rgba(0, 121, 107, 0.25);
+}
+
+/* Hover elegante */
+.btn-enviar:hover {
+    background-color: #00665b; /* un poco más oscuro */
+    box-shadow: 0 6px 16px rgba(0, 121, 107, 0.35);
+    transform: translateY(-2px); /* pequeño levantamiento */
+}
+
+/* Click */
+.btn-enviar:active {
+    transform: translateY(0px);
+    box-shadow: 0 3px 10px rgba(0, 121, 107, 0.2);
+}
+
+/* Para que no aparezca borde feo al hacer focus */
+.btn-enviar:focus {
+    outline: none;
 }

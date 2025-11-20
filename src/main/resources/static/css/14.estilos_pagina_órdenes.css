@@ -1,26 +1,204 @@
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
-.btn{
+
+/* 🌿 Estilo general */
+body {
+    font-family: 'Quicksand', sans-serif;
+    background-color: #f1f8f6;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Para empujar el footer al fondo */
+}
+
+/* 🌿 Contenido principal */
+main {
+    flex: 1; /* Ocupa todo el espacio disponible */
+}
+
+/* 🌿 Título */
+h1 {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #004d40;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+/* 🌿 Contenedor de contenido */
+.contenido {
+    max-width: 90%;
+    margin: 0 auto 4rem auto; /* margen inferior para despegar del footer */
+    background-color: #ffffff;
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+/* 🌿 Tabla */
+.table {
+    border-radius: 12px;
+    overflow: hidden;
+    text-align: center;
+    vertical-align: middle;
     width: 100%;
-    padding: 10px;
-    background-color: rgb(107, 209, 12);
+}
+
+/* 🌿 Encabezado de tabla con azul verdoso */
+.table thead {
+    background-color: #b2dfdb; /* azul verdoso suave */
+    color: #004d40;
+}
+
+.table th {
+    font-weight: 600;
+    text-transform: uppercase;
+    padding: 14px;
+    border-bottom: 2px solid #80cbc4; /* línea sutil debajo del encabezado */
+}
+
+/* 🌿 Filas */
+.table tbody tr {
+    transition: background-color 0.3s ease;
+}
+
+.table tbody tr:hover {
+    background-color: #e0f2f1; /* verde menta claro */
+}
+
+/* 🌿 Botones */
+.btn {
+    background-color: #00796b;
     color: white;
     border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 16px;
-   
+    border-radius: 8px;
+    padding: 10px 16px;
+    font-size: 15px;
+    transition: background-color 0.3s ease;
 }
 
 .btn:hover {
-    background-color:rgb(94, 180, 14) ; 
-
+    background-color: #00695c;
+    color: #fff;
 }
-h1{
+
+/* 🌿 Mensaje sin órdenes */
+.contenido p {
     text-align: center;
-    margin-bottom: 3%;
-    font-family: Quicksand;
+    color: #555;
+    font-size: 1.1rem;
+    margin-top: 2rem;
 }
 
-.listado_medicamentos{
-    text-decoration:none;
+/* 🌿 Listado de medicamentos */
+.list-unstyled {
+    margin: 0;
+    padding: 0;
 }
+
+.list-unstyled li {
+    background-color: #e0f2f1;
+    color: #004d40;
+    border-radius: 6px;
+    padding: 4px 8px;
+    margin-bottom: 4px;
+    display: inline-block;
+    font-size: 0.9rem;
+}
+
+/* 🌿 Footer */
+footer {
+
+    color: white;
+    text-align: center;
+    padding: 3rem 0;
+    margin-top: auto;
+}
+
+/* 🌿 Encabezado igual al de Vehículos */
+.tabla-ordenes thead {
+    background-color: #a9d9d4; /* tono verde-agua como la tabla de vehículos */
+    color: #004d40;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 15px;
+}
+
+.tabla-ordenes th {
+    padding: 14px;
+    border-bottom: 2px solid #80cbc4;
+}
+
+.tabla-ordenes thead i {
+    margin-right: 6px;
+    color: #004d40;
+}
+
+/* 🌿 Icono en el título */
+h1 i {
+    color: #00796b;
+    margin-right: 10px;
+}
+
+/* 🌿 Mejor centrado visual */
+h1 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+
+/* 🌿 Encabezado de tabla con verde azulado */
+.table thead {
+    background-color: #a9d9d4 !important; /* verde agua como el de Vehículos */
+    color: #004d40 !important;            /* texto verde oscuro */
+}
+
+.table th {
+    font-weight: 600 !important;
+    text-transform: uppercase !important;
+    padding: 14px !important;
+    border-bottom: 2px solid #80cbc4 !important;
+}
+
+/* 🌿 Íconos dentro del encabezado */
+.table thead i {
+    color: #004d40 !important;
+    margin-right: 6px !important;
+}
+
+/* 🌿 Redondear bordes superiores */
+.table thead tr:first-child th:first-child {
+    border-top-left-radius: 12px !important;
+}
+
+.table thead tr:first-child th:last-child {
+    border-top-right-radius: 12px !important;
+}
+/* 💚 Encabezado azul verdoso claro */
+.encabezado-verde {
+    background-color: #a9d9d4 !important; /* tono verde-agua suave */
+    color: #004d40 !important;            /* texto verde oscuro */
+}
+
+.encabezado-verde th {
+    font-weight: 600 !important;
+    text-transform: uppercase !important;
+    padding: 15px !important;
+    border-bottom: 2px solid #80cbc4 !important; /* línea suave entre encabezado y cuerpo */
+}
+
+.encabezado-verde {
+    background-color: #a9d9d4 !important; /* azul verdoso claro */
+    color: #004d40 !important;
+}
+
+.table thead.encabezado-verde th {
+    background-color: #a9d9d4 !important;
+    color: #004d40 !important;
+    font-weight: 600 !important;
+    text-transform: uppercase !important;
+    padding: 15px !important;
+    border-bottom: 2px solid #80cbc4 !important;
+}
+

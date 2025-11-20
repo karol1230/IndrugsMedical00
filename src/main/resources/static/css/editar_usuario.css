@@ -1,0 +1,98 @@
+/* -------------------------------------- */
+/*    ESTILOS GENERALES DE LA PÁGINA      */
+/* -------------------------------------- */
+
+body {
+    background-color: #f4f6f6;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* -------------------------------------- */
+/*            TARJETA (CARD)              */
+/* -------------------------------------- */
+
+.card {
+    background: #ffffff;
+    border-radius: 15px;
+    padding: 25px;
+    width: 800px !important;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Animación suave */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(15px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+/* -------------------------------------- */
+/*              TÍTULO                    */
+/* -------------------------------------- */
+
+.card h2 {
+    text-align: center;
+    color: #0f766e;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+/* -------------------------------------- */
+/*          ETIQUETAS E INPUTS            */
+/* -------------------------------------- */
+
+.form-label {
+    font-weight: 600;
+    color: #0f4b46;
+}
+
+.form-control,
+.form-select {
+    border-radius: 10px;
+    padding: 10px;
+    border: 1px solid #b5c8c6;
+    transition: 0.2s ease-in-out;
+}
+
+/* Efecto al hacer clic o pasar por encima */
+.form-control:focus,
+.form-select:focus {
+    border-color: #0f766e;
+    box-shadow: 0 0 8px rgba(15, 118, 110, 0.4);
+}
+
+/* -------------------------------------- */
+/*             BOTÓN GUARDAR              */
+/* -------------------------------------- */
+
+.btn-guardar {
+    background-color: #0f766e;
+    color: white;
+    font-size: 17px;
+    padding: 10px 25px;
+    border-radius: 10px;
+    border: none;
+    transition: 0.2s ease-in-out;
+}
+
+.btn-guardar:hover {
+    background-color: #0d5e58;
+    transform: scale(1.05);
+}
+
+/* -------------------------------------- */
+/*        VALIDACIÓN DE BOOTSTRAP         */
+/* -------------------------------------- */
+
+.was-validated .form-control:invalid,
+.was-validated .form-select:invalid {
+    border-color: #e63946;
+}
+
+.invalid-feedback {
+    font-size: 13px;
+    color: #e63946;
+}
+main {
+    padding-bottom: 80px !important;
+}

@@ -6,11 +6,15 @@
     margin-top: 10px;
     box-shadow: 0px 2px 9px 2px rgba(139, 137, 137, 0.5);
 }
-h1{
+.contenido h1 {
     text-align: center;
-    color: #0e0e0e;
-    font-family: Quicksand;
+    font-size: 45px;
+    font-weight: 600;
+    color: #0d6b63;
+    margin-bottom: 40px;
+    font-family: 'Nunito', sans-serif;
 }
+
 .btn{
     width: 100%;
     padding: 10px;
@@ -27,3 +31,230 @@ h1{
     border: 2px seagreen;
     color: #f5eded;
 }
+
+.formularios {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 auto 40px;
+    width: 85%;
+}
+
+.filtrar-usuarios {
+    background: #d9f1ee;
+    padding: 20px 30px;
+    border-radius: 18px;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    border-left: 10px solid #0d6b63;
+}
+
+.filtrar-usuarios label {
+    font-weight: 600;
+    font-size: 16px;
+    color: #0d6b63;
+}
+
+.filtrar-usuarios select {
+    width: 150px;
+    padding: 6px 10px;
+    border: 2px solid #bcdcd8;
+    border-radius: 10px;
+    outline: none;
+    font-size: 15px;
+}
+
+.butn_filtro {
+    background: #0d6b63;
+    color: white;
+    padding: 8px 25px;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    transition: 0.3s ease;
+}
+
+.butn_filtro:hover {
+    background: #0a4c46;
+}
+
+.btnform {
+    background: #7d3cff;
+    color: white;
+    font-size: 16px;
+    padding: 10px 20px;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: 0.3s ease;
+}
+
+.btnform:hover {
+    background: #692bd1;
+}
+
+#tabla1 {
+    width: 90%;
+    margin: 0 auto 50px;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0px 4px 12px rgba(0,0,0,0.15);
+}
+
+#tabla1 thead {
+    background: #1f242b;
+    color: white;
+}
+
+#tabla1 thead th {
+    padding: 18px;
+    font-size: 17px;
+}
+
+#tabla1 tbody tr td {
+    padding: 18px;
+    font-size: 16px;
+    background: white;
+    border-bottom: 1px solid #e9e9e9;
+}
+
+#tabla1 tbody tr:hover td {
+    background: #f5fafa;
+}
+
+.btn-primary {
+    background: #0d6b63 !important;
+    border: none !important;
+    padding: 8px 25px;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 600;
+    transition: 0.3s ease;
+}
+
+.btn-primary:hover {
+    background: #095049 !important;
+}
+
+
+
+/* CONTENEDOR GENERAL */
+.contenido {
+    width: 90% !important;
+    max-width: 1400px !important;
+    margin: 0 auto 80px !important; /* Separación del footer */
+}
+
+/* ===== FILTROS ===== */
+
+.formularios {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    margin-bottom: 25px !important;
+    flex-wrap: wrap !important;
+}
+
+/* Caja donde está el filtro */
+.filtrar-usuarios {
+    background: #d9f1ed !important;
+    padding: 15px 20px !important;
+    border-radius: 12px !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 15px !important;
+    border-left: 6px solid #0d9386 !important;
+}
+
+/* Inputs del filtro */
+.filtrar-usuarios select {
+    padding: 6px 12px !important;
+    border-radius: 8px !important;
+    border: 1px solid #c2c2c2 !important;
+    font-size: 15px !important;
+}
+
+/* Botón FILTRAR */
+.butn_filtro {
+    padding: 6px 18px !important;   /* Más delgado */
+    background: #0d9386 !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 8px !important;
+    font-size: 15px !important;
+    transition: 0.3s !important;
+}
+
+.butn_filtro:hover {
+    background: #0b7a70 !important;
+}
+
+/* ===== BOTÓN EXPORTAR PDF ===== */
+
+.btnform {
+    background: #7f27ff !important;
+    color: white !important;
+    padding: 10px 16px !important;
+    border-radius: 10px !important;
+    font-size: 15px !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    border: none !important;
+    transition: 0.3s !important;
+}
+
+.btnform:hover {
+    background: #6a1ee0 !important;
+}
+
+/* ===== TABLA ===== */
+
+#tabla1 {
+    width: 100% !important;               /* Más ancha */
+    background: white !important;
+    border-radius: 15px !important;
+    overflow: hidden !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.12) !important;
+}
+
+#tabla1 thead {
+    background: #121417 !important;
+    color: white !important;
+    font-size: 15px !important;
+}
+
+#tabla1 th {
+    padding: 16px !important;
+}
+
+#tabla1 td {
+    padding: 18px 16px !important;
+    font-size: 15px !important;
+    border-bottom: 1px solid #e5e5e5 !important;
+}
+
+/* Botón editar */
+#tabla1 .btn {
+    background: #0d9386 !important;
+    padding: 7px 16px !important;
+    border-radius: 10px !important;
+    font-size: 14px !important;
+    border: none !important;
+    transition: 0.3s !important;
+}
+
+#tabla1 .btn:hover {
+    background: #0b7a70 !important;
+}
+
+/* Separación inferior para evitar que toque el footer */
+main.cuerpo_indrugs {
+    padding-bottom: 50px !important;
+}
+

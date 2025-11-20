@@ -1,0 +1,88 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300..700&display=swap');
+
+/* === CONTENEDOR FORMULARIO === */
+#formuno {
+    width: 70%;
+    max-width: 900px;
+    margin: 50px auto;
+    padding: 40px;
+    border-radius: 25px;
+    background: #ffffff;
+    border: 1px solid #cfe7e5;
+    box-shadow: 0px 7px 25px rgba(0,0,0,0.12);
+    font-family: 'Nnunito', sans-serif;
+    animation: fadeIn .5s ease;
+}
+
+/* === TÍTULO === */
+#titulo_domicilio {
+    text-align: center;
+    color: #00796b;
+    font-size: 32px;
+    font-weight: 800;
+    margin-bottom: 30px;
+    letter-spacing: 1.3px;
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+}
+
+#titulo_domicilio i {
+    color: #009688;
+}
+
+/* === LABELS === */
+.form-label {
+    font-weight: 650;
+    color: #004d40;
+    margin-bottom: 6px;
+}
+
+/* === INPUTS === */
+.custom-input {
+    width: 100%;
+    padding: 13px 15px;
+    border-radius: 14px;
+    border: 1px solid #bcd5d1;
+    background: #f6fbfa;
+    font-size: 15px;
+    transition: 0.25s;
+    font-family: 'Quicksand', sans-serif;
+}
+
+.custom-input:focus {
+    border-color: #009688;
+    box-shadow: 0 0 8px rgba(0,150,136,0.45);
+    background: #ffffff;
+    outline: none;
+}
+
+/* === ESTILO INPUT FILE === */
+input[type="file"] {
+    background: #f1faf9;
+    border: 1px dashed #80cbc4;
+}
+
+/* === BOTÓN PRINCIPAL === */
+.btn-submit {
+    width: 100%;
+    padding: 14px;
+    background: #009688;
+    color: white;
+    border: none;
+    border-radius: 14px;
+    font-size: 18px;
+    font-weight: 700;
+    transition: 0.25s;
+}
+
+.btn-submit:hover {
+    background: #00796b;
+    transform: translateY(-2px);
+}
+
+/* === ANIMACIÓN === */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
