@@ -28,5 +28,17 @@ public class PQRS {
 
     @Column(name = "FECHA_PQRS")
     private LocalDateTime fechaPqrs;
+
+    // NUEVO: Respuesta del administrador
+    @Column(name = "RESPUESTA", columnDefinition = "TEXT")
+    private String respuesta;
+
+    // NUEVO: Estado (Pendiente, Respondida)
+    @Column(name = "ESTADO")
+    private String estado = "Pendiente";
+
+    // NUEVO: Fecha de respuesta
+    @Column(name = "FECHA_RESPUESTA")
+    private LocalDateTime fechaRespuesta;
 }
 

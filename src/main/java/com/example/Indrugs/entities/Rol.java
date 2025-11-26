@@ -17,4 +17,7 @@ public class Rol {
         @Column(name = "NOMBRE_ROL")
         private String nombreRol;
 
+    public boolean equalsIgnoreCase(String admin) {
+        return false;
+    }
 }

@@ -18,4 +18,10 @@ public class PQRSDTO {
     private String motivo;
 
     private LocalDateTime fechaPqrs;
+
+    private String nombreUsuario;
+
+    private String estado;
+
+    private String respuesta;
 }

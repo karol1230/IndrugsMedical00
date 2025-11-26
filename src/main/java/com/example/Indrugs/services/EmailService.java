@@ -17,6 +17,8 @@ public class EmailService {
     @Autowired
     private JavaMailSender mailSender;
 
+
+
     /**
      * Enviar correo genérico con contenido HTML (mensaje predefinido)
      *
@@ -115,4 +117,21 @@ public class EmailService {
             e.printStackTrace();
         }
     }
+    public void enviarCorreoHtml(String correo, String asunto, String contenidoHtml) {
+        try {
+            MimeMessage mensaje = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(mensaje, true, "UTF-8");
+
+            helper.setTo(correo);
+            helper.setSubject(asunto);
+            helper.setFrom("indrugsmedica@gmail.com");
+            helper.setText(contenidoHtml, true);
+
+            mailSender.send(mensaje);
+        } catch (MessagingException | MailException e) {
+            e.printStackTrace();
+        }
+    }
+
+
 }

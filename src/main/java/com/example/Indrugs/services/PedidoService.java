@@ -1,6 +1,7 @@
 package com.example.Indrugs.services;
 
 import com.example.Indrugs.DTO.PedidoDTO;
+import com.example.Indrugs.entities.PQRS;
 import com.example.Indrugs.entities.Usuario;
 import java.util.List;
 
@@ -42,4 +43,7 @@ public interface PedidoService {
 
     // Eliminar pedido
     void eliminarPedido(Long id);
+
+
+
 }
