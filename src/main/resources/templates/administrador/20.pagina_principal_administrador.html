@@ -4,97 +4,114 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Inicio administrador</title>
+
+    <!-- Íconos -->
     <script src="https://kit.fontawesome.com/14122cd484.js" crossorigin="anonymous"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Tus estilos -->
     <link th:href="@{/css/1.estilos_pagina_inicio.css}" rel="stylesheet">
+    <link th:href="@{/css/header-footer/header-footer.css}" rel="stylesheet">
     <link th:href="@{/css/20.pagina_principal_admin.css}" rel="stylesheet">
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- jsPDF para exportar PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <style>
+        .contenedor-grafico {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.12);
+        }
+        #graficoUsuarios {
+            max-height: 420px;
+        }
+        #btnExportarPDF {
+            margin-top: 10px;
+        }
+
+
+    </style>
 </head>
 
 <body>
+
 <header th:insert="Layouts/header_footerAdmin :: header"></header>
 
 <main class="cuerpo_indrugs">
+
     <div th:insert="Layouts/header_footerAdmin :: error"></div>
+
     <div class="contenido">
+
         <section class="dashboard">
-            <div class="cards">
 
-                <div class="card">
-                    <a th:href="@{/17.pagina_inventario}">
-                        <div>
-                            <span class="card_numeros" th:text="${cantidadInventario}">0</span><br>
-                            <span class="card_nombre">Inventario</span>
-                        </div>
-                        <div class="card_icono">
-                            <img th:src="@{/Iconos/icons8-inventario-96.png}" alt="">
-                        </div>
-                    </a>
-                </div>
-                <div class="card">
-                    <a th:href="@{/21.pagina_usuarios}">
-                        <div>
-                            <span class="card_numeros" th:text="${estadisticas.ACTIVOS}">0</span><br>
-                            <span class="card_nombre">Usuarios</span>
-                        </div>
-                        <div class="card_icono">
-                            <img th:src="@{/Iconos/icons8-usuarios-96.png}" alt="">
-                        </div>
-                    </a>
-                </div>
-                <div class="card">
-                    <a th:href="@{/18.pagina_orden_admin}">
-                        <div>
-                            <span class="card_numeros" th:text="${cantidadOrdenes}">0</span><br>
-                            <span class="card_nombre">Órdenes</span>
-                        </div>
-                        <div class="card_icono">
-                            <img th:src="@{/Iconos/icons8-clasificación-de-respuestas-80.png}" alt="">
-                        </div>
-                    </a>
-                </div>
+            <!-- 🔥 BOTÓN EXPORTAR PDF EN ESQUINA SUPERIOR DERECHA -->
+            <div class="contenedor-grafico">
+                <h2 class="mb-3">Estadísticas de Usuarios</h2>
 
+                <canvas id="graficoUsuarios"></canvas>
             </div>
 
+            <div class="exportar-container">
+                <button id="btnExportarPDF" class="botonD">EXPORTAR PDF</button>
+            </div>
+
+
+
+            <!-- TABLAS IMPORTANTES -->
             <div class="contenido_dash">
 
-                <div class="ordenes_recientes">
+                <!-- Tabla órdenes recientes -->
+                <div class="ordenes_recientes mb-4">
                     <div class="cabeza1">
                         <h2>Órdenes recientes</h2>
                         <a th:href="@{/18.pagina_orden_admin}">
                             <input class="botonD" type="button" value="VER TODO">
                         </a>
                     </div>
+
                     <table id="tabla1" class="table">
                         <thead class="table-dark">
                         <tr>
                             <th>ID</th>
-                            <th>Usurios</th>
+                            <th>Usuarios</th>
                             <th>Fecha de orden</th>
                             <th>Estado de orden</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr class="table" id="cuerpo_tabla2" th:each="orden : ${ordenesRecientes}">
-                            <td th:text="${orden.idOrden}">ID</td>
-                            <td th:text="${orden.pacienteNombre}">Usuario</td>
-                            <td th:text="${orden.fechaEntrega}">FechaEntregaOrden</td>
-                            <td th:text="${orden.estadoOrden}">Estado</td>
-                            </td>
+                        <tr th:each="orden : ${ordenesRecientes}">
+                            <td th:text="${orden.idOrden}"></td>
+                            <td th:text="${orden.pacienteNombre}"></td>
+                            <td th:text="${orden.fechaEntrega}"></td>
+                            <td th:text="${orden.estadoOrden}"></td>
+                        </tr>
+
+                        <tr th:if="${ordenesRecientes == null or ordenesRecientes.isEmpty()}">
+                            <td colspan="4" class="text-center"><em>No hay órdenes recientes</em></td>
                         </tr>
                         </tbody>
                     </table>
                 </div>
 
+                <!-- Tabla usuarios recientes -->
                 <div class="domicilio">
                     <div class="cabeza1">
                         <h2>Resumen de usuarios</h2>
+
                         <a th:href="@{/21.pagina_usuarios}">
                             <input class="botonD" type="button" value="VER TODO">
                         </a>
                     </div>
 
-                    <!-- Usuarios recientes -->
                     <table id="tabla2" class="table">
                         <thead class="table-dark">
                         <tr>
@@ -103,16 +120,18 @@
                             <th>Estado</th>
                         </tr>
                         </thead>
+
                         <tbody>
                         <tr th:each="usuario : ${usuariosRecientes}">
                             <td>
                                 <span class="badge"
-                                      th:classappend="${usuario.nombreRol == 'Paciente' ? 'bg-primary' :
-                (usuario.nombreRol == 'Domiciliario' ? 'bg-success' : 'bg-warning')}"
+                                      th:classappend="${usuario.nombreRol == 'Paciente' ? 'bg-primary' : (usuario.nombreRol == 'Domiciliario' ? 'bg-success' : 'bg-warning')}"
                                       th:text="${usuario.nombreRol}">
                                 </span>
                             </td>
+
                             <td th:text="${usuario.nombre}"></td>
+
                             <td>
                                 <span class="badge"
                                       th:classappend="${usuario.estado == 'ACTIVO' ? 'bg-success' : 'bg-danger'}"
@@ -120,19 +139,89 @@
                                 </span>
                             </td>
                         </tr>
+
                         <tr th:if="${usuariosRecientes == null or usuariosRecientes.isEmpty()}">
-                            <td colspan="3" class="text-center">
-                                <em>No hay usuarios recientes</em>
-                            </td>
+                            <td colspan="3" class="text-center"><em>No hay usuarios recientes</em></td>
                         </tr>
+
                         </tbody>
                     </table>
                 </div>
+
             </div>
+
         </section>
+
     </div>
+
 </main>
 
 <footer th:insert="Layouts/header_footerAdmin :: footer"></footer>
+
+<!-- SCRIPT GRÁFICA + EXPORTAR PDF -->
+<script>
+
+    let grafico; // Variable global para la gráfica
+
+    async function cargarEstadisticasUsuarios() {
+
+        try {
+            const response = await fetch('/admin/estadisticas-usuarios');
+            const data = await response.json();
+
+            const ctx = document.getElementById('graficoUsuarios').getContext('2d');
+
+            grafico = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Pacientes', 'Medicamentos', 'Órdenes Completadas', 'Activos', 'Inactivos'],
+                    datasets: [{
+                        label: 'Cantidad',
+                        data: [
+                            data.pacientes,
+                            data.cantidadMedicamentos,
+                            data.ordenesCompletadas,
+                            data.activos,
+                            data.inactivos
+                        ],
+                        borderWidth: 1,
+                        backgroundColor: 'rgba(144, 238, 144, 0.7)'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: { beginAtZero: true }
+                    }
+                }
+            });
+
+        } catch (e) {
+            console.error("Error cargando estadísticas:", e);
+        }
+    }
+
+    // Exportar gráfica a PDF
+    document.getElementById('btnExportarPDF').addEventListener('click', function () {
+
+        const { jsPDF } = window.jspdf;
+
+        const doc = new jsPDF();
+
+        doc.text("Estadísticas de Usuarios", 14, 15);
+
+        // Convertir el canvas de la gráfica a imagen
+        const canvas = document.getElementById('graficoUsuarios');
+        const imgData = canvas.toDataURL('image/png');
+
+        doc.addImage(imgData, 'PNG', 15, 25, 180, 100);
+
+        doc.save('estadisticas_usuarios.pdf');
+    });
+
+    cargarEstadisticasUsuarios();
+
+</script>
+
 </body>
 </html>

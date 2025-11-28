@@ -24,7 +24,7 @@ public class PQRSAdminController {
     @Autowired
     private EmailService emailService;
 
-
+    // 📌 LISTAR TODAS LAS PQRS
     @GetMapping
     public String listarTodas(Model model, HttpSession session) {
 
@@ -42,6 +42,7 @@ public class PQRSAdminController {
         return "administrador/pqrs_listar";
     }
 
+    // 📌 VER DETALLE PQRS
     @GetMapping("/{id}")
     public String verDetalle(@PathVariable Long id, Model model, HttpSession session) {
 
@@ -65,6 +66,7 @@ public class PQRSAdminController {
         return "administrador/pqrs_detalle";
     }
 
+    // 📌 RESPONDER Y CAMBIAR ESTADO DE UNA PQRS
     @PostMapping("/{id}/responder")
     public String responderPqrs(
             @PathVariable Long id,
@@ -80,10 +82,11 @@ public class PQRSAdminController {
         }
 
         pqrs.setRespuesta(respuesta);
-        pqrs.setEstado(estado); // <-- usar el estado enviado desde el formulario
+        pqrs.setEstado(estado);
         pqrs.setFechaRespuesta(LocalDateTime.now());
         pqrsService.guardar(pqrs);
 
+        // 📧 Enviar correo automático
         try {
             String correo = pqrs.getUsuario().getCorreo();
 
@@ -114,36 +117,23 @@ public class PQRSAdminController {
                     "</body>" +
                     "</html>";
 
-
             emailService.enviarCorreoHtml(correo, "Respuesta a tu PQRS", contenidoHtml);
 
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("error", "La PQRS fue respondida, pero ocurrió un error enviando el correo.");
         }
 
-
-        // Mensaje dinámico según el estado seleccionado
+        // Mensaje dinámico
         String mensajeExito;
         switch (estado) {
-            case "Resuelto":
-                mensajeExito = "PQRS resuelta exitosamente ✅";
-                break;
-            case "Pendiente":
-                mensajeExito = "La PQRS cambió de estado a pendiente ⏳";
-                break;
-            case "En proceso":
-                mensajeExito = "La PQRS está ahora en proceso 🔄";
-                break;
-            default:
-                mensajeExito = "PQRS actualizada correctamente";
+            case "Resuelto": mensajeExito = "PQRS resuelta exitosamente ✅"; break;
+            case "Pendiente": mensajeExito = "La PQRS cambió de estado a pendiente ⏳"; break;
+            case "En proceso": mensajeExito = "La PQRS está ahora en proceso 🔄"; break;
+            default: mensajeExito = "PQRS actualizada correctamente";
         }
 
         redirectAttributes.addFlashAttribute("exito", mensajeExito);
 
         return "redirect:/administrador/pqrs";
     }
-
-
 }
-
-

@@ -6,13 +6,28 @@ import com.example.Indrugs.entities.Medicamentos;
 import java.util.List;
 
 public interface InventarioService {
+
+    // Leer todo el inventario
     List<InventarioDTO> read();
+
+    // Crear inventario nuevo
     void crear(InventarioDTO inventarioDTO);
+
+    // Actualizar inventario
     void actualizar(Long idInventario, InventarioDTO inventarioDTO);
+
+    // Total de unidades en stock (suma del stock)
     Long totalUnidadesEnStock();
+
+    // Buscar inventario por id
     InventarioDTO buscarPorId(Long idInventario);
+
+    // Buscar por estado (ACTIVO / INACTIVO)
     List<InventarioDTO> findByEstado(String estadoMed);
 
-    // 🆕 NUEVO MÉTODO: Descontar stock al asignar medicamentos
+    // 🆕 Descontar stock cuando se asigna un medicamento a una orden
     void descontarStock(Medicamentos medicamento, int cantidad);
+
+    // 🆕 NUEVO → Total de medicamentos registrados en BD
+    long totalMedicamentosRegistrados();
 }

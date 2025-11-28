@@ -208,6 +208,21 @@
     border: none !important;
     transition: 0.3s !important;
 }
+/* ===== BOTÓN EXPORTAR PDF - VERDE CLARO ===== */
+.btnform.boton-exportar-verdePDF {
+    background-color: #c8f7c8 !important; /* verde más claro */
+    color: #083d08 !important; /* verde oscuro */
+    border: 2px solid #9be59b !important;
+}
+
+/* ===== ENCABEZADO TABLA - VERDE CLARO ===== */
+.boton-exportar-encabezadoTabla,
+.boton-exportar-encabezadoTabla th {
+    background-color: #c8f7c8 !important;
+    color: #083d08 !important;
+    border: 2px solid #9be59b !important;
+}
+
 
 .btnform:hover {
     background: #6a1ee0 !important;

@@ -19,6 +19,12 @@ public interface UsuarioService {
     UsuarioDTO findById(Long idUsuario);
     boolean existsByCorreo(String correo);
     boolean existsByNumDoc(String numDoc);
+
+    // ----------- NUEVOS MÉTODOS PARA ESTADÍSTICAS ----------
+    long countByEstado(String estado);
+    long countTotal();
+    long countByRolNombre(String nombreRol);
+
     long contarUsuariosPorRol(String nombreRol);
     long contarUsuariosActivos();
     Map<String, Long> obtenerResumenUsuarios();
@@ -26,6 +32,5 @@ public interface UsuarioService {
     List<UsuarioDTO> findByRolNombre(String nombreRol);
     List<UsuarioDTO> findByRolNombreAndEstado(String nombreRol, String estado);
 
-    // <-- NUEVO: devuelve entidades Usuario para el select del formulario
-    List<com.example.Indrugs.entities.Usuario> listarPorRol(String nombreRol);
+    List<Usuario> listarPorRol(String nombreRol);
 }

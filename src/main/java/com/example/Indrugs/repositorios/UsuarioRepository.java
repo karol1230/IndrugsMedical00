@@ -1,5 +1,6 @@
 package com.example.Indrugs.repositorios;
 
+import com.example.Indrugs.entities.Rol;
 import com.example.Indrugs.entities.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
@@ -17,5 +18,6 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     List<Usuario> findByRol_nombreRolAndEstado(String nombreRol, String estado);
     List<Usuario> findByRol_nombreRol(String nombreRol);
     Optional<Usuario> findByIdUsuario(Long idUsuario);
+    long countByRol(Rol rol);
 
 }

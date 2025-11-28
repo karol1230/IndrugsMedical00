@@ -88,4 +88,10 @@ public class InventarioServiceImpl implements InventarioService {
                     throw new RuntimeException("No se encontró inventario para el medicamento seleccionado.");
                 });
     }
+
+    // 🆕 MÉTODO NECESARIO PARA TUS ESTADÍSTICAS
+    @Override
+    public long totalMedicamentosRegistrados() {
+        return medicamentoRepository.count();
+    }
 }

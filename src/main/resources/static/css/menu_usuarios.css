@@ -26,27 +26,50 @@ html, body {
    CONTENEDOR FORMULARIOS
 ----------------------------------- */
 
+/* Alinear caja de filtros + botones en UNA sola línea */
 .formularios {
     display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
+    justify-content: flex-start;
     align-items: center;
-    margin-bottom: 20px;
+    gap: 20px;
+    flex-wrap: wrap;
 }
+
+/* Contenedor de los botones (lineal con los filtros) */
+.acciones-estadisticas {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+/* Asegurar altura uniforme y alineación visual de botones */
+.acciones-estadisticas .btnform {
+    height: 42px;
+    padding: 0 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
 
 /* -----------------------------------
    FILTROS
 ----------------------------------- */
 
 .filtrar-usuarios {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    background: #e3f3f1;
-    padding: 12px 20px;
-    border-radius: 12px;
-    border-left: 4px solid #1b8e85;
-}
+     display: flex;
+     justify-content: space-between; /* separa filtros a la izquierda, botones a la derecha */
+     align-items: center;
+     gap: 15px;
+     background: #e3f3f1;
+     padding: 12px 20px;
+     border-radius: 12px;
+     border-left: 4px solid #1b8e85;
+     width: 95%;
+     margin: auto;
+ }
+
 
 .filtrar-usuarios label {
     font-weight: 500;
@@ -79,6 +102,13 @@ html, body {
 .butn_filtro:hover {
     background: #146a63;
 }
+
+.acciones-tabla-global {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
 
 /* -----------------------------------
    BOTÓN EXPORTAR (MORADO ELEGANTE)

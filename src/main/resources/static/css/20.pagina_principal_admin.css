@@ -51,6 +51,38 @@
     color: #ffff;
 
 }
+/* Contenedor para posicionar el botón */
+.exportar-container {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+    padding-right: 10px;
+}
+
+/* Botón exportar */
+#btnExportarPDF {
+    background-color: #0A4733; /* Verde botella */
+    color: white;
+    padding: 14px 32px;  /* MÁS ANCHO */
+    min-width: 180px;   /* Asegura que el texto quepa */
+    height: 48px;
+    border-radius: 12px;
+    font-size: 17px;
+    font-family: "Nunito", sans-serif;
+    font-weight: 700;
+    border: none;
+    cursor: pointer;
+    white-space: nowrap;  /* Evita que el texto se corte */
+    box-shadow: 0 3px 8px rgba(0,0,0,0.20);
+    transition: 0.2s ease-in-out;
+}
+
+#btnExportarPDF:hover {
+    background-color: #083B2B; /* Verde botella más oscuro */
+    transform: translateY(-2px);
+}
+
 
 /* Tabla_ordenes*/
 .contenido_dash{

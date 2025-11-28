@@ -31,8 +31,8 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public List<UsuarioDTO> read() {
-        List<Usuario> usuarios = usuarioRepository.findAll();
-        return usuarios.stream()
+        return usuarioRepository.findAll()
+                .stream()
                 .map(UsuarioMapper::mapToDto)
                 .collect(Collectors.toList());
     }
@@ -47,14 +47,13 @@ public class UsuarioServiceImpl implements UsuarioService {
         }
 
         Usuario usuario = UsuarioMapper.mapNewToEntitie(userCreate);
-        String passwordEncriptada = passwordEncoder.encode(userCreate.getPassword());
-        usuario.setPassword(passwordEncriptada);
+        usuario.setPassword(passwordEncoder.encode(userCreate.getPassword()));
 
         Rol rol = rolRepository.findById(userCreate.getRol())
                 .orElseThrow(() -> new RuntimeException("Rol no encontrado"));
         usuario.setRol(rol);
-        usuario.setEstado("ACTIVO");
 
+        usuario.setEstado("ACTIVO");
         usuarioRepository.save(usuario);
     }
 
@@ -73,16 +72,16 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public List<UsuarioDTO> findByRol(Long idRol) {
-        List<Usuario> usuarios = usuarioRepository.findByRol_idRol(idRol);
-        return usuarios.stream()
+        return usuarioRepository.findByRol_idRol(idRol)
+                .stream()
                 .map(UsuarioMapper::mapToDto)
                 .collect(Collectors.toList());
     }
 
     @Override
     public List<UsuarioDTO> findByStatus(String estado) {
-        List<Usuario> usuarios = usuarioRepository.findByEstado(estado);
-        return usuarios.stream()
+        return usuarioRepository.findByEstado(estado)
+                .stream()
                 .map(UsuarioMapper::mapToDto)
                 .collect(Collectors.toList());
     }
@@ -101,9 +100,9 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Override
     public UsuarioDTO findById(Long idUsuario) {
-        Usuario usuario = usuarioRepository.findById(idUsuario)
+        return usuarioRepository.findById(idUsuario)
+                .map(UsuarioMapper::mapToDto)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
-        return UsuarioMapper.mapToDto(usuario);
     }
 
     @Override
@@ -114,6 +113,25 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     public boolean existsByNumDoc(String numDoc) {
         return usuarioRepository.existsByNumDoc(numDoc);
+    }
+
+    // --------------------------------------------------------
+    // NUEVOS MÉTODOS PARA ESTADÍSTICAS
+    // --------------------------------------------------------
+
+    @Override
+    public long countByEstado(String estado) {
+        return usuarioRepository.countByEstado(estado);
+    }
+
+    @Override
+    public long countTotal() {
+        return usuarioRepository.count();
+    }
+
+    @Override
+    public long countByRolNombre(String nombreRol) {
+        return usuarioRepository.countByRol_nombreRol(nombreRol);
     }
 
     @Override
@@ -129,37 +147,41 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     public Map<String, Long> obtenerResumenUsuarios() {
         Map<String, Long> resumen = new HashMap<>();
-        resumen.put("pacientes", contarUsuariosPorRol("Paciente"));
-        resumen.put("domiciliarios", contarUsuariosPorRol("Domiciliario"));
-        resumen.put("administradores", contarUsuariosPorRol("Administrador"));
-        resumen.put("ACTIVOS", contarUsuariosActivos());
+
+        resumen.put("pacientes", countByRolNombre("Paciente"));
+        resumen.put("domiciliarios", countByRolNombre("Domiciliario"));
+        resumen.put("administradores", countByRolNombre("Administrador"));
+        resumen.put("activos", countByEstado("ACTIVO"));
+        resumen.put("inactivos", countByEstado("INACTIVO"));
+
         return resumen;
     }
 
     @Override
     public List<UsuarioDTO> obtenerUsuariosRecientes() {
-        List<Usuario> usuarios = usuarioRepository.findTop5ByOrderByIdUsuarioDesc();
-        return usuarios.stream()
+        return usuarioRepository.findTop5ByOrderByIdUsuarioDesc()
+                .stream()
                 .map(UsuarioMapper::mapToDto)
                 .collect(Collectors.toList());
     }
 
     @Override
     public List<UsuarioDTO> findByRolNombre(String nombreRol) {
-        List<Usuario> usuarios = usuarioRepository.findByRol_nombreRol(nombreRol);
-        return usuarios.stream()
+        return usuarioRepository.findByRol_nombreRol(nombreRol)
+                .stream()
                 .map(UsuarioMapper::mapToDto)
                 .collect(Collectors.toList());
     }
 
     @Override
     public List<UsuarioDTO> findByRolNombreAndEstado(String nombreRol, String estado) {
-        List<Usuario> usuarios = usuarioRepository.findByRol_nombreRolAndEstado(nombreRol, estado);
-        return usuarios.stream()
+        return usuarioRepository.findByRol_nombreRolAndEstado(nombreRol, estado)
+                .stream()
                 .map(UsuarioMapper::mapToDto)
                 .collect(Collectors.toList());
     }
 
+    @Override
     public List<Usuario> listarPorRol(String nombreRol) {
         return usuarioRepository.findByRol_nombreRol(nombreRol);
     }

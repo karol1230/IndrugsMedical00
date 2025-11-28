@@ -1,0 +1,188 @@
+/* =====================================================
+   BARRA SUPERIOR BLANCA
+===================================================== */
+.barra-top-blanca {
+  background-color: #ffffff;
+  height: 5px;
+  width: 100%;
+}
+
+/* =====================================================
+   HEADER PRINCIPAL
+===================================================== */
+.cabeza_indrugs {
+  background: linear-gradient(180deg, #00796b 0%, #00695c 100%);
+  padding: 10px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: "Nunito", sans-serif;
+  position: fixed; /* sticky al hacer scroll */
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  transition: all 0.3s ease;
+}
+
+/* EFECTO SCROLL */
+.cabeza_indrugs.scroll-active {
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  background-color: #009688; /* cambio de color al hacer scroll */
+}
+
+/* =====================================================
+   CONTENEDOR INTERNO (LOGO + MENÚS)
+===================================================== */
+.contenedeor_cabeza.logo_nav_items {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 30px;
+}
+
+/* =====================================================
+   LOGO
+===================================================== */
+.logo {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: white;
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.img_indrugs_logo {
+  height: 55px;
+  margin-right: 12px;
+}
+
+/* =====================================================
+   MENÚ PRINCIPAL (barra_2)
+===================================================== */
+.menu .barra_2 {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  gap: 20px;
+}
+
+.menu .barra_2 li a {
+  text-decoration: none;
+  color: white;
+  font-weight: 600;
+  font-family: "Nunito", sans-serif;
+  padding: 6px 10px;
+  border-radius: 5px;
+  transition: background 0.3s ease;
+}
+
+.menu .barra_2 li a:hover {
+  background-color: rgba(255,255,255,0.2);
+}
+
+/* =====================================================
+   ICONOS DERECHA (barra_1)
+===================================================== */
+.navegacion_1 {
+  display: flex;
+  align-items: center;
+}
+
+.navegacion_1 .barra_1 {
+  display: flex;
+  list-style: none;
+  gap: 15px;
+  margin: 0;
+  padding: 0;
+}
+
+.navegacion_1 .barra_1 li a img {
+  height: 30px;
+  width: 30px;
+  transition: transform 0.2s ease;
+}
+
+.navegacion_1 .barra_1 li a img:hover {
+  transform: scale(1.1);
+}
+
+/* =====================================================
+   FOOTER
+===================================================== */
+footer {
+  background: linear-gradient(180deg, #00796b 0%, #00695c 100%);
+  color: #f1fffb;
+  padding: 20px 0;
+  text-align: center;
+  font-family: "Nunito", sans-serif;
+}
+
+footer .footer-logo-texto {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 10px;
+}
+
+footer .footer-logo {
+  width: 60px;
+}
+
+footer .footer-texto {
+  margin: 0;
+  font-size: 1em;
+  font-weight: 500;
+}
+
+footer .footer-redes a {
+  margin: 0 10px;
+}
+
+footer .footer-contacto p {
+  margin: 3px 0;
+  font-size: 0.9em;
+}
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+@media only screen and (max-width: 991px) {
+  .contenedeor_cabeza.logo_nav_items {
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .menu .barra_2 {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .navegacion_1 .barra_1 {
+    gap: 10px;
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .cabeza_indrugs {
+    padding: 10px 20px;
+  }
+
+  .logo {
+    font-size: 22px;
+  }
+
+  .menu .barra_2 {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .navegacion_1 .barra_1 {
+    gap: 8px;
+  }
+}
