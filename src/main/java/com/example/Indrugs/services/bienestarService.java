@@ -1,10 +1,7 @@
 package com.example.Indrugs.services;
 
-import jakarta.mail.MessagingException;
-import jakarta.mail.internet.MimeMessage;
+import com.example.Indrugs.DTO.Usuario.UsuarioDTO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,49 +10,49 @@ import java.util.List;
 public class bienestarService {
 
     @Autowired
-    private JavaMailSender mailSender;
+    private EmailService emailService;
 
-    // ✅ Método original con parámetros
-    public void enviarCorreosBienestarMensual(List<String> correos) throws MessagingException {
+    @Autowired
+    private UsuarioService usuarioService;
 
-        // 📌 Asunto exacto que solicitaste
-        String asunto = "Tu salud es importante: pequeños recordatorios para cuidarte";
+    /**
+     * Enviar correos de bienestar a usuarios activos con parámetros personalizados
+     */
+    public void enviarCorreosBienestarMensual(String mes, String telefonoSoporte, String mensajeExtra) {
 
-        // 📌 Cuerpo exacto que solicitaste
-        String cuerpo = "Cuidar de tu salud es más fácil de lo que parece. Aquí te dejamos algunos consejos para mantener tus tratamientos bajo control y sentirte mejor cada día:\n\n"
-                + "•Sigue tu tratamiento al pie de la letra: No olvides tomar tus medicamentos en el horario indicado.\n"
-                + "•Lleva un registro: Anota tus dosis o usa recordatorios en tu teléfono para mantener todo en orden.\n"
-                + "•Consulta dudas con tu médico: Nunca dudes en preguntar si notas algo diferente o tienes efectos secundarios.\n"
-                + "•Mantén hábitos saludables: Alimentación balanceada, hidratación y ejercicio moderado ayudan mucho a tu bienestar.\n\n"
-                + "•Recuerda que estamos aquí para ayudarte a recibir tus medicamentos sin complicaciones, directamente en tu domicilio. 💚\n\n"
-                + "Gracias por confiar en nosotros,\n\n"
-                + "El equipo de Indrugs Medica\n\n";
+        List<UsuarioDTO> usuarios = usuarioService.findByStatus("Activo");
 
+        System.out.println("📩 Enviando correos masivos de bienestar a " + usuarios.size() + " usuarios...");
 
-        // Envío a cada destinatario
-        for (String correoDestino : correos) {
-            MimeMessage message = mailSender.createMimeMessage();
-            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
-            helper.setTo(correoDestino);
-            helper.setSubject(asunto);
-            helper.setText(cuerpo, false); // false = texto plano
-            mailSender.send(message);
+        for (UsuarioDTO usuario : usuarios) {
+            try {
+                emailService.enviarCorreoBienestar(
+                        usuario.getCorreo(),
+                        usuario.getNombre(),
+                        mes,
+                        telefonoSoporte,
+                        mensajeExtra
+                );
+
+                System.out.println("Correo enviado realmente a: " + usuario.getCorreo());
+
+            } catch (Exception e) {
+                System.out.println("Error real enviando a: " + usuario.getCorreo() + " → " + e.getMessage());
+            }
         }
+
+        System.out.println("🚀 Proceso masivo de correos terminado.");
     }
 
-    // ✅ Método nuevo SIN parámetros para llamar desde el controller
+    /**
+     * Llamado desde botón del admin, usa valores por defecto
+     */
     public void enviarCorreosBienestarMensual() {
-        try {
-            // 📌 Aquí debes reemplazar con los correos reales más adelante
-            List<String> listaCorreos = List.of(
-                    "correo1@ejemplo.com",
-                    "correo2@ejemplo.com"
-            );
 
-            enviarCorreosBienestarMensual(listaCorreos);
+        String mes = "Noviembre 2025";
+        String telefonoSoporte = "3101234567";
+        String mensajeExtra = "Gracias por confiar en Indrugs Médica. ¡Cuida tu salud este mes!";
 
-        } catch (MessagingException e) {
-            System.out.println("Error enviando correos de bienestar: " + e.getMessage());
-        }
+        enviarCorreosBienestarMensual(mes, telefonoSoporte, mensajeExtra);
     }
 }

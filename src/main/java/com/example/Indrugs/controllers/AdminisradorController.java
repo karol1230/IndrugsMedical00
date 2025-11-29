@@ -189,13 +189,13 @@ public class AdminisradorController {
     @GetMapping("/admin/correos-masivos")
     public String enviarCorreosMasivos(RedirectAttributes redirectAttributes) {
         try {
-            // Llama al método de BienestarService que envía correos masivos
             bienestarService.enviarCorreosBienestarMensual();
-
-            redirectAttributes.addFlashAttribute("mensajeExito", "Correos masivos de bienestar enviados correctamente.");
+            redirectAttributes.addFlashAttribute("mensajeExito", "Correos de bienestar enviados correctamente.");
         } catch (Exception e) {
             redirectAttributes.addFlashAttribute("error", "Error enviando correos masivos: " + e.getMessage());
         }
         return "redirect:/21.pagina_usuarios";
     }
+
+
 }

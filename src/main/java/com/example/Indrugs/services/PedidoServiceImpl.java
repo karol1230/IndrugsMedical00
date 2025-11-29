@@ -7,7 +7,6 @@ import com.example.Indrugs.entities.Usuario;
 import com.example.Indrugs.repositorios.OrdenRepository;
 import com.example.Indrugs.repositorios.PedidoRepository;
 import com.example.Indrugs.repositorios.UsuarioRepository;
-import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,7 +39,6 @@ public class PedidoServiceImpl implements PedidoService {
     public PedidoDTO crearPedido(PedidoDTO dto) {
 
         Pedido pedido = new Pedido();
-
         pedido.setNombrePaciente(dto.getNombrePaciente());
         pedido.setDireccion(dto.getDireccion());
         pedido.setTelefono(dto.getTelefono());
@@ -122,16 +120,13 @@ public class PedidoServiceImpl implements PedidoService {
             Usuario cliente = pedido.getOrden().getPaciente();
 
             if (cliente != null && cliente.getCorreo() != null) {
-                try {
-                    emailService.enviarCorreo(
-                            cliente.getCorreo(),
-                            "Tu orden con medicamento ha llegado",
-                            "<p>Hola " + cliente.getNombre() +
-                                    ", indrugs medical te informa que tu pedido acaba de llegar a tu lugar de vivienda.</p>"
-                    );
-                } catch (MessagingException e) {
-                    e.printStackTrace();
-                }
+                // Llamada directa a EmailService; ya maneja excepciones internamente
+                emailService.enviarCorreo(
+                        cliente.getCorreo(),
+                        "Tu orden con medicamento ha llegado",
+                        "<p>Hola " + cliente.getNombre() +
+                                ", indrugs medical te informa que tu pedido acaba de llegar a tu lugar de vivienda.</p>"
+                );
             }
         }
 

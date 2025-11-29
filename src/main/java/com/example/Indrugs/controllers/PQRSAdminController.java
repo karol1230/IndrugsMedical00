@@ -98,7 +98,7 @@ public class PQRSAdminController {
                     "<body style='font-family: Arial, sans-serif; background-color:#f0f2f5; margin:0; padding:0;'>" +
                     "  <div style='max-width:600px; margin:30px auto; background-color:#ffffff; border-radius:12px; box-shadow:0 6px 15px rgba(0,0,0,0.1); padding:25px;'>" +
 
-                    "    <h2 style='color:#00796b; text-align:center; margin-bottom:5px;'>✨ ¡Tu PQRS ha sido actualizada! ✨</h2>" +
+                    "    <h2 style='color:#00796b; text-align:center; margin-bottom:5px;'> ¡Tu PQRS ha sido actualizada! </h2>" +
                     "    <p style='text-align:center; color:#555; margin-top:0;'>Aquí tienes los detalles de tu solicitud:</p>" +
 
                     "    <div style='background-color:#e0f2f1; border-left:6px solid #00796b; padding:18px; margin:20px 0; border-radius:8px;'>" +
@@ -109,7 +109,7 @@ public class PQRSAdminController {
                     "      <p style='font-style:italic; color:#333;'>" + respuesta + "</p>" +
                     "    </div>" +
 
-                    "    <p style='text-align:center; color:#555; margin-top:30px;'>💜 Gracias por confiar en <strong>INDRUGS MEDICA</strong>. ¡Estamos aquí para ayudarte siempre! 💜</p>" +
+                    "    <p style='text-align:center; color:#555; margin-top:30px;'> Gracias por confiar en <strong>INDRUGS MEDICA</strong>. ¡Estamos aquí para ayudarte siempre! 💜</p>" +
                     "    <hr style='border:none; border-top:1px solid #ddd; margin-top:25px;'/>" +
                     "    <p style='font-size:12px; color:#888; text-align:center;'>Este correo es automático, por favor no respondas a este mensaje.</p>" +
 
@@ -126,9 +126,9 @@ public class PQRSAdminController {
         // Mensaje dinámico
         String mensajeExito;
         switch (estado) {
-            case "Resuelto": mensajeExito = "PQRS resuelta exitosamente ✅"; break;
-            case "Pendiente": mensajeExito = "La PQRS cambió de estado a pendiente ⏳"; break;
-            case "En proceso": mensajeExito = "La PQRS está ahora en proceso 🔄"; break;
+            case "Resuelto": mensajeExito = "PQRS resuelta exitosamente "; break;
+            case "Pendiente": mensajeExito = "La PQRS cambió de estado a pendiente "; break;
+            case "En proceso": mensajeExito = "La PQRS está ahora en proceso "; break;
             default: mensajeExito = "PQRS actualizada correctamente";
         }
 

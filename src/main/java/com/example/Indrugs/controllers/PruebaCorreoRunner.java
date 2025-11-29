@@ -15,13 +15,11 @@ public class PruebaCorreoRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        // Enviar correo de prueba
-        bienestarService.enviarCorreosBienestarMensual(
-                "Noviembre 2025",
-                "3101234567",
-                "Este es un mensaje de prueba desde CommandLineRunner."
-        );
 
-        System.out.println("Prueba de correo ejecutada al iniciar la app.");
+        bienestarService.enviarCorreosBienestarMensual();
+
+        System.out.println("Correo masivo");
     }
+
+
 }

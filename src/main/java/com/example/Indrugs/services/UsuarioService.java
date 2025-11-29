@@ -4,6 +4,7 @@ import com.example.Indrugs.DTO.Usuario.UsuarioDTO;
 import com.example.Indrugs.DTO.Usuario.UsuarioCreateDTO;
 import com.example.Indrugs.DTO.Usuario.UsuarioUpdateDTO;
 import com.example.Indrugs.entities.Usuario;
+import com.example.Indrugs.entities.Usuario;
 
 import java.util.List;
 import java.util.Map;
@@ -20,7 +21,7 @@ public interface UsuarioService {
     boolean existsByCorreo(String correo);
     boolean existsByNumDoc(String numDoc);
 
-    // ----------- NUEVOS MÉTODOS PARA ESTADÍSTICAS ----------
+    // ----------- ESTADÍSTICAS ----------
     long countByEstado(String estado);
     long countTotal();
     long countByRolNombre(String nombreRol);
@@ -33,4 +34,7 @@ public interface UsuarioService {
     List<UsuarioDTO> findByRolNombreAndEstado(String nombreRol, String estado);
 
     List<Usuario> listarPorRol(String nombreRol);
+
+    // ----------- 🔥 NUEVO MÉTODO PARA CORREOS MASIVOS ---------
+    List<String> obtenerCorreosActivos();
 }

@@ -23,17 +23,20 @@ public class UsuarioServiceImpl implements UsuarioService {
     private final UsuarioRepository usuarioRepository;
     private final BCryptPasswordEncoder passwordEncoder;
 
-    public UsuarioServiceImpl(RolRepository rolRepository, UsuarioRepository usuarioRepository, BCryptPasswordEncoder passwordEncoder) {
+    public UsuarioServiceImpl(RolRepository rolRepository,
+                              UsuarioRepository usuarioRepository,
+                              BCryptPasswordEncoder passwordEncoder) {
         this.rolRepository = rolRepository;
         this.usuarioRepository = usuarioRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
+    // ✅ Método principal sin errores
     @Override
     public List<UsuarioDTO> read() {
         return usuarioRepository.findAll()
                 .stream()
-                .map(UsuarioMapper::mapToDto)
+                .map(usuario -> UsuarioMapper.mapToDto(usuario)) // 👈 llamada correcta NO estática
                 .collect(Collectors.toList());
     }
 
@@ -61,6 +64,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     public void actualizar(Long idUsuario, UsuarioUpdateDTO userUpdate) {
         Usuario usuario = usuarioRepository.findById(idUsuario)
                 .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
         UsuarioMapper.mapUpdateTo(usuario, userUpdate);
         usuarioRepository.save(usuario);
     }
@@ -115,9 +119,9 @@ public class UsuarioServiceImpl implements UsuarioService {
         return usuarioRepository.existsByNumDoc(numDoc);
     }
 
-    // --------------------------------------------------------
-    // NUEVOS MÉTODOS PARA ESTADÍSTICAS
-    // --------------------------------------------------------
+    // ---------------------------------------------------
+    // ✅ Estadísticas sin errores
+    // ---------------------------------------------------
 
     @Override
     public long countByEstado(String estado) {
@@ -147,13 +151,11 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     public Map<String, Long> obtenerResumenUsuarios() {
         Map<String, Long> resumen = new HashMap<>();
-
         resumen.put("pacientes", countByRolNombre("Paciente"));
         resumen.put("domiciliarios", countByRolNombre("Domiciliario"));
         resumen.put("administradores", countByRolNombre("Administrador"));
         resumen.put("activos", countByEstado("ACTIVO"));
         resumen.put("inactivos", countByEstado("INACTIVO"));
-
         return resumen;
     }
 
@@ -185,4 +187,20 @@ public class UsuarioServiceImpl implements UsuarioService {
     public List<Usuario> listarPorRol(String nombreRol) {
         return usuarioRepository.findByRol_nombreRol(nombreRol);
     }
+
+    // ---------------------------------------------------
+    // ✅ Nuevo método para correos masivos (NO estático, correcto)
+    // ---------------------------------------------------
+
+    @Override
+
+
+    public List<String> obtenerCorreosActivos() {
+        return usuarioRepository.findByEstado("ACTIVO")
+                .stream()
+                .map(Usuario::getCorreo)
+                .collect(Collectors.toList());
+    }
+
+
 }
