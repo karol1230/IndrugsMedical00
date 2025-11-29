@@ -11,6 +11,8 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class EmailService {
 
@@ -146,6 +148,27 @@ public class EmailService {
 
         } catch (MessagingException e) {
             e.printStackTrace();
+        }
+    }
+
+    // ====================================================
+    // 6) ✅ NUEVO: CORREOS MASIVOS A UNA LISTA DE DESTINATARIOS
+    // ====================================================
+    public void enviarCorreosMasivos(List<String> destinatarios, String asunto, String contenidoHtml) {
+        for (String correo : destinatarios) {
+            try {
+                MimeMessage mensaje = mailSender.createMimeMessage();
+                MimeMessageHelper helper = new MimeMessageHelper(mensaje, true, "UTF-8");
+
+                helper.setTo(correo);
+                helper.setSubject(asunto);
+                helper.setFrom("indrugsmedica@gmail.com");
+                helper.setText(contenidoHtml, true);
+
+                mailSender.send(mensaje);
+            } catch (MessagingException | MailException e) {
+                e.printStackTrace(); // Loguea si falla el envío de alguno
+            }
         }
     }
 }

@@ -27,15 +27,7 @@
 	<div class="contenido">
 		<h1 class="tabla_usuarios">USUARIOS</h1>
 
-		<!-- 🚀 BOTÓN PARA ENVIAR CORREOS MASIVOS -->
-		<div style="margin-bottom: 20px; text-align: right;">
-			<a th:href="@{/admin/correos-masivos/form}"
-			   class="btn btn-success"
-			   style="font-size: 15px; padding: 8px 14px;"
-			   onclick="return confirmarEnvio();">
-				<i class="fas fa-paper-plane"></i> Enviar correos masivos
-			</a>
-		</div>
+		<!-- ❌ BOTÓN DE CORREOS MASIVOS ELIMINADO -->
 
 		<div class="formularios">
 
@@ -58,28 +50,26 @@
 				<button class="butn_filtro" onclick="cargarEstadisticasUsuarios()">Filtrar</button>
 			</div>
 
-			<!-- ✅ AQUÍ suben los botones en línea -->
+			<!-- ✅ SOLO ESTOS BOTONES SE MANTIENEN -->
 			<div class="acciones-estadisticas">
+
 				<a th:href="@{/export/usuarios}">
 					<button class="btnform boton-descargar-PDFusuarios">
 						<i class="fas fa-file-pdf"></i> Exportar PDF Usuarios
 					</button>
 				</a>
 
-				<a th:href="@{/admin/correos-masivos}">
+				<a th:href="@{/admin/correos-masivos}" onclick="return confirmarEnvio();">
 					<button class="btnform boton-enviar-correosUsuarios">
 						<i class="fas fa-paper-plane"></i> Enviar correos masivos
 					</button>
 				</a>
-
-
 			</div>
 
 		</div>
 
 
-
-		<div th:if="${usuarios != null and !usuarios.isEmpty()}">
+		<div th:if="${usuarios != null && !usuarios.isEmpty()}">
 			<div style="display: flex; justify-content: center; width: 100%; margin-top: 20px;">
 				<table id="tabla1" class="table">
 					<thead class="table-dark">
@@ -116,19 +106,20 @@
 			</div>
 		</div>
 
-		<div th:if="${usuarios == null or usuarios.isEmpty()}">
+		<div th:if="${usuarios == null || usuarios.isEmpty()}">
 			<p>No hay usuarios registrados.</p>
 		</div>
+
 	</div>
 </main>
 
 <footer th:insert="Layouts/header_footerAdmin :: footer"></footer>
 
-<!-- CONFIRMACIÓN JS -->
+<!-- CONFIRMACIÓN -->
 <script>
 	function confirmarEnvio() {
-		return confirm("¿Estas seguro que quieres enviar los correos masivos?");
-	}
+        return confirm("¿Estás seguro de enviar los correos masivos?");
+    }
 </script>
 
 </body>
