@@ -1,65 +1,116 @@
+<!-- ICONOS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+    html, body {
+        margin: 0 !important;
+        padding: 0 !important;
+        border: 0 !important;
+    }
+
+    /* Elimina líneas blancas creadas por hr */
+    .linea_separación {
+        margin: 0 !important;
+        padding: 0 !important;
+        border: none !important;
+        height: 0 !important;
+    }
+
+    /* Evita espacio entre elementos thymeleaf */
+    [th\\:fragment] {
+        display: block;
+    }
+</style>
+
+
 <!-- HEADER -->
-<div th:fragment="header" xmlns:th="http://www.thymeleaf.org">
-    <header style="
-        background: linear-gradient(180deg, #00796b 0%, #00695c 100%);
-        padding: 15px 40px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        font-family: sans-serif;
-    ">
+<header th:fragment="header" xmlns:th="http://www.thymeleaf.org"
+        style="background: linear-gradient(180deg, #00796b 0%, #00695c 100%);
+               padding: 15px 40px;
+               display: flex;
+               align-items: center;
+               justify-content: space-between;
+               font-family: sans-serif;
+               margin: 0;
+               box-sizing: border-box;">
 
-        <!-- LOGO + NOMBRE -->
-        <a th:href="@{/index}"
-           style="display: flex; align-items: center; text-decoration: none; color: white;">
+    <!-- LOGO + NOMBRE -->
+    <a th:href="@{/index}"
+       style="display: flex; align-items: center; text-decoration: none; color: white;">
+        <img th:src="@{/imagenes/logo.png}" alt="Logo"
+             style="height: 55px; margin-right: 12px;">
+        <span style="font-size: 26px; font-weight: 700; letter-spacing: 1px;">
+            INDRUGS MEDICAL
+        </span>
+    </a>
 
-            <img th:src="@{/imagenes/logo.png}"
-                 alt="Logo"
-                 style="height: 55px; margin-right: 12px;">
+    <!-- MENÚ PRINCIPAL -->
+    <nav>
+        <ul style="
+            display: flex;
+            align-items: center;
+            list-style: none;
+            gap: 18px;
+            margin: 0;
+            padding: 0;
+        ">
+            <li><a th:href="@{/index}" style="color: white; text-decoration: none;">Inicio</a></li>
+            <li style="color:white;">•</li>
 
-            <span style="font-size: 26px; font-weight: 700; letter-spacing: 1px;">
-                INDRUGS MEDICAL
-            </span>
-        </a>
+            <li><a th:href="@{/7.pagina_sobre_nosotros}" style="color: white; text-decoration: none;">Nosotros</a></li>
+            <li style="color:white;">•</li>
 
-        <!-- MENÚ -->
-        <nav>
-            <ul style="
-                display: flex;
-                align-items: center;
-                list-style: none;
-                gap: 18px;
-                margin: 10;
-                padding: 30;
-            ">
+            <li><a th:href="@{/10.pagina_mapa_nav}" style="color: white; text-decoration: none;">Mapa</a></li>
+            <li style="color:white;">•</li>
 
-                <li><a th:href="@{/index}" style="color: white; text-decoration: none;">Inicio</a></li>
-                <li style="color:white;">•</li>
+            <!-- SIN LOGIN -->
+            <li th:if="${session.usuarioLogueado == null}">
+                <a th:href="@{/login}" style="color:white;text-decoration:none; display:flex; align-items:center; gap:6px;">
+                    <i class="fa-solid fa-user"></i> Iniciar sesión
+                </a>
+            </li>
 
-                <li><a th:href="@{/7.pagina_sobre_nosotros}" style="color: white; text-decoration: none;">Nosotros</a></li>
-                <li style="color:white;">•</li>
+            <!-- LOGUEADO -->
+            <li th:if="${session.usuarioLogueado != null}">
+                <span th:text="'Hola, ' + ${session.usuarioLogueado.nombre}" style="color:white;margin-right:10px;"></span>
+            </li>
 
-                <li><a th:href="@{/10.pagina_mapa_nav}" style="color: white; text-decoration: none;">Mapa</a></li>
-                <li style="color:white;">•</li>
+            <li th:if="${session.usuarioLogueado != null}">
+                <a th:href="@{/logout}" style="color:white;text-decoration:none;">Cerrar sesión</a>
+            </li>
+        </ul>
+    </nav>
 
-                <!-- ✅ Coincide exactamente con session.setAttribute("usuarioLogueado", usuario) en backend -->
-                <li th:if="${session.usuarioLogueado == null}">
-                    <a th:href="@{/login}" style="color:white;text-decoration:none;">Iniciar sesión</a>
-                </li>
+</header>
 
-                <li th:if="${session.usuarioLogueado != null}">
-                    <span th:text="'Hola, ' + ${session.usuarioLogueado.nombre}" style="color:white;margin-right:10px;"></span>
-                </li>
+<hr class="linea_separación">
 
-                <li th:if="${session.usuarioLogueado != null}">
-                    <a th:href="@{/logout}" style="color:white;text-decoration:none;">Cerrar sesión</a>
-                </li>
-
-
-    </header>
+<!-- BARRA SECUNDARIA -->
+<div class="contenedeor_cabeza logo_nav_items" style="margin:0; padding:0;">
+    <nav class="menu">
+        <ul class="barra_2" style="
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            padding: 10px 0;
+            margin: 0;
+            background: #e7f6f5;
+            font-family: sans-serif;
+        ">
+            <li><a style="text-decoration:none; color:#00695c;" th:href="@{/index}">Inicio</a></li>
+            <li><a style="text-decoration:none; color:#00695c;" th:href="@{/login}">
+                <i class='fa-solid fa-user'></i> Iniciar sesión
+            </a></li>
+            <li><a style="text-decoration:none; color:#00695c;" th:href="@{/10.pagina_mapa_nav}">Mapa de navegación</a></li>
+            <li><a style="text-decoration:none; color:#00695c;" th:href="@{/7.pagina_sobre_nosotros}">Nosotros</a></li>
+        </ul>
+    </nav>
 </div>
 
 <hr class="linea_separación">
+
+
 
 <div class="contenedeor_cabeza logo_nav_items">
     <nav class="menu">

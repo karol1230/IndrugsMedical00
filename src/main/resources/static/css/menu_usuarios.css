@@ -204,3 +204,6 @@ html, body {
     justify-content: center;
 }
 
+header {
+    padding-bottom: 40px;
+}

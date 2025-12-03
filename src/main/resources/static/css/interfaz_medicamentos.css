@@ -99,3 +99,6 @@
     background: #005f54;
     transform: translateY(-3px);
 }
+header {
+    padding-bottom: 70px;
+}

@@ -20,3 +20,7 @@ h1{
     margin-bottom: 3%;
     font-family: Quicksand;
 }
+
+header {
+    padding-bottom: 30px;
+}

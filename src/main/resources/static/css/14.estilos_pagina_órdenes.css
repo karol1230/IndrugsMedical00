@@ -15,6 +15,29 @@ main {
     flex: 1; /* Ocupa todo el espacio disponible */
 }
 
+/* ✔ Fuerza el centramiento del contenedor de la tabla */
+#tabla1 {
+    margin-left: auto !important;
+    margin-right: auto !important;
+    width: 95% !important; /* ajusta el ancho si quieres */
+}
+
+/* ✔ Centra el contenido de la tabla */
+#tabla1 th,
+#tabla1 td {
+    text-align: center !important;
+    vertical-align: middle !important;
+}
+.cuerpo_indrugs {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    margin: 0 auto !important;
+}
+
+header {
+    padding-bottom: 70px;
+}
+
 /* 🌿 Título */
 h1 {
     text-align: center;

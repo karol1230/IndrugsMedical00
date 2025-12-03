@@ -2,68 +2,59 @@
     <header class="cabeza_indrugs">
 
         <!-- LOGO -->
-        <div class="contenedeor_cabeza logo_nav_items">
+        <div class="contenedor_cabeza logo_nav_items">
             <a th:href="@{/index}" class="logo">
                 <img class="img_indrugs_logo" th:src="@{/imagenes/logo.png}" alt="Logo">
                 INDRUGS MEDICAL
             </a>
         </div>
 
-        <hr class="linea_separación">
-
         <!-- MENÚ PRINCIPAL -->
-        <div class="contenedeor_cabeza logo_nav_items">
-            <nav class="menu">
-                <ul class="barra_2">
-                    <li id="items_barra"><a id="enlaces_barra" th:href="@{/1.pagina_principal_paciente}">Inicio</a></li>
-                    <li id="items_barra"><a id="enlaces_barra" th:href="@{/24.pagina_control}">Control</a></li>
-                    <li id="items_barra"><a id="enlaces_barra" th:href="@{/8.pagina_med}">Medicamentos</a></li>
-                    <li id="items_barra"><a id="enlaces_barra" th:href="@{/5.pagina_pqrs}">PQRS</a></li>
+        <nav class="menu">
+            <ul class="barra_2">
+                <li class="item_barra"><a class="enlace_barra" th:href="@{/1.pagina_principal_paciente}">Inicio</a></li>
+                <li class="item_barra"><a class="enlace_barra" th:href="@{/24.pagina_control}">Control</a></li>
+                <li class="item_barra"><a class="enlace_barra" th:href="@{/8.pagina_med}">Medicamentos</a></li>
+                <li class="item_barra"><a class="enlace_barra" th:href="@{/5.pagina_pqrs}">PQRS</a></li>
 
-                    <!-- ✅ Login / Logout -->
-                    <li id="items_barra" th:if="${session.usuarioLogueado == null}">
-                        <a id="enlaces_barra" th:href="@{/login}">Iniciar sesión</a>
-                    </li>
+                <!-- Login / Logout -->
+                <li class="item_barra" th:if="${session.usuarioLogueado == null}">
+                    <a class="enlace_barra" th:href="@{/login}">Iniciar sesión</a>
+                </li>
+                <li class="item_barra" th:if="${session.usuarioLogueado != null}">
+                    <a class="enlace_barra" th:href="@{/logout}">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                        Cerrar sesión
+                    </a>
+                </li>
+            </ul>
+        </nav>
 
-                    <li id="items_barra" th:if="${session.usuarioLogueado != null}">
-                        <a id="enlaces_barra" th:href="@{/logout}">Cerrar sesión</a>
-                    </li>
+        <!-- ICONOS DERECHA -->
+        <nav class="navegacion_1">
+            <ul class="barra_1">
+                <!-- Perfil del Paciente -->
+                <li th:if="${session.usuarioLogueado != null and session.usuarioLogueado.rol.idRol == 2}">
+                <a th:href="@{/perfil}" class="enlace_barra1" title="Mi Perfil">
+                    <i class="fa-solid fa-user icono_perfil" style="color:white; font-size:24px;"></i>
 
-                </ul>
-            </nav>
+                </a>
+                </li>
 
-            <!-- ICONOS DERECHA -->
-            <nav class="navegacion_1">
-                <ul class="barra_1">
-
-                    <!-- 🛒 CARRITO (Se queda) -->
-                    <li id="items_barra1">
-                        <a th:href="@{/16.pagina_carrito_med}" id="enlaces_barra1">
-                            <img id="iconos" th:src="@{/Iconos/compras.png}" alt="Carrito">
-                        </a>
-                    </li>
-
-                    <!-- 🚪 Logout ícono -->
-                    <li id="items_barra1" th:if="${session.usuarioLogueado != null}">
-                        <a th:href="@{/logout}" id="enlaces_barra1">
-                            <img id="iconos" th:src="@{/Iconos/icons8-cerrar-sesión-96.png}" alt="Cerrar sesión">
-                        </a>
-                    </li>
-
-                    <!-- 🔐 Si no hay sesión → muestra icono login -->
-                    <li id="items_barra1" th:if="${session.usuarioLogueado == null}">
-                        <a th:href="@{/login}" id="enlaces_barra1">
-                            <img id="iconos" th:src="@{/Iconos/icons8-cerrar-sesión-96.png}" alt="Login">
-                        </a>
-                    </li>
-
-                </ul>
-            </nav>
-        </div>
-
-        <hr class="linea_separación">
+                <!-- Carrito -->
+                <li class="item_barra1">
+                    <a th:href="@{/16.pagina_carrito_med}" class="enlace_barra1" title="Carrito">
+                        <img class="iconos" th:src="@{/Iconos/compras.png}" alt="Carrito">
+                    </a>
+                </li>
+            </ul>
+        </nav>
 
     </header>
+</div>
+
+
+
 </div>
 
 <div th:fragment="error" xmlns:th="http://www.thymeleaf.org">

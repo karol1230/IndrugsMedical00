@@ -11,15 +11,16 @@
     <link rel="stylesheet" th:href="@{/css/header-footer/header-footer.css}">
 </head>
 <body>
-<header th:insert="Layouts/header_footerAdmin :: header"></header>
+<header th:insert="Layouts/header_footerAdmin :: header">
+</header>
 
 <main class="cuerpo_indrugs container py-4">
     <div th:insert="Layouts/header_footerAdmin :: error"></div>
     <h1 class="text-center mb-4">Gestión de Órdenes</h1>
 
     <div th:if="${ordenes != null and !ordenes.isEmpty()}">
-        <table id="tabla1" class="table table-hover align-middle">
-            <thead class="table-dark text-center">
+        <table id="tabla1" class="table table-hover align-middle tabla-centrada">
+        <thead class="table-dark text-center">
             <tr>
                 <th>ID</th>
                 <th>Paciente</th>

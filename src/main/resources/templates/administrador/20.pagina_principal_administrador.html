@@ -22,23 +22,6 @@
     <!-- jsPDF para exportar PDF -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
-    <style>
-        .contenedor-grafico {
-            background: white;
-            padding: 25px;
-            border-radius: 12px;
-            margin-bottom: 15px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.12);
-        }
-        #graficoUsuarios {
-            max-height: 420px;
-        }
-        #btnExportarPDF {
-            margin-top: 10px;
-        }
-
-
-    </style>
 </head>
 
 <body>
@@ -50,36 +33,70 @@
     <div th:insert="Layouts/header_footerAdmin :: error"></div>
 
     <div class="contenido">
+        <section class="bienvenida-admin">
+            <div class="bienvenida-box">
+                <h1>👋 ¡Bienvenido, Administrador <span th:text="${nombreAdmin}"></span>!</h1>
+                <p>
+                    Desde este panel podrás gestionar las funciones principales del sistema:
+                    usuarios, inventario, medicamentos, órdenes y PQRS.
+                </p>
+            </div>
+        </section>
 
+
+        <!-- TARJETAS DE CARACTERÍSTICAS -->
+        <section class="caracteristicas-admin">
+            <div class="card-admin">
+                <i class="fas fa-chart-line icono-admin"></i>
+                <h3>Monitoreo en Tiempo Real</h3>
+                <p>Observa estadísticas actualizadas del sistema para una gestión eficiente.</p>
+            </div>
+
+            <div class="card-admin">
+                <i class="fas fa-shield-alt icono-admin"></i>
+                <h3>Gestión Segura</h3>
+                <p>El sistema garantiza protección de datos y operaciones confiables.</p>
+            </div>
+
+            <div class="card-admin">
+                <i class="fas fa-hand-holding-medical icono-admin"></i>
+                <h3>Procesos Eficientes</h3>
+                <p>Optimiza el manejo de órdenes y solicitudes de manera sencilla.</p>
+            </div>
+        </section>
+
+
+
+        <!-- ⭐⭐⭐ DASHBOARD (gráfica + tablas) -->
         <section class="dashboard">
 
-            <!-- 🔥 BOTÓN EXPORTAR PDF EN ESQUINA SUPERIOR DERECHA -->
+            <!-- Gráfica -->
             <div class="contenedor-grafico">
-                <h2 class="mb-3">Estadísticas de Usuarios</h2>
+                <div class="header-card">
+                    <h2 class="titulo-tarjeta">Estadísticas de Usuarios</h2>
+
+                    <button id="btnExportarPDF" class="botonD">
+                        <i class="fas fa-file-export"></i> Exportar PDF
+                    </button>
+                </div>
 
                 <canvas id="graficoUsuarios"></canvas>
             </div>
 
-            <div class="exportar-container">
-                <button id="btnExportarPDF" class="botonD">EXPORTAR PDF</button>
-            </div>
 
-
-
-            <!-- TABLAS IMPORTANTES -->
             <div class="contenido_dash">
 
                 <!-- Tabla órdenes recientes -->
-                <div class="ordenes_recientes mb-4">
+                <div class="tarjeta">
                     <div class="cabeza1">
                         <h2>Órdenes recientes</h2>
                         <a th:href="@{/18.pagina_orden_admin}">
-                            <input class="botonD" type="button" value="VER TODO">
+                            <button class="botonD">VER TODO</button>
                         </a>
                     </div>
 
-                    <table id="tabla1" class="table">
-                        <thead class="table-dark">
+                    <table id="tabla1" class="table table-hover text-center tabla-estilizada">
+                        <thead>
                         <tr>
                             <th>ID</th>
                             <th>Usuarios</th>
@@ -102,18 +119,19 @@
                     </table>
                 </div>
 
+
                 <!-- Tabla usuarios recientes -->
-                <div class="domicilio">
+                <div class="tarjeta">
                     <div class="cabeza1">
                         <h2>Resumen de usuarios</h2>
 
                         <a th:href="@{/21.pagina_usuarios}">
-                            <input class="botonD" type="button" value="VER TODO">
+                            <button class="botonD">VER TODO</button>
                         </a>
                     </div>
 
-                    <table id="tabla2" class="table">
-                        <thead class="table-dark">
+                    <table id="tabla2" class="table table-hover text-center tabla-estilizada">
+                        <thead>
                         <tr>
                             <th>Rol</th>
                             <th>Nombre</th>
@@ -125,8 +143,8 @@
                         <tr th:each="usuario : ${usuariosRecientes}">
                             <td>
                                 <span class="badge"
-                                      th:classappend="${usuario.nombreRol == 'Paciente' ? 'bg-primary' : (usuario.nombreRol == 'Domiciliario' ? 'bg-success' : 'bg-warning')}"
-                                      th:text="${usuario.nombreRol}">
+                                      th:classappend="${usuario.nombreRol == 'Paciente' ? 'bg-primary' : (usuario.nombreRol == 'Domiciliario' ? 'bg-success' : 'bg-warning')}">
+                                      <span th:text="${usuario.nombreRol}"></span>
                                 </span>
                             </td>
 
@@ -134,8 +152,8 @@
 
                             <td>
                                 <span class="badge"
-                                      th:classappend="${usuario.estado == 'ACTIVO' ? 'bg-success' : 'bg-danger'}"
-                                      th:text="${usuario.estado}">
+                                      th:classappend="${usuario.estado == 'ACTIVO' ? 'bg-success' : 'bg-danger'}">
+                                      <span th:text="${usuario.estado}"></span>
                                 </span>
                             </td>
                         </tr>
@@ -158,10 +176,12 @@
 
 <footer th:insert="Layouts/header_footerAdmin :: footer"></footer>
 
+
+
 <!-- SCRIPT GRÁFICA + EXPORTAR PDF -->
 <script>
 
-    let grafico; // Variable global para la gráfica
+    let grafico;
 
     async function cargarEstadisticasUsuarios() {
 
@@ -175,6 +195,8 @@
                 type: 'bar',
                 data: {
                     labels: ['Pacientes', 'Medicamentos', 'Órdenes Completadas', 'Activos', 'Inactivos'],
+
+                    /* 🎨 COLORES PASTEL PARA CADA COLUMNA */
                     datasets: [{
                         label: 'Cantidad',
                         data: [
@@ -185,9 +207,23 @@
                             data.inactivos
                         ],
                         borderWidth: 1,
-                        backgroundColor: 'rgba(144, 238, 144, 0.7)'
+                        backgroundColor: [
+                            'rgba(255, 179, 186, 0.7)',
+                            'rgba(255, 223, 186, 0.7)',
+                            'rgba(255, 255, 186, 0.7)',
+                            'rgba(186, 255, 201, 0.7)',
+                            'rgba(186, 225, 255, 0.7)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 179, 186, 1)',
+                            'rgba(255, 223, 186, 1)',
+                            'rgba(255, 255, 186, 1)',
+                            'rgba(186, 255, 201, 1)',
+                            'rgba(186, 225, 255, 1)'
+                        ]
                     }]
                 },
+
                 options: {
                     responsive: true,
                     scales: {
@@ -201,7 +237,8 @@
         }
     }
 
-    // Exportar gráfica a PDF
+
+    /* 📄 EXPORTAR PDF */
     document.getElementById('btnExportarPDF').addEventListener('click', function () {
 
         const { jsPDF } = window.jspdf;
@@ -210,7 +247,6 @@
 
         doc.text("Estadísticas de Usuarios", 14, 15);
 
-        // Convertir el canvas de la gráfica a imagen
         const canvas = document.getElementById('graficoUsuarios');
         const imgData = canvas.toDataURL('image/png');
 
@@ -222,6 +258,7 @@
     cargarEstadisticasUsuarios();
 
 </script>
+
 
 </body>
 </html>

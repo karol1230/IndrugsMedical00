@@ -87,6 +87,8 @@ input[type="datetime-local"] {
     to   { opacity: 1; transform: translateY(0); }
 }
 
-
+header {
+    padding-bottom: 80px;
+}
 
 

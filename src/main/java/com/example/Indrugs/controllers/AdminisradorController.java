@@ -54,6 +54,8 @@ public class AdminisradorController {
         Usuario usuario = (Usuario) session.getAttribute("usuarioLogueado");
         if (usuario == null) return "redirect:/login";
 
+        model.addAttribute("nombreAdmin", usuario.getNombre());
+
         Map<String, Long> estadisticasUsuarios = usuarioService.obtenerResumenUsuarios();
         model.addAttribute("estadisticas", estadisticasUsuarios);
 

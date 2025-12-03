@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Perfil del Domiciliario</title>
+    <link rel="stylesheet" th:href="@{/css/1.estilos_pagina_inicio.css}">
+    <link rel="stylesheet" th:href="@{/css/header-footer/header-footer.css}">
+    <style>
+        body {
+            padding-top: 120px;
+            background: #f0f4f3;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .perfil-container {
+            max-width: 600px;
+           margin: 80px auto 50px auto; /* cambié el primer valor de 30px a 80px */
+             padding: 30px 40px;
+            border-radius: 15px;
+            background: #f7f9f8;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .perfil-container h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #2a7a4f;
+            font-size: 28px;
+        }
+
+        .perfil-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 15px;
+        }
+
+        .perfil-table td {
+            padding: 8px;
+        }
+
+        .perfil-table td:first-child {
+            font-weight: bold;
+            width: 40%;
+            color: #555;
+        }
+
+        .perfil-table input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+
+        .perfil-container button {
+            padding: 10px 25px;
+            background-color: #2a7a4f;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .mensaje-exito {
+            max-width: 600px;
+            margin: 20px auto 15px auto;
+            text-align: center;
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            padding: 15px;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+    </style>
+</head>
+<body>
+
+<!-- Header -->
+<th:block th:replace="~{Layouts/header_footerDomi :: header}"></th:block>
+
+<!-- Mensaje de éxito -->
+<div th:if="${mensajeExito}" class="mensaje-exito">
+    <p th:text="${mensajeExito}"></p>
+</div>
+
+<div class="perfil-container">
+    <h2>Mi Perfil</h2>
+
+    <form th:action="@{/perfil/domiciliario/actualizar}" th:object="${usuario}" method="post">
+    <table class="perfil-table">
+            <tr>
+                <td>Nombre:</td>
+                <td><input type="text" th:field="*{nombre}" /></td>
+            </tr>
+            <tr>
+                <td>Rol:</td>
+                <td th:text="${usuario.rol.nombreRol}"></td>
+            </tr>
+            <tr>
+                <td>Tipo de Documento:</td>
+                <td><input type="text" th:field="*{tipoDoc}" /></td>
+            </tr>
+            <tr>
+                <td>Número de Documento:</td>
+                <td><input type="text" th:field="*{numDoc}" /></td>
+            </tr>
+            <tr>
+                <td>Dirección:</td>
+                <td><input type="text" th:field="*{direccion}" /></td>
+            </tr>
+            <tr>
+                <td>Teléfono:</td>
+                <td><input type="text" th:field="*{telefono}" /></td>
+            </tr>
+            <tr>
+                <td>Correo:</td>
+                <td><input type="email" th:field="*{correo}" /></td>
+            </tr>
+        </table>
+
+        <div style="text-align:center; margin-top:20px;">
+            <button type="submit">Actualizar</button>
+        </div>
+    </form>
+</div>
+
+<!-- Footer -->
+<th:block th:replace="~{Layouts/header_footerDomi :: footer}"></th:block>
+
+</body>
+</html>
