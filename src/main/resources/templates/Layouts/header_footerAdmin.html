@@ -42,20 +42,6 @@
         <ul class="barra_1">
 
 
-          <!-- 🚪 CERRAR SESION (ícono, se queda y ahora sirve) -->
-          <li th:if="${session.usuarioLogueado != null}">
-            <a th:href="@{/logout}" id="enlaces_barra1">
-              <img id="iconos" th:src="@{/Iconos/icons8-cerrar-sesión-96.png}" alt="Cerrar sesión">
-            </a>
-          </li>
-
-          <!-- 🔐 Si no hay sesión → icono te manda al login -->
-          <li th:if="${session.usuarioLogueado != null}">
-            <a th:href="@{/logout}" id="enlaces_barra1">
-              <i class="fa-solid fa-right-from-bracket" style="font-size: 28px; color:white;"></i>
-            </a>
-          </li>
-
 
         </ul>
       </nav>
