@@ -16,12 +16,12 @@
       <nav class="menu">
         <ul class="barra_2">
           <li><a th:href="@{/20.pagina_principal_administrador}">Inicio</a></li>
-          <li><a th:href="@{/admin/registrar-usuario}">Registrar</a></li>
           <li><a th:href="@{/21.pagina_usuarios}">Usuarios</a></li>
           <li><a th:href="@{/17.pagina_inventario}">Inventario</a></li>
           <li><a th:href="@{/22.pagina_medicamento}">Medicamento</a></li>
           <li><a th:href="@{/18.pagina_orden_admin}">Órdenes</a></li>
           <li><a th:href="@{/administrador/pqrs}">PQRS</a></li>
+          <li><a th:href="@{/admin/registrar-usuario}">Registrar</a></li>
 
 
 
@@ -41,7 +41,7 @@
           <!-- 🚪 CERRAR SESION (ícono, se queda y ahora sirve) -->
           <li th:if="${session.usuarioLogueado != null}">
             <a th:href="@{/logout}" id="enlaces_barra1">
-              <img id="iconos" th:src="@{/Iconos/icons8-cerrar-sesión-96.png}" alt="Cerrar sesión">
+              <img id="iconos" th:src="@{/Iconos/icons8-cerrar-sesión-96.png}" alt="Cerrar sesión" title="Cerrar sesión">
             </a>
           </li>
 

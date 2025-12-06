@@ -21,7 +21,13 @@
     <div class="contenido">
         <h1>Agregar vehículo</h1>
 
-        <form th:action="@{/agregar_vehiculo}" method="post" th:object="${vehiculo}" class="row g-3 needs-validation" novalidate>
+        <!-- FORMULARIO CORREGIDO CON enctype PARA PERMITIR ARCHIVOS -->
+        <form th:action="@{/agregar_vehiculo}"
+              method="post"
+              th:object="${vehiculo}"
+              enctype="multipart/form-data"
+              class="row g-3 needs-validation"
+              novalidate>
 
             <input type="hidden" name="idUsuario" th:value="${usuarioLogueado.idUsuario}" />
 
@@ -36,7 +42,6 @@
                         <option value="Carro">🚗 Carro</option>
                     </select>
                 </div>
-
             </div>
 
             <div class="col-12">
@@ -67,6 +72,24 @@
                     <option value="Activo">Activo</option>
                     <option value="Inactivo">Inactivo</option>
                 </select>
+            </div>
+
+            <!-- NUEVO CAMPO PARA PDF -->
+            <div class="col-12">
+                <label for="tarjetaPropiedad" class="form-label">
+                    <i class="fas fa-file-pdf"></i> Tarjeta de propiedad del vehículo (PDF):
+                </label>
+
+                <input type="file"
+                       id="tarjetaPropiedad"
+                       name="tarjetaPropiedad"
+                       class="form-control"
+                       accept="application/pdf"
+                       required>
+
+                <div class="invalid-feedback">
+                    Debes adjuntar la tarjeta de propiedad en formato PDF.
+                </div>
             </div>
 
             <div class="col-12 mt-3">
