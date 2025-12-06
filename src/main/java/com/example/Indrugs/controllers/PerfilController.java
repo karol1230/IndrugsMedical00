@@ -4,6 +4,7 @@ import com.example.Indrugs.entities.Usuario;
 import com.example.Indrugs.repositorios.UsuarioRepository;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +18,9 @@ public class PerfilController {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder; // 🔥 NECESARIO PARA ENCRIPTAR
+
     // =========================
     // VER PERFIL SEGÚN ROL
     // =========================
@@ -29,7 +33,6 @@ public class PerfilController {
 
         model.addAttribute("usuario", usuario);
 
-        // Seleccionar la vista según rol
         String rol = usuario.getRol().getNombreRol();
         return switch (rol) {
             case "Administrador" -> "administrador/perfil";
@@ -46,15 +49,18 @@ public class PerfilController {
     public String actualizarPerfilPaciente(@ModelAttribute Usuario usuarioActualizado,
                                            HttpSession session,
                                            RedirectAttributes redirectAttributes) {
+
         Usuario usuarioLogueado = (Usuario) session.getAttribute("usuarioLogueado");
+
         if (usuarioLogueado == null || !"Paciente".equals(usuarioLogueado.getRol().getNombreRol())) {
             return "redirect:/login";
         }
 
-        // Actualizar datos permitidos
         actualizarDatosUsuario(usuarioLogueado, usuarioActualizado);
 
-        // Guardar cambios
+        // 🔥 Actualizar contraseña si el usuario ingresó algo
+        actualizarPassword(usuarioLogueado, usuarioActualizado.getPassword());
+
         usuarioRepository.save(usuarioLogueado);
         session.setAttribute("usuarioLogueado", usuarioLogueado);
 
@@ -69,15 +75,18 @@ public class PerfilController {
     public String actualizarPerfilDomiciliario(@ModelAttribute Usuario usuarioActualizado,
                                                HttpSession session,
                                                RedirectAttributes redirectAttributes) {
+
         Usuario usuarioLogueado = (Usuario) session.getAttribute("usuarioLogueado");
+
         if (usuarioLogueado == null || !"Domiciliario".equals(usuarioLogueado.getRol().getNombreRol())) {
             return "redirect:/login";
         }
 
-        // Actualizar datos permitidos
         actualizarDatosUsuario(usuarioLogueado, usuarioActualizado);
 
-        // Guardar cambios
+        // 🔥 Actualizar contraseña si el usuario la escribió
+        actualizarPassword(usuarioLogueado, usuarioActualizado.getPassword());
+
         usuarioRepository.save(usuarioLogueado);
         session.setAttribute("usuarioLogueado", usuarioLogueado);
 
@@ -95,5 +104,20 @@ public class PerfilController {
         usuarioOriginal.setDireccion(usuarioActualizado.getDireccion());
         usuarioOriginal.setTelefono(usuarioActualizado.getTelefono());
         usuarioOriginal.setCorreo(usuarioActualizado.getCorreo());
+    }
+
+    // =========================
+    // 🔥 MÉTODO PARA ACTUALIZAR CONTRASEÑA
+    // =========================
+    private void actualizarPassword(Usuario usuario, String nuevaPassword) {
+
+        if (nuevaPassword != null && !nuevaPassword.trim().isEmpty()) {
+            if (nuevaPassword.length() < 6) {
+                // Puedes mostrar un error si quieres
+                return;
+            }
+
+            usuario.setPassword(passwordEncoder.encode(nuevaPassword));
+        }
     }
 }

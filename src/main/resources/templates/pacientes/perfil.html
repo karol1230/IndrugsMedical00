@@ -118,21 +118,6 @@
     box-shadow: 0 10px 25px rgba(0,0,0,0.1);
 }
 
-/* Mensaje de éxito separado */
-.mensaje-exito {
-    max-width: 600px;
-    margin: 120px auto 30px auto; /* margen superior para no quedar detrás del header */
-    text-align: center;
-    background-color: #d4edda;
-    color: #155724;
-    border: 1px solid #c3e6cb;
-    padding: 15px;
-    border-radius: 10px;
-    font-weight: bold;
-    font-size: 16px;
-    position: relative;
-    z-index: 100;
-}
 
     </style>
 </head>
@@ -141,14 +126,16 @@
 <!-- Header -->
 <th:block th:replace="~{Layouts/header_footerPaciente :: header}"></th:block>
 
-<!-- Mensaje de éxito -->
-<div th:if="${mensajeExito}" class="mensaje-exito">
-    <p th:text="${mensajeExito}"></p>
-</div>
+
 
 <!-- Contenedor del perfil -->
 <div class="perfil-container">
     <h2>Mi Perfil</h2>
+
+    <!-- Mensaje de éxito -->
+    <div th:if="${mensajeExito}" class="mensaje-exito">
+        <p th:text="${mensajeExito}"></p>
+    </div>
 
     <form th:action="@{/perfil/paciente/actualizar}" th:object="${usuario}" method="post">
     <table class="perfil-table">
@@ -180,7 +167,12 @@
                 <td>Correo:</td>
                 <td><input type="email" th:field="*{correo}" /></td>
             </tr>
-        </table>
+        <tr>
+            <td>Contraseña:</td>
+            <td><input type="password" th:field="*{password}" placeholder="Nueva contraseña" minlength="6" /></td>
+        </tr>
+
+    </table>
 
         <div style="text-align:center; margin-top:20px;">
             <button type="submit">Actualizar</button>

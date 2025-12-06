@@ -20,6 +20,8 @@ public class EmailService {
     @Autowired
     private UsuarioService usuarioService;
 
+
+
     /**
      * Obtener correos activos desde la BD
      */
@@ -210,7 +212,46 @@ public class EmailService {
     }
 
 
+    public void enviarCorreoRecuperarPassword(String correo, String nombre, String nuevaClave) {
+        try {
+            String asunto = "Recuperación de contraseña - Indrugs Medical";
 
+            String html = """
+            <html>
+            <body style="font-family: Arial, sans-serif; color:#333;">
+                <h2 style="color:#00796b;">Hola %s,</h2>
+                <p>Recibimos una solicitud para recuperar tu contraseña.</p>
+
+                <p>Tu nueva clave temporal es:</p>
+
+                <div style="padding: 10px 15px; 
+                            background:#00796b; 
+                            color:white; 
+                            display:inline-block; 
+                            font-size:18px;
+                            border-radius:6px;
+                            font-weight:bold;">
+                    %s
+                </div>
+
+                <p style="margin-top:20px;">
+                    Te recomendamos iniciar sesión y cambiarla inmediatamente.
+                </p>
+
+                <p>Atentamente,<br>
+                <b>Equipo INDRUGS MEDICAL</b></p>
+            </body>
+            </html>
+        """.formatted(nombre, nuevaClave);
+
+            enviarCorreo(correo, asunto, html);
+
+            System.out.println("📨 Correo de recuperación enviado a: " + correo);
+
+        } catch (Exception e) {
+            System.out.println("❌ Error enviando correo de recuperación: " + e.getMessage());
+        }
+    }
 
 
 }

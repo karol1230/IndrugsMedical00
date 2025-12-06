@@ -7,9 +7,9 @@
     <link rel="stylesheet" th:href="@{/css/header-footer/header-footer.css}">
     <style>
         body {
-            padding-top: 120px;
-            background: #f0f4f3;
-            font-family: 'Arial', sans-serif;
+          padding-top: 180px; /* ajusta si es necesario */
+          background: #f0f4f3;
+          font-family: 'Arial', sans-serif;
         }
 
         .perfil-container {
@@ -72,6 +72,9 @@
             font-weight: bold;
             font-size: 16px;
         }
+        header {
+    padding-bottom: 60px;
+}
 
     </style>
 </head>
@@ -80,13 +83,15 @@
 <!-- Header -->
 <th:block th:replace="~{Layouts/header_footerDomi :: header}"></th:block>
 
-<!-- Mensaje de éxito -->
-<div th:if="${mensajeExito}" class="mensaje-exito">
-    <p th:text="${mensajeExito}"></p>
-</div>
+
 
 <div class="perfil-container">
     <h2>Mi Perfil</h2>
+
+    <!-- Mensaje de éxito -->
+    <div th:if="${mensajeExito}" class="mensaje-exito">
+        <p th:text="${mensajeExito}"></p>
+    </div>
 
     <form th:action="@{/perfil/domiciliario/actualizar}" th:object="${usuario}" method="post">
     <table class="perfil-table">
@@ -118,6 +123,10 @@
                 <td>Correo:</td>
                 <td><input type="email" th:field="*{correo}" /></td>
             </tr>
+        <tr>
+            <td>Contraseña:</td>
+            <td><input type="password" th:field="*{password}" placeholder="Nueva contraseña" minlength="6" /></td>
+        </tr>
         </table>
 
         <div style="text-align:center; margin-top:20px;">

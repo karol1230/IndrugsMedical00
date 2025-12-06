@@ -5,7 +5,7 @@ html {
   scroll-behavior: smooth;
 }
 body {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Nunito', sans-serif;
 }
 
 
@@ -52,7 +52,7 @@ body {
   justify-content: center;
   align-items: center;
   position: relative;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Nunito', sans-serif;
 
 }
 
@@ -89,20 +89,20 @@ body {
   background-color: #eef6f9;
   padding: 60px 0;
   border-radius: 25px;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Nunito', sans-serif;
 }
 
 .medicamentos-destacados h2 {
   font-weight: 700;
   margin-bottom: 10px;
   color: #064854;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Nunito', sans-serif;
 
 }
 
 .medicamentos-destacados p {
   color: #555;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Nunito', sans-serif;
 
 }
 
@@ -111,7 +111,7 @@ body {
   object-fit: cover;
   border-top-left-radius: 1rem;
   border-top-right-radius: 1rem;
-    font-family: 'Poppins', sans-serif;
+    font-family: 'Nunito', sans-serif;
 
 }
 
@@ -125,7 +125,7 @@ body {
   margin-bottom: 25px;
   font-weight: 600;
   color: #064854;
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Nunito', sans-serif;
 
 
 }
@@ -222,40 +222,6 @@ body {
 
 .card .btn-custom:hover {
   background-color: #00695c;
-}
-
-/* =====================================================
-   EPS
-===================================================== */
-.imagenes_eps {
-  display: flex;
-  border: 2px solid rgb(252, 251, 251);
-}
-
-.eps, .eps_compensar, .eps_sura, .eps_saludtotal {
-  background-color: #fff;
-  border-radius: 10%;
-}
-
-.eps {
-  border: 2px solid #fdfbfb;
-  height: 100px;
-  width: 10%;
-  margin-top: 90px;
-}
-
-.eps_compensar {
-  height: 100px;
-  width: 20%;
-  margin-top: 90px;
-  margin-left: 50px;
-}
-
-.eps_sura, .eps_saludtotal {
-  height: 200px;
-  width: 20%;
-  margin: 40px;
-  margin-top: 90px;
 }
 
 
