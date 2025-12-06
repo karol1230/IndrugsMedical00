@@ -1,47 +1,75 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
 
-body{
+body {
     height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0 auto;
-    font-family: Quicksand, "Montserrat",sans-serif;
-    color: white;
+    margin: 0;
+    font-family: Quicksand, "Montserrat", sans-serif;
     background-color: #022c5c;
-}
-.codigo_num{
-    width: 100%;
-    margin: 0 auto;
-    font-size: 6rem;
-    font-weight: 800;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 0;
-}
-p:first-of-type{
-    transform: rotateZ(-20deg);
-}
-p:nth-last-of-type(2){
-    color: rgb(74, 227, 113);
-    opacity: 1;
-}
-p:last-of-type{
-    transform:rotateZ(20deg);
+    color: white;
+    overflow: hidden;
 }
 
-.texto_error{
-    font-size: 1.5rem;
-    font-weight: 700;
-    justify-content: center;
+/* CONTENEDOR */
+.codigo_500 {
     text-align: center;
+    animation: fadeIn 1.2s ease forwards;
 }
-.descripcion{
-    font-size: 0.9rem;
-    text-align: center;
-    line-height: 1.6;
-    color: rgb(153, 151, 151);
+
+/* NUEVA ANIMACIÓN PARA LOS NÚMEROS */
+.digit {
+    font-size: 6rem;
+    font-weight: 800;
+    margin: 0 8px;
+    display: inline-block;
+    animation: bounce 1s ease-in-out infinite alternate;
+}
+
+.digit:nth-child(2) {
+    color: #4ae371;
+}
+
+@keyframes bounce {
+    from { transform: translateY(0); }
+    to { transform: translateY(-18px); }
+}
+
+/* TÍTULO */
+.texto_error {
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-top: 15px;
+}
+
+/* DESCRIPCIÓN */
+.descripcion {
+    font-size: 1rem;
+    color: #d5d5d5;
+    margin-top: 10px;
+}
+
+/* BOTÓN */
+.btn-volver {
+    display: inline-block;
+    margin-top: 22px;
+    background: #4ae371;
+    padding: 10px 22px;
+    border-radius: 8px;
+    color: #022c5c;
+    font-weight: 700;
+    text-decoration: none;
+    transition: 0.25s ease;
+}
+
+.btn-volver:hover {
+    background: #3cd45f;
+    transform: scale(1.06);
+}
+
+/* Fade In */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
 }

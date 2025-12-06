@@ -1,16 +1,14 @@
 package com.example.Indrugs.services;
 
+import com.example.Indrugs.DTO.Usuario.UsuarioCreateDTO;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 @Service
@@ -30,7 +28,7 @@ public class EmailService {
     }
 
     /**
-     * Enviar correo HTML genérico (versión limpia usada en otros módulos)
+     * Enviar correo HTML genérico
      */
     public void enviarCorreo(String destinatario, String asunto, String contenidoHtml) {
         try {
@@ -50,17 +48,10 @@ public class EmailService {
         }
     }
 
-    /**
-     * ✅ Alias que necesitaba PQRSAdminController
-     * Internamente llama a enviarCorreo(destinatario, asunto, html)
-     */
     public void enviarCorreoHtml(String destinatario, String asunto, String contenidoHtml) {
         enviarCorreo(destinatario, asunto, contenidoHtml);
     }
 
-    /**
-     * Enviar bienestar a 1 usuario específico (usado por BienestarService)
-     */
     public void enviarCorreoBienestar(String destinatario, String nombre, String mes, String telefonoSoporte, String mensajeExtra) {
         try {
             MimeMessage mensaje = mailSender.createMimeMessage();
@@ -86,11 +77,7 @@ public class EmailService {
         }
     }
 
-    /**
-     * 📩 Enviar correos masivos de bienestar mensual
-     */
     public void enviarCorreosMasivosBienestar(String mes, String telefonoSoporte, String mensajeExtra) {
-
         List<String> correos = obtenerCorreosActivos();
 
         for (String correo : correos) {
@@ -109,8 +96,7 @@ public class EmailService {
         }
     }
 
-
-    // -------------- MÉTODOS QUE YA TENÍAS (QUEDAN IGUAL, SIN CAMBIOS) -------------- //
+    // -------------- MÉTODOS YA EXISTENTES -------------- //
 
     public void enviarCorreo(String destinatario) {
         enviarCorreo(destinatario, "INDRUGS MEDICA", "<html><body><h2>Nuevo control registrado</h2></body></html>");
@@ -138,4 +124,93 @@ public class EmailService {
 
         enviarCorreo(destinatario, "Nuevo control médico registrado", html);
     }
+
+    // =====================================================
+// ✅ MÉTODO PARA POSTULACIONES COMPLETAS (3 PDFs y vehículo)
+// =====================================================
+    public void enviarPostulacionCompleta(
+            UsuarioCreateDTO candidato,
+            String vehiculo,
+            MultipartFile archivoCV,
+            MultipartFile licenciaPdf,
+            MultipartFile tarjetaPdf
+    ) throws Exception {
+
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+
+        helper.setTo("indrugsmedica@gmail.com");
+        helper.setSubject("Nueva postulación - " + candidato.getNombre());
+
+        String contenidoHtml = """
+            <html>
+            <body style='font-family: Arial, sans-serif;'>
+                <h2>Nueva postulación recibida</h2>
+                <p><b>Nombre:</b> %s</p>
+                <p><b>Tipo de documento:</b> %s</p>
+                <p><b>Número de documento:</b> %s</p>
+                <p><b>Correo:</b> %s</p>
+                <p><b>Teléfono:</b> %s</p>
+                <p><b>Tipo de vehículo:</b> %s</p>
+                <p>Se adjuntan los siguientes documentos en PDF:</p>
+                <ul>
+                    <li>Hoja de vida</li>
+                    <li>Licencia de conducción</li>
+                    <li>Tarjeta de propiedad</li>
+                </ul>
+            </body>
+            </html>
+            """.formatted(
+                candidato.getNombre(),
+                candidato.getTipoDoc(),   // ← tipo de documento
+                candidato.getNumDoc(),    // ← número de documento
+                candidato.getCorreo(),
+                candidato.getTelefono(),
+                vehiculo
+        );
+
+        helper.setText(contenidoHtml, true);
+
+        helper.addAttachment(archivoCV.getOriginalFilename(), archivoCV);
+        helper.addAttachment(licenciaPdf.getOriginalFilename(), licenciaPdf);
+        helper.addAttachment(tarjetaPdf.getOriginalFilename(), tarjetaPdf);
+
+        mailSender.send(message);
+        System.out.println("📨 Postulación enviada correctamente con todos los PDFs y documento");
+    }public void enviarCorreoDomiciliario(String correo, String nombre, Long numDoc) {
+        try {
+            MimeMessage mensaje = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(mensaje, true, "UTF-8");
+
+            helper.setTo(correo);
+            helper.setSubject("Bienvenido a nuestro equipo");
+            helper.setFrom("indrugsmedica@gmail.com");
+
+            String html = """
+            <html>
+            <body style='font-family: Arial, sans-serif;'>
+                <h2>Hola %s</h2>
+                <p>¡Bienvenido! Ahora eres parte de nuestro equipo de domiciliarios.</p>
+                <p>Puedes iniciar sesión con tu correo electrónico y tu número de identificación como contraseña:</p>
+                <ul>
+                    <li><b>Correo:</b> %s</li>
+                    <li><b>Contraseña:</b> %s</li>
+                </ul>
+            </body>
+            </html>
+            """.formatted(nombre, correo, numDoc);
+
+            helper.setText(html, true);
+            mailSender.send(mensaje);
+
+            System.out.println("✅ Correo de domiciliario enviado a: " + correo);
+        } catch (Exception e) {
+            System.out.println("❌ Error enviando correo domiciliario: " + e.getMessage());
+        }
+    }
+
+
+
+
+
 }

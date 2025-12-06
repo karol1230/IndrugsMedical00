@@ -75,6 +75,7 @@ public class OrdenController {
     }
 
 
+
     // ============================================================
     // CREAR ORDEN
     // ============================================================
@@ -292,9 +293,8 @@ public class OrdenController {
     // DOMICILIARIO: VER SUS PEDIDOS
     // ============================================================
 
-    @GetMapping("/domiciliario/pedidos")
+    @GetMapping("/pedidos-domiciliario") // ✅ ya no choca con el otro controller
     public String verPedidosDomiciliario(Model model, HttpSession session) {
-
         Usuario usuario = (Usuario) session.getAttribute("usuarioLogueado");
         if (usuario == null) return "redirect:/login";
 

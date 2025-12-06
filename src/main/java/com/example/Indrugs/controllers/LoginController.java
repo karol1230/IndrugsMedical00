@@ -32,16 +32,23 @@ public class LoginController {
             Usuario usuario = usuarioService.autenticar(correo, password);
             session.setAttribute("usuarioLogueado", usuario);
 
-            if (usuario.getRol().getNombreRol().equals("Administrador")){
-                return "redirect:/20.pagina_principal_administrador";
-            } else if (usuario.getRol().getNombreRol().equals("Paciente")){
-                return "redirect:/1.pagina_principal_paciente";
-            } else if (usuario.getRol().getNombreRol().equals("Domiciliario")){
-                return "redirect:/11.pagina_principal_domiciliario";
-            }
+            String rol = usuario.getRol().getNombreRol();
 
-            redirectAttributes.addFlashAttribute("error", "Rol no encontrado");
-            return "redirect:/login";
+            switch (rol) {
+                case "Administrador":
+                    return "redirect:/20.pagina_principal_administrador";
+
+                case "Paciente":
+                    return "redirect:/1.pagina_principal_paciente";
+
+                case "Domiciliario":
+                    // ✔ Debe coincidir con el mapping del DomiciliarioController
+                    return "redirect:/11.pagina_principal_domiciliario";
+
+                default:
+                    redirectAttributes.addFlashAttribute("error", "Rol no encontrado");
+                    return "redirect:/login";
+            }
 
         } catch (RuntimeException e) {
             redirectAttributes.addFlashAttribute("error", e.getMessage());
@@ -49,14 +56,12 @@ public class LoginController {
         }
     }
 
-    // ✅ LOGOUT PRINCIPAL (Usar este desde todos los módulos)
     @GetMapping("/logout")
     public String logout(HttpSession session) {
         session.invalidate();
         return "redirect:/index";
     }
 
-    // ✅ ENDPOINT DE RESPALDO (por si llega a llamarse accidentalmente)
     @GetMapping("/cerrarSesion")
     public String compatibilidadLogout(HttpSession session) {
         session.invalidate();

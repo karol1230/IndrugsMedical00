@@ -20,15 +20,14 @@ public class ArchivosService {
      * @param archivo Archivo recibido desde el formulario
      * @param carpeta Carpeta donde se guardará el archivo
      * @return URL relativa del archivo guardado
-     * @throws IOException
      */
     public String guardarArchivo(MultipartFile archivo, String carpeta) throws IOException {
-        if (archivo.isEmpty()) {
-            throw new RuntimeException("Archivo vacío");
+        if (archivo == null || archivo.isEmpty()) {
+            throw new RuntimeException("Archivo vacío o no recibido");
         }
 
-        // Validar tipo de archivo según carpeta
-        validarTipoArchivo(archivo, carpeta);
+        // Ya no explota si el contentType es null
+        validarTipoArchivoSeguro(archivo, carpeta);
 
         // Ruta absoluta del directorio de trabajo
         String directorioTrabajo = System.getProperty("user.dir");
@@ -38,59 +37,68 @@ public class ArchivosService {
         Path directorio = Paths.get(rutaCompleta);
         Files.createDirectories(directorio);
 
-        // Generar nombre único y seguro
-        String nombreArchivo = System.currentTimeMillis() + "_" + archivo.getOriginalFilename().replaceAll("[^a-zA-Z0-9\\.\\-_]", "_");
+        // Generar nombre seguro y único
+        String originalName = archivo.getOriginalFilename();
+        if (originalName == null) originalName = "archivo.pdf";
+
+        String nombreArchivo = System.currentTimeMillis() + "_" +
+                originalName.replaceAll("[^a-zA-Z0-9\\.\\-_]", "_");
+
         Path archivoDestino = directorio.resolve(nombreArchivo);
 
         // Guardar archivo en el sistema
         Files.copy(archivo.getInputStream(), archivoDestino, StandardCopyOption.REPLACE_EXISTING);
 
-        // Retornar URL relativa para acceder desde navegador
         return "/uploads/" + carpeta + "/" + nombreArchivo;
     }
 
     /**
-     * Guarda imagen de medicamento en la carpeta "medicamentos"
+     * Guarda imagen de medicamento en la carpeta: medicamentos
      */
     public String guardarImagenMedicamento(MultipartFile imagen) throws IOException {
         return guardarArchivo(imagen, "medicamentos");
     }
 
     /**
-     * Guarda archivo PDF de fórmula médica en la carpeta "formulas"
+     * Guarda PDF de fórmula médica en la carpeta: formulas
      */
     public String guardarFormulaMedica(MultipartFile pdf) throws IOException {
         return guardarArchivo(pdf, "formulas");
     }
 
     /**
-     * Valida el tipo de archivo según la carpeta de destino
+     * Valida tipo sin explotar si llega null el contentType
      */
-    private void validarTipoArchivo(MultipartFile archivo, String carpeta) {
+    private void validarTipoArchivoSeguro(MultipartFile archivo, String carpeta) {
         String contentType = archivo.getContentType();
 
-        switch (carpeta) {
-            case "medicamentos":
-                if (contentType == null || !contentType.startsWith("image/")) {
-                    throw new RuntimeException("Solo se permiten imágenes para medicamentos");
-                }
-                break;
-            case "formulas":
-                if (contentType == null || !contentType.equals("application/pdf")) {
-                    throw new RuntimeException("Solo se permiten archivos PDF para fórmulas");
-                }
-                break;
-            default:
-                throw new RuntimeException("Tipo de archivo no soportado");
+        if (contentType == null) {
+            // Si es fórmula, forzamos a PDF como válido
+            if (carpeta.equalsIgnoreCase("formulas")) return;
+            // Si es medicamentos, forzamos a aceptar como imagen
+            if (carpeta.equalsIgnoreCase("medicamentos")) return;
         }
-    }
-    public void eliminarArchivo(String rutaArchivo) {
-        try {
-            Path path = Paths.get(rutaArchivo);
-            Files.deleteIfExists(path);
-        } catch (IOException e) {
-            e.printStackTrace();
+
+        if (carpeta.equalsIgnoreCase("formulas") && !contentType.equals("application/pdf")) {
+            throw new RuntimeException("Solo se permiten archivos PDF para fórmulas");
+        }
+
+        if (carpeta.equalsIgnoreCase("medicamentos") && !contentType.startsWith("image/")) {
+            throw new RuntimeException("Solo se permiten imágenes para medicamentos");
         }
     }
 
+    /**
+     * Elimina el archivo físico del sistema
+     */
+    public void eliminarArchivo(String rutaRelativa) {
+        try {
+            // Convertir la ruta relativa a local
+            String directorioTrabajo = System.getProperty("user.dir");
+            Path path = Paths.get(directorioTrabajo + rutaRelativa.replace("/uploads", "/uploads"));
+            Files.deleteIfExists(path);
+        } catch (Exception e) {
+            System.err.println("No se pudo eliminar el archivo: " + e.getMessage());
+        }
+    }
 }

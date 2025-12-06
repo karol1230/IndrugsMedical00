@@ -39,4 +39,15 @@ public class UsuarioCreateDTO {
     @NotBlank(message = "La contraseña es obligatoria")
     @Size(min = 8, message = "La contraseña debe tener al menos 8 caracteres")
     private String password;
+    private boolean desdeAdmin = false;
+
+    public boolean isDesdeAdmin() {
+        return desdeAdmin;
+    }
+
+    public void setDesdeAdmin(boolean desdeAdmin) {
+        this.desdeAdmin = desdeAdmin;
+    }
+
+
 }

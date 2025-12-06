@@ -68,11 +68,12 @@
 
 
         <!-- ⭐⭐⭐ DASHBOARD (gráfica + tablas) -->
-        <section class="dashboard">
+        <!-- ⭐⭐⭐ DASHBOARD (gráfica + tablas) -->
+        <section class="dashboard container-fluid px-4">
 
             <!-- Gráfica -->
-            <div class="contenedor-grafico">
-                <div class="header-card">
+            <div class="contenedor-grafico mb-4">
+                <div class="header-card d-flex justify-content-between align-items-center">
                     <h2 class="titulo-tarjeta">Estadísticas de Usuarios</h2>
 
                     <button id="btnExportarPDF" class="botonD">
@@ -83,19 +84,18 @@
                 <canvas id="graficoUsuarios"></canvas>
             </div>
 
-
-            <div class="contenido_dash">
+            <div class="contenido_dash d-flex flex-column gap-4">
 
                 <!-- Tabla órdenes recientes -->
-                <div class="tarjeta">
-                    <div class="cabeza1">
+                <div class="tarjeta w-100">
+                    <div class="cabeza1 d-flex justify-content-between align-items-center">
                         <h2>Órdenes recientes</h2>
                         <a th:href="@{/18.pagina_orden_admin}">
-                            <button class="botonD">VER TODO</button>
+                            <a href="/usuarios" class="btn-ver-todo">Ver todo</a>
                         </a>
                     </div>
 
-                    <table id="tabla1" class="table table-hover text-center tabla-estilizada">
+                    <table id="tabla1" class="table table-hover text-center tabla-estilizada w-100">
                         <thead>
                         <tr>
                             <th>ID</th>
@@ -121,54 +121,41 @@
 
 
                 <!-- Tabla usuarios recientes -->
-                <div class="tarjeta">
-                    <div class="cabeza1">
-                        <h2>Resumen de usuarios</h2>
-
-                        <a th:href="@{/21.pagina_usuarios}">
-                            <button class="botonD">VER TODO</button>
-                        </a>
+                <div class="tarjeta w-100">
+                    <div class="cabeza1 d-flex justify-content-between align-items-center">
+                        <h2>Órdenes recientes</h2>
                     </div>
 
-                    <table id="tabla2" class="table table-hover text-center tabla-estilizada">
+                    <table id="tabla1" class="table table-hover text-center tabla-estilizada w-100">
                         <thead>
                         <tr>
-                            <th>Rol</th>
-                            <th>Nombre</th>
-                            <th>Estado</th>
+                            <th>ID</th>
+                            <th>Usuarios</th>
+                            <th>Fecha de orden</th>
+                            <th>Estado de orden</th>
                         </tr>
                         </thead>
-
                         <tbody>
-                        <tr th:each="usuario : ${usuariosRecientes}">
-                            <td>
-                                <span class="badge"
-                                      th:classappend="${usuario.nombreRol == 'Paciente' ? 'bg-primary' : (usuario.nombreRol == 'Domiciliario' ? 'bg-success' : 'bg-warning')}">
-                                      <span th:text="${usuario.nombreRol}"></span>
-                                </span>
-                            </td>
-
-                            <td th:text="${usuario.nombre}"></td>
-
-                            <td>
-                                <span class="badge"
-                                      th:classappend="${usuario.estado == 'ACTIVO' ? 'bg-success' : 'bg-danger'}">
-                                      <span th:text="${usuario.estado}"></span>
-                                </span>
-                            </td>
+                        <tr th:each="orden : ${ordenesRecientes}">
+                            <td th:text="${orden.idOrden}"></td>
+                            <td th:text="${orden.pacienteNombre}"></td>
+                            <td th:text="${orden.fechaEntrega}"></td>
+                            <td th:text="${orden.estadoOrden}"></td>
                         </tr>
 
-                        <tr th:if="${usuariosRecientes == null or usuariosRecientes.isEmpty()}">
-                            <td colspan="3" class="text-center"><em>No hay usuarios recientes</em></td>
+                        <tr th:if="${ordenesRecientes == null or ordenesRecientes.isEmpty()}">
+                            <td colspan="4" class="text-center"><em>No hay órdenes recientes</em></td>
                         </tr>
-
                         </tbody>
                     </table>
                 </div>
 
+
             </div>
 
         </section>
+
+
 
     </div>
 

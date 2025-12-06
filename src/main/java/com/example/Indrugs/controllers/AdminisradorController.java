@@ -1,6 +1,19 @@
 package com.example.Indrugs.controllers;
 
 import com.example.Indrugs.DTO.OrdenDTO;
+import com.example.Indrugs.DTO.Usuario.UsuarioCreateDTO;
+import com.example.Indrugs.services.EmailService;
+import com.example.Indrugs.services.UsuarioService;
+import jakarta.validation.Valid;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.example.Indrugs.DTO.Usuario.UsuarioDTO;
 import com.example.Indrugs.DTO.Usuario.UsuarioUpdateDTO;
 import com.example.Indrugs.entities.Usuario;
@@ -9,13 +22,9 @@ import com.example.Indrugs.repositorios.UsuarioRepository;
 import com.example.Indrugs.services.bienestarService;
 import com.example.Indrugs.services.InventarioService;
 import com.example.Indrugs.services.OrdenService;
-import com.example.Indrugs.services.UsuarioService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.HashMap;
 import java.util.List;
@@ -26,6 +35,7 @@ import java.util.Map;
 public class AdminisradorController {
 
 
+    private EmailService emailService;
     private final UsuarioService usuarioService;
     private final InventarioService inventarioService;
     private final OrdenService ordenService;
@@ -35,10 +45,12 @@ public class AdminisradorController {
     private UsuarioRepository usuarioRepository;
 
     @Autowired
-    public AdminisradorController(UsuarioService usuarioService,
+    public AdminisradorController( EmailService emailService,
+            UsuarioService usuarioService,
                                   InventarioService inventarioService,
                                   OrdenService ordenService,
                                   bienestarService bienestarService) {
+        this.emailService = emailService;
         this.usuarioService = usuarioService;
         this.inventarioService = inventarioService;
         this.ordenService = ordenService;
@@ -55,6 +67,7 @@ public class AdminisradorController {
         if (usuario == null) return "redirect:/login";
 
         model.addAttribute("nombreAdmin", usuario.getNombre());
+
 
         Map<String, Long> estadisticasUsuarios = usuarioService.obtenerResumenUsuarios();
         model.addAttribute("estadisticas", estadisticasUsuarios);
@@ -198,6 +211,101 @@ public class AdminisradorController {
         }
         return "redirect:/21.pagina_usuarios";
     }
+    //AAAAA//
+
+
+
+    @GetMapping("/admin/registrar-usuario")
+    public String mostrarRegistrar(Model model){
+        model.addAttribute("usuarioNuevo", new UsuarioCreateDTO());
+        return "administrador/26.pagina_registros";
+
+    }
+
+
+    @PostMapping("/admin/registrar-usuario")
+    public String crearUsuario(
+            @Valid @ModelAttribute("usuarioNuevo") UsuarioCreateDTO userCreate,
+            BindingResult bindingResult,
+            Model model,
+            RedirectAttributes redirectAttributes) {
+
+        if (bindingResult.hasErrors()) {
+            return "administrador/26.pagina_registros";
+        }
+
+        try {
+            if (usuarioService.existsByCorreo(userCreate.getCorreo())) {
+                model.addAttribute("error", "El correo ya está registrado");
+                return "administrador/26.pagina_registros";
+            }
+
+            // Crear usuario en la base de datos
+            usuarioService.crear(userCreate);
+
+            // Enviar correo de registro general
+            emailService.enviarCorreoRegistro(userCreate.getCorreo(), userCreate.getNombre());
+
+            // ✅ Si el usuario es domiciliario (por ejemplo, rol = 3)
+            if (userCreate.getRol() != null && userCreate.getRol().equals(3L)) {
+                emailService.enviarCorreoDomiciliario(
+                        userCreate.getCorreo(),
+                        userCreate.getNombre(),
+                        Long.valueOf(userCreate.getNumDoc()) // numDoc ya es String, no hace falta convertir
+                );
+            }
+
+            redirectAttributes.addFlashAttribute("mensaje", "Usuario registrado exitosamente");
+            return "redirect:/20.pagina_principal_administrador";
+
+        } catch (Exception e) {
+            model.addAttribute("error", "Error al registrar usuario: " + e.getMessage());
+            return "administrador/26.pagina_registros";
+        }
+
+
+
+
+}@GetMapping("/unete")
+    public String mostrarFormularioUnete(Model model) {
+        model.addAttribute("candidato", new UsuarioCreateDTO());
+        return "unete_equipo"; // ← CORRECTO
+    }
+
+    @PostMapping("/unete")
+    public String recibirPostulacion(
+            @ModelAttribute("candidato") UsuarioCreateDTO candidato,
+            @RequestParam("vehiculo") String vehiculo,
+            @RequestParam("cv") MultipartFile archivoCV,
+            @RequestParam("licenciaPdf") MultipartFile licenciaPdf,
+            @RequestParam("tarjetaPdf") MultipartFile tarjetaPdf,
+            RedirectAttributes redirectAttributes) {
+
+        try {
+            // Validación de los archivos
+            if (archivoCV.isEmpty() || licenciaPdf.isEmpty() || tarjetaPdf.isEmpty()) {
+                redirectAttributes.addFlashAttribute("error", "Debes adjuntar todos los PDFs requeridos.");
+                return "redirect:/unete";
+            }
+
+            // Enviar correo con todos los PDFs y el vehículo
+            emailService.enviarPostulacionCompleta(
+                    candidato,
+                    vehiculo,
+                    archivoCV,
+                    licenciaPdf,
+                    tarjetaPdf
+            );
+
+            redirectAttributes.addFlashAttribute("mensaje", "Postulación enviada correctamente.");
+            return "redirect:/unete";
+
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("error", "Error enviando el formulario: " + e.getMessage());
+            return "redirect:/unete";
+        }
+    }
+
 
 
 }

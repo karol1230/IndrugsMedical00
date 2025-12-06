@@ -30,14 +30,10 @@
 
     <div class="contenido">
         <div class="datos_registrarse">
-            <form th:action="@{/admin/registrar-usuario}"
-                  method="post"
-                  th:object="${usuarioNuevo}"
-                  class="form-grid needs-validation"
-                  novalidate>
+            <form th:action="@{/admin/registrar-usuario}" method="post" th:object="${usuarioNuevo}"
+                  class="form-grid needs-validation" novalidate>
 
-
-            <h1 class="full">Registrarse</h1>
+                <h1 class="full">Registrarse</h1>
 
                 <div th:if="${error}" class="full alert alert-danger">
                     <span th:text="${error}"></span>
@@ -53,6 +49,7 @@
                     <select class="form-select" th:field="*{rol}" required>
                         <option value="" disabled selected>Elija su rol</option>
                         <option value="2">Paciente</option>
+                        <option value="3">Domiciliario</option>
                     </select>
                 </div>
 
@@ -117,26 +114,26 @@
     </div>
 </main>
 
-    <script>
-        (() => {
-            'use strict';
-            const forms = document.querySelectorAll('.needs-validation');
+<script>
+    (() => {
+        'use strict';
+        const forms = document.querySelectorAll('.needs-validation');
 
-            Array.from(forms).forEach(form => {
-                form.addEventListener(
-                    'submit',
-                    event => {
-                        if (!form.checkValidity()) {
-                            event.preventDefault();
-                            event.stopPropagation();
-                        }
-                        form.classList.add('was-validated');
-                    },
-                    false,
-                );
-            });
-        })();
-    </script>
+        Array.from(forms).forEach(form => {
+            form.addEventListener(
+                'submit',
+                event => {
+                    if (!form.checkValidity()) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                },
+                false,
+            );
+        });
+    })();
+</script>
 
 </footer>
 </body>

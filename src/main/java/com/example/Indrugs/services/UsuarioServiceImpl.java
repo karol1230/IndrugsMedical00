@@ -31,12 +31,11 @@ public class UsuarioServiceImpl implements UsuarioService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    // ✅ Método principal sin errores
     @Override
     public List<UsuarioDTO> read() {
         return usuarioRepository.findAll()
                 .stream()
-                .map(usuario -> UsuarioMapper.mapToDto(usuario)) // 👈 llamada correcta NO estática
+                .map(UsuarioMapper::mapToDto)
                 .collect(Collectors.toList());
     }
 
@@ -119,9 +118,7 @@ public class UsuarioServiceImpl implements UsuarioService {
         return usuarioRepository.existsByNumDoc(numDoc);
     }
 
-    // ---------------------------------------------------
-    // ✅ Estadísticas sin errores
-    // ---------------------------------------------------
+    // ----------- ESTADÍSTICAS -----------
 
     @Override
     public long countByEstado(String estado) {
@@ -188,19 +185,19 @@ public class UsuarioServiceImpl implements UsuarioService {
         return usuarioRepository.findByRol_nombreRol(nombreRol);
     }
 
-    // ---------------------------------------------------
-    // ✅ Nuevo método para correos masivos (NO estático, correcto)
-    // ---------------------------------------------------
-
+    // ----------- 🔥 NUEVO: guardar domiciliario / registro general -----------
     @Override
+    public Usuario save(Usuario usuario) {
+        return usuarioRepository.save(usuario);
+    }
 
-
+    // ----------- Correos masivos -----------
+    @Override
     public List<String> obtenerCorreosActivos() {
         return usuarioRepository.findByEstado("ACTIVO")
                 .stream()
                 .map(Usuario::getCorreo)
                 .collect(Collectors.toList());
     }
-
 
 }

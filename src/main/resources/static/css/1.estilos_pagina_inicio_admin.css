@@ -174,6 +174,17 @@ body{
     max-width: 1000px;
     margin: 0 auto;
 }
+.tabla-usuarios {
+    margin-bottom: 40px; /* SEPARA las tablas */
+}
+.card {
+    margin-bottom: 40px;
+}
+.contenido_dash {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 40px; /* espacio entre tablas */
+}
 
 
 
@@ -221,6 +232,25 @@ body{
     background-color: rgb(107, 209, 12); /* El color de fondo*/
 
 }
+/* BOTONES VER TODO */
+.btn-ver-todo {
+    background-color: #007bff !important;
+    color: #ffffff !important;
+    padding: 12px 28px !important;
+    border-radius: 10px !important;
+    font-family: Arial, sans-serif !important;
+    font-size: 16px !important;
+    font-weight: bold !important;
+    border: none !important;
+    display: inline-block !important;
+    text-decoration: none !important;
+}
+
+.btn-ver-todo:hover {
+    background-color: #005dc0 !important;
+    transform: scale(1.05);
+}
+
 
 
 /*Footer*/
@@ -284,6 +314,8 @@ body{
     
 
 }
+
+
 .boton:hover{
     cursor: pointer;
     background-color: rgb(46, 235, 56); /* El color de fondo*/
@@ -360,3 +392,63 @@ body{
     width: 200px;
     height: 200px;
 }
+/* ====== FORZAR ancho completo para las tarjetas y tablas ====== */
+
+/* Quita limitaciones del contenedor padre */
+.contenido {
+  width: 100% !important;
+  max-width: none !important;
+  padding-left: 24px !important;   /* deja algo de espacio lateral si quieres */
+  padding-right: 24px !important;
+  margin: 0 auto !important;
+}
+
+/* Asegura que el contenedor del dashboard no tenga padding que comprima */
+.contenido_dash {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 32px !important;
+  width: 100% !important;
+  max-width: none !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+/* Las tarjetas (contenedores de cada tabla) ocupan todo el ancho */
+.tarjeta {
+  width: 100% !important;
+  max-width: none !important;
+  box-sizing: border-box !important;
+  padding-left: 20px !important;
+  padding-right: 20px !important;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+/* La tabla ocupa todo el ancho dentro de la tarjeta */
+.tabla-estilizada,
+table#tabla1,
+table#tabla2 {
+  width: 100% !important;
+  table-layout: auto !important; /* evita celdas comprimidas */
+}
+
+/* Si usas bootstrap .container o .row en algún nivel, fuerza a la tabla a salir a full width */
+.contenedor-grafico,
+.dashboard {
+  width: 100% !important;
+  max-width: none !important;
+}
+
+/* Opcional: reduce el espacio lateral de las celdas para que entren mejor */
+.tabla-estilizada td,
+.tabla-estilizada th {
+  padding: 12px 10px !important;
+}
+
+/* Si aún hay reglas muy específicas que sobreescriben, este selector ultra-específico debería ganarle */
+.contenido .contenido_dash .tarjeta .tabla-estilizada {
+  width: 100% !important;
+  max-width: none !important;
+}
+

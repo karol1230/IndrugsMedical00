@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+	<!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="utf-8">
@@ -50,17 +50,15 @@
 				<button class="butn_filtro" onclick="cargarEstadisticasUsuarios()">Filtrar</button>
 			</div>
 
-			<!-- ✅ SOLO ESTOS BOTONES SE MANTIENEN -->
 			<div class="acciones-estadisticas">
-
 				<a th:href="@{/export/usuarios}">
-					<button class="btnform boton-descargar-PDFusuarios">
-						<i class="fas fa-file-pdf"></i> Exportar PDF Usuarios
+					<button class="btn-usuario">
+						<i class="fas fa-file-pdf"></i> Exportar PDF
 					</button>
 				</a>
 
 				<a th:href="@{/admin/correos-masivos}" onclick="return confirmarEnvio();">
-					<button class="btnform boton-enviar-correosUsuarios">
+					<button class="btn-usuario">
 						<i class="fas fa-paper-plane"></i> Enviar correos masivos
 					</button>
 				</a>

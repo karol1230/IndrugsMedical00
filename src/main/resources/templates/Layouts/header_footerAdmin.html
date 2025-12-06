@@ -7,7 +7,7 @@
       <!-- LOGO -->
       <a th:href="@{/index}" class="logo">
         <img class="img_indrugs_logo" th:src="@{/imagenes/logo.png}" alt="Logo">
-        INDRUGS MEDICAL
+        INDRUGS MEDICA
       </a>
 
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -16,18 +16,14 @@
       <nav class="menu">
         <ul class="barra_2">
           <li><a th:href="@{/20.pagina_principal_administrador}">Inicio</a></li>
+          <li><a th:href="@{/admin/registrar-usuario}">Registrar</a></li>
           <li><a th:href="@{/21.pagina_usuarios}">Usuarios</a></li>
           <li><a th:href="@{/17.pagina_inventario}">Inventario</a></li>
           <li><a th:href="@{/22.pagina_medicamento}">Medicamento</a></li>
           <li><a th:href="@{/18.pagina_orden_admin}">Órdenes</a></li>
           <li><a th:href="@{/administrador/pqrs}">PQRS</a></li>
 
-          <li th:if="${session.usuarioLogueado != null}">
-            <a th:href="@{/logout}" style="color:white; display:flex; align-items:center; gap:5px; text-decoration:none;">
-              <i class="fa-solid fa-right-from-bracket"></i>
-              Cerrar sesión
-            </a>
-          </li>
+
 
 
           <!-- ✅ Iniciar sesión como texto -->
@@ -49,12 +45,7 @@
             </a>
           </li>
 
-          <!-- 🔐 Si no hay sesión → icono te manda al login -->
-          <li th:if="${session.usuarioLogueado != null}">
-            <a th:href="@{/logout}" id="enlaces_barra1">
-              <i class="fa-solid fa-right-from-bracket" style="font-size: 28px; color:white;"></i>
-            </a>
-          </li>
+
 
 
         </ul>
@@ -74,25 +65,42 @@
   </div>
 </div>
 
-<footer th:fragment="footer" xmlns:th="http://www.thymeleaf.org"
+<footer th:fragment="footer"
         style="background: linear-gradient(180deg, #00796b 0%, #00695c 100%);
-               color: #f1fffb; padding: 20px 0; text-align: center;
-               font-family:'Poppins', sans-serif;">
+               color: white !important;
+               padding: 20px 0;
+               text-align: center;">
 
-  <div style="margin-bottom: 10px;">
+  <!-- FORZAR LETRA BLANCA PARA TODOS LOS ELEMENTOS -->
+  <style>
+    footer * {
+        color: white !important;
+    }
+    footer a {
+        color: white !important;
+        text-decoration: none;
+    }
+    footer a:hover {
+        opacity: 0.8;
+    }
+  </style>
+
+  <!-- CONTENIDO DEL FOOTER -->
+  <div style="margin-bottom:10px;">
     <img th:src="@{/imagenes/logo.png}" alt="Logo" style="width:60px; margin-bottom:5px;">
-    <p style="font-size: 1em; font-weight: 500; margin: 0;">
+    <p style="font-size:1em; font-weight:500; margin:0;">
       © 2025 INDRUGS MEDICAL — Cuidado y bienestar para todos 💊
     </p>
   </div>
 
-  <div style="font-size: 0.9em; line-height: 1.6;">
+  <div style="font-size:0.9em; line-height:1.6; ">
     <p><strong>Dirección:</strong> Calle 82 B N° 95 D-14, Bogotá, Colombia</p>
     <p><strong>Teléfono:</strong> +57 (320) 456-7890</p>
     <p><strong>Email:</strong> indrugsmedica@gmail.com</p>
   </div>
 
 </footer>
+
 
 <script>
   window.addEventListener("scroll", () => {

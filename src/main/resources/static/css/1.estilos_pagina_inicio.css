@@ -4,6 +4,10 @@
 html {
   scroll-behavior: smooth;
 }
+body {
+  font-family: 'Poppins', sans-serif;
+}
+
 
 body, html {
   margin: 0;
@@ -25,7 +29,9 @@ body {
   font-family: "Nunito", sans-serif;
   padding-top: 2rem !important;
   margin-top: 0 !important;
+
 }
+
 
 .contenido {
   width: 100%;
@@ -46,23 +52,35 @@ body {
   justify-content: center;
   align-items: center;
   position: relative;
+  font-family: 'Poppins', sans-serif;
+
 }
 
 .hero-box {
   background: rgba(255, 255, 255, 0.85);
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  border-radius: 15px;
+
+  /* 🔥 Borde cuadrado */
+  border-radius: 0;
+
   padding: 50px 40px;
-  max-width: 1000px;
-  width: 90%;
+
+  /* 🔥 Ocupa TODO el ancho de la página */
+  width: 100%;
+  max-width: 100vw;  /* ancho total de la ventana */
+
   text-align: center;
   z-index: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin: 0 auto;
+
+  /* 🔥 Sin margen para que se vea FULL width */
+  margin: 0;
 }
+
+
 
 /* =====================================================
    SECCIÓN MEDICAMENTOS DESTACADOS
@@ -71,17 +89,21 @@ body {
   background-color: #eef6f9;
   padding: 60px 0;
   border-radius: 25px;
-  font-family: "Nunito", sans-serif; /* NUEVA FUENTE */
+  font-family: 'Poppins', sans-serif;
 }
 
 .medicamentos-destacados h2 {
   font-weight: 700;
   margin-bottom: 10px;
   color: #064854;
+    font-family: 'Poppins', sans-serif;
+
 }
 
 .medicamentos-destacados p {
   color: #555;
+    font-family: 'Poppins', sans-serif;
+
 }
 
 .medicamentos-destacados .card img {
@@ -89,6 +111,8 @@ body {
   object-fit: cover;
   border-top-left-radius: 1rem;
   border-top-right-radius: 1rem;
+    font-family: 'Poppins', sans-serif;
+
 }
 
 
@@ -101,6 +125,9 @@ body {
   margin-bottom: 25px;
   font-weight: 600;
   color: #064854;
+  font-family: 'Poppins', sans-serif;
+
+
 }
 
 .features-grid {

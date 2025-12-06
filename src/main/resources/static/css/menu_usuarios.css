@@ -11,7 +11,33 @@ html, body {
 .contenido{
     width: 90%;
     margin: auto;
-}
+}.acciones-estadisticas {
+     display: flex;
+     justify-content: center; /* Centra horizontalmente los botones */
+     gap: 20px; /* Espacio agradable entre botones */
+     margin: 30px 240px     ; /* Separación vertical de la sección */
+ }
+
+ .btn-usuario {
+     background-color: #2E7D32; /* Verde botella */
+     color: white;
+     border: none;
+     padding: 12px 24px;
+     font-size: 16px;
+     border-radius: 8px;
+     cursor: pointer;
+     transition: background-color 0.3s;
+ }
+
+ .btn-usuario i {
+     margin-right: 8px; /* Espacio entre icono y texto */
+ }
+
+ .btn-usuario:hover {
+     background-color: #1B5E20; /* Verde más oscuro al pasar el mouse */
+ }
+
+
 
 /* Título */
 .tabla_usuarios {

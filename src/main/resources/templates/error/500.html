@@ -4,21 +4,32 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Error 500</title>
-    <link th:href="@{/css/7.estilos_pagina_error_500.css}" rel="stylesheet" />
+
+    <!-- Vinculo al CSS -->
+    <link th:href="@{/css/7.estilos_pagina_error_500.css}" rel="stylesheet">
 </head>
+
 <body>
 <div class="codigo_500">
+
+    <!-- Números con animación moderna -->
     <div class="codigo_num">
-        <p>5</p>
-        <p>0</p>
-        <p>0</p>
+        <p class="digit">5</p>
+        <p class="digit">0</p>
+        <p class="digit">0</p>
     </div>
+
     <div class="texto_error">
         Error interno del servidor
     </div>
+
     <div class="descripcion">
-        Algo salió mal. Vuelve a intentar más tarde.
+        Algo salió mal. Por favor intenta nuevamente más tarde.
     </div>
+
+    <!-- Botón seguro que NO dará 404 -->
+    <a href="/" class="btn-volver">Volver al inicio</a>
+
 </div>
 </body>
 </html>

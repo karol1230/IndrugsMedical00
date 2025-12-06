@@ -1,15 +1,15 @@
 package com.example.Indrugs.services;
 
-import com.example.Indrugs.DTO.Usuario.UsuarioDTO;
 import com.example.Indrugs.DTO.Usuario.UsuarioCreateDTO;
+import com.example.Indrugs.DTO.Usuario.UsuarioDTO;
 import com.example.Indrugs.DTO.Usuario.UsuarioUpdateDTO;
-import com.example.Indrugs.entities.Usuario;
 import com.example.Indrugs.entities.Usuario;
 
 import java.util.List;
 import java.util.Map;
 
 public interface UsuarioService {
+
     List<UsuarioDTO> read();
     void crear(UsuarioCreateDTO userCreate);
     void actualizar(Long idUsuario, UsuarioUpdateDTO userUpdate);
@@ -25,7 +25,6 @@ public interface UsuarioService {
     long countByEstado(String estado);
     long countTotal();
     long countByRolNombre(String nombreRol);
-
     long contarUsuariosPorRol(String nombreRol);
     long contarUsuariosActivos();
     Map<String, Long> obtenerResumenUsuarios();
@@ -35,6 +34,9 @@ public interface UsuarioService {
 
     List<Usuario> listarPorRol(String nombreRol);
 
-    // ----------- 🔥 NUEVO MÉTODO PARA CORREOS MASIVOS ---------
+    // ----------- 🔥 NUEVO (NECESARIO PARA REGISTRAR DOMICILIARIO) -----------
+    Usuario save(Usuario usuario);
+
+    // ----------- 🔥 Correos masivos -----------
     List<String> obtenerCorreosActivos();
 }
