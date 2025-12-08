@@ -3,12 +3,14 @@ package com.example.Indrugs.controllers;
 import com.example.Indrugs.DTO.DomicilioDTO;
 import com.example.Indrugs.DTO.OrdenDTO;
 import com.example.Indrugs.DTO.PedidoDTO;
+import com.example.Indrugs.entities.Pedido;
 import com.example.Indrugs.entities.Usuario;
 import com.example.Indrugs.services.*;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 import java.util.Map;
@@ -22,26 +24,28 @@ public class DomiciliarioController {
     private final VehiculoService vehiculoService;
     private final OrdenService ordenService;
     private final PedidoServiceImpl pedidoService;
+    private final EmailService emailService;
 
     public DomiciliarioController(UsuarioService usuarioService,
                                   DomicilioService domicilioService,
                                   VehiculoService vehiculoService,
                                   OrdenService ordenService,
-                                  PedidoServiceImpl pedidoService) {
+                                  PedidoServiceImpl pedidoService,
+                                  EmailService emailService) {
+
         this.usuarioService = usuarioService;
         this.domicilioService = domicilioService;
         this.vehiculoService = vehiculoService;
         this.ordenService = ordenService;
         this.pedidoService = pedidoService;
+        this.emailService = emailService;
     }
-
 
     @GetMapping("/11.pagina_principal_domiciliario")
     public String mostrarPaginaDomiciliario(HttpSession session, Model model) {
         Usuario usuario = (Usuario) session.getAttribute("usuarioLogueado");
         if (usuario == null) return "redirect:/login";
 
-        // 👇 NUEVA LÍNEA: pasamos el nombre del domiciliario al modelo
         model.addAttribute("nombreDomiciliario", usuario.getNombre());
 
         Map<String, Object> dashboard = domicilioService.ObtenerResumen();
@@ -57,7 +61,6 @@ public class DomiciliarioController {
         return "domiciliario/11.pagina_principal_domiciliario";
     }
 
-
     @GetMapping("/15.pagina_domicilio_domi")
     public String mostrarTabla(HttpSession session, Model model) {
         Usuario usuario = (Usuario) session.getAttribute("usuarioLogueado");
@@ -68,35 +71,84 @@ public class DomiciliarioController {
         return "domiciliario/15.pagina_domicilio_domi";
     }
 
-
     @GetMapping("/actualizar/domicilio/{idDomicilio}")
     public String cambiarEstado(@PathVariable Long idDomicilio) {
         domicilioService.actualizar(idDomicilio);
         return "redirect:/15.pagina_domicilio_domi";
     }
 
+    @PostMapping("/domiciliario/pedido/actualizar/{id}")
+    public String actualizarEstado(
+            @PathVariable Long id,
+            @RequestParam("estado") String estado) {
 
-
+        pedidoService.actualizarEstado(id, estado);
+        return "redirect:/domiciliario/pedidos";
+    }
 
     @GetMapping("/24.pagina_pedidos_domiciliario")
     public String mostrarPedidos(HttpSession session, Model model) {
         Usuario usuario = (Usuario) session.getAttribute("usuarioLogueado");
         if (usuario == null) return "redirect:/login";
 
-        // Lista solo los pedidos asignados al domiciliario logueado
         List<PedidoDTO> pedidos = pedidoService.listarPorDomiciliario(usuario);
         model.addAttribute("pedidos", pedidos);
         return "domiciliario/24.pagina_pedidos_domiciliario";
     }
 
+    @GetMapping("/domiciliario/pedidos")
+    public String mostrarPedidosDomiciliario(Model model, HttpSession session) {
+
+        Usuario usuario = (Usuario) session.getAttribute("usuarioLogueado");
+
+        if (usuario == null) {
+            return "redirect:/login";
+        }
+        List<PedidoDTO> pedidos = pedidoService.obtenerPedidosAsignados(usuario.getIdUsuario());
+        model.addAttribute("pedidos", pedidos);
 
 
+        return "domiciliario/24.pagina_pedidos_domiciliario";
+    }
 
-    @PostMapping("/actualizar/pedido/{idPedido}")
-    public String actualizarEstadoPedido(@PathVariable Long idPedido,
-                                         @RequestParam String estado) {
-        pedidoService.actualizarEstado(idPedido, estado);
+
+    @PostMapping("/actualizar/pedido/{id}")
+    public String actualizarEstadoPedido(@PathVariable Long id,
+                                         @RequestParam String estado,
+                                         RedirectAttributes redirectAttributes) {
+
+        Pedido pedido = pedidoService.obtenerPedidoPorId(id);
+
+        if (pedido == null) {
+            redirectAttributes.addFlashAttribute("mensajeInfo", "El pedido no existe.");
+            return "redirect:/24.pagina_pedidos_domiciliario";
+        }
+
+        // Actualizar estado
+        pedidoService.actualizarEstado(id, estado);
+
+        // Si el estado es HE_LLEGADO, enviar correo
+        if (estado.equalsIgnoreCase("HE_LLEGADO")) {
+
+            String correoPaciente = pedido.getCorreoPaciente();
+
+            if (correoPaciente != null && !correoPaciente.isEmpty()) {
+
+                String html = """
+                    <h2>El domiciliario ha llegado</h2>
+                    <p>Tu pedido ya está en la puerta. ¡Por favor abre para recibirlo!</p>
+                    """;
+
+                emailService.enviarCorreoHtml(correoPaciente,
+                        "Tu pedido ha llegado",
+                        html);
+            }
+
+            redirectAttributes.addFlashAttribute("mensajeExito", "Correo enviado exitosamente");
+        }
+
         return "redirect:/24.pagina_pedidos_domiciliario";
     }
+
 
 }

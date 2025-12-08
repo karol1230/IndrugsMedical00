@@ -12,21 +12,11 @@ import java.util.List;
 @Repository
 public interface PedidoRepository extends JpaRepository<Pedido, Long> {
 
-    // =============================
-    // BUSCAR POR DOMICILIARIO
-    // =============================
-    List<Pedido> findByDomiciliario(Usuario domiciliario);
-
-    @Query("SELECT p FROM Pedido p WHERE p.domiciliario.id = :idDomiciliario")
+    @Query("SELECT p FROM Pedido p WHERE p.domiciliario.idUsuario = :idDomiciliario")
     List<Pedido> findByDomiciliarioId(@Param("idDomiciliario") Long idDomiciliario);
 
+    @Query("SELECT p FROM Pedido p WHERE p.domiciliario = :domiciliario")
+    List<Pedido> findByDomiciliario(@Param("domiciliario") Usuario domiciliario);
 
-    // =============================
-    // ➤ MÉTODOS PARA ESTADÍSTICAS
-    // =============================
-
-    // Contar pedidos por estado
     long countByEstado(String estado);
-
-    // count() ya viene en JpaRepository
 }

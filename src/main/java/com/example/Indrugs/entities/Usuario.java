@@ -40,6 +40,8 @@ public class Usuario {
     @Column(name = "CONTRASEÑA_USUARIOS")
     private String password;
 
+
+
     //aca es para que un usuario tenga un rol, conexion de Rol entidad y usuario
     @ManyToOne
     @JoinColumn(name = "ID_ROLES_USUARIOS")

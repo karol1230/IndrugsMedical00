@@ -3,6 +3,7 @@ package com.example.Indrugs.DTO;
 import java.time.LocalDateTime;
 
 public class PedidoDTO {
+
     private Long id;
     private String nombrePaciente;
     private String direccion;
@@ -23,10 +24,10 @@ public class PedidoDTO {
         this.telefono = telefono;
         this.observaciones = observaciones;
         this.estado = estado;
-        this.usuario = usuario; // asignación correcta
+        this.usuario = usuario;
     }
 
-    // ✅ Getters y setters
+    // GETTERS & SETTERS
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 

@@ -68,7 +68,12 @@ public class ControlController {
             // 2️⃣ Obtener correo del usuario logueado
             Usuario usuario = (Usuario) session.getAttribute("usuarioLogueado");
             if (usuario != null && usuario.getCorreo() != null) {
-                emailService.enviarCorreo(usuario.getCorreo());
+                emailService.enviarCorreo(
+                        usuario.getCorreo(),
+                        "Nuevo control registrado",
+                        "Hola " + usuario.getNombre() + ",\nTu control ha sido registrado correctamente."
+                );
+
             }
 
 
