@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "pedido") // coincide con la tabla SQL
+@Table(name = "pedido")
 public class Pedido {
 
     @Id
@@ -20,6 +20,9 @@ public class Pedido {
     @Column(name = "telefono")
     private String telefono;
 
+    @Column(name = "correo_paciente")
+    private String correoPaciente; // 🔥 NUEVO
+
     @Column(name = "hora_pedido")
     private LocalDateTime horaPedido;
 
@@ -29,15 +32,15 @@ public class Pedido {
     @Column(name = "observaciones")
     private String observaciones;
 
-    // Relación con Orden
     @ManyToOne
     @JoinColumn(name = "orden_id")
     private Orden orden;
 
-    // Relación con Domiciliario (Usuario)
     @ManyToOne
-    @JoinColumn(name = "usuario_domiciliario", nullable = false) // coincide con NOT NULL
+    @JoinColumn(name = "usuario_domiciliario", nullable = false)
     private Usuario domiciliario;
+
+
 
     // --- Getters y Setters ---
     public Long getId() { return id; }
@@ -52,6 +55,9 @@ public class Pedido {
     public String getTelefono() { return telefono; }
     public void setTelefono(String telefono) { this.telefono = telefono; }
 
+    public String getCorreoPaciente() { return correoPaciente; }  // 🔥
+    public void setCorreoPaciente(String correoPaciente) { this.correoPaciente = correoPaciente; } // 🔥
+
     public LocalDateTime getHoraPedido() { return horaPedido; }
     public void setHoraPedido(LocalDateTime horaPedido) { this.horaPedido = horaPedido; }
 
@@ -64,6 +70,9 @@ public class Pedido {
     public Orden getOrden() { return orden; }
     public void setOrden(Orden orden) { this.orden = orden; }
 
+
     public Usuario getDomiciliario() { return domiciliario; }
     public void setDomiciliario(Usuario domiciliario) { this.domiciliario = domiciliario; }
+
+
 }

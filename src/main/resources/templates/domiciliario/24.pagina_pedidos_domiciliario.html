@@ -60,21 +60,36 @@
                     </td>
 
                     <td>
-                        <form th:action="@{'/domiciliario/pedido/actualizar/' + ${pedido.id}}" method="post">
+                        <form th:action="@{'/actualizar/pedido/' + ${pedido.id}}" method="post">
 
-                        <button type="submit" name="estado" value="EN CAMINO" class="btn btn-outline-warning btn-sm">
-                                 EN CAMINO
+                            <button type="submit" name="estado" value="EN_CAMINO"
+                                    class="btn btn-outline-warning btn-sm">
+                                EN CAMINO
                             </button>
-                            <button type="submit" name="estado" value="HE LLEGADO" class="btn btn-outline-secondary btn-sm">
+
+                            <button type="submit" name="estado" value="HE_LLEGADO"
+                                    class="btn btn-outline-secondary btn-sm">
                                 HE LLEGADO
                             </button>
-                            <button type="submit" name="estado" value="ENTREGADO" class="btn btn-outline-success btn-sm">
-                                 ENTREGADO
+
+                            <button type="submit" name="estado" value="ENTREGADO"
+                                    class="btn btn-outline-success btn-sm">
+                                ENTREGADO
                             </button>
+
                         </form>
                     </td>
+
                 </tr>
                 </tbody>
+                <div th:if="${mensajeExito}" class="alert alert-success" role="alert">
+                    <span th:text="${mensajeExito}"></span>
+                </div>
+
+                <div th:if="${mensajeInfo}" class="alert alert-info mt-3" role="alert">
+                    <span th:text="${mensajeInfo}"></span>
+                </div>
+
             </table>
         </div>
 
