@@ -107,7 +107,7 @@
 }
 
 #tabla1 thead {
-    background: #1f242bç;
+    background: #1f242b;
     color: white;
 }
 
@@ -161,38 +161,54 @@
 }
 
 /* Caja donde está el filtro */
+/* Contenedor del filtro */
 .filtrar-usuarios {
-    background: #d9f1ed !important;
-    padding: 15px 20px !important;
-    border-radius: 12px !important;
-    display: flex !important;
-    align-items: center !important;
-    gap: 15px !important;
-    border-left: 6px solid #0d9386 !important;
+    display: flex;
+    justify-content: flex-start; /* alineado a la izquierda */
+    align-items: center;
+    gap: 12px; /* un poco más de espacio entre elementos */
+    background: #e3f3f1;
+    padding: 8px 16px; /* un poco más grande que antes */
+    border-radius: 10px;
+    border-left: 4px solid #1b8e85;
+    width: fit-content; /* que se ajuste al contenido */
+    margin: 0; /* alineado al inicio */
+    flex-wrap: wrap;
 }
 
-/* Inputs del filtro */
+/* Etiquetas */
+.filtrar-usuarios label {
+    font-weight: 500;
+    color: #004c43;
+    font-size: 14px; /* un poco más grande */
+}
+
+/* Select un poco más grande */
 .filtrar-usuarios select {
-    padding: 6px 12px !important;
-    border-radius: 8px !important;
-    border: 1px solid #c2c2c2 !important;
-    font-size: 15px !important;
+    padding: 6px 10px; /* más grande */
+    font-size: 14px;
+    border-radius: 6px;
+    border: 1px solid #9bbfba;
+    background: white;
+    transition: .3s;
 }
 
-/* Botón FILTRAR */
+/* Botón filtrar más grande y alineado */
 .butn_filtro {
-    padding: 6px 18px !important;   /* Más delgado */
-    background: #0d9386 !important;
-    color: white !important;
-    border: none !important;
-    border-radius: 8px !important;
-    font-size: 15px !important;
-    transition: 0.3s !important;
+    background: #1b8e85;
+    color: white;
+    border: none;
+    padding: 6px 16px; /* más grande */
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 14px;
+    transition: .3s;
 }
 
 .butn_filtro:hover {
-    background: #0b7a70 !important;
+    background: #146a63;
 }
+
 
 /* ===== BOTÓN EXPORTAR PDF ===== */
 

@@ -8,6 +8,8 @@ import com.example.Indrugs.entities.Usuario;
 import com.example.Indrugs.mapper.UsuarioMapper;
 import com.example.Indrugs.repositorios.RolRepository;
 import com.example.Indrugs.repositorios.UsuarioRepository;
+import jakarta.servlet.http.HttpSession;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -199,6 +201,7 @@ public class UsuarioServiceImpl implements UsuarioService {
                 .map(Usuario::getCorreo)
                 .collect(Collectors.toList());
     }
+
 
 
 }

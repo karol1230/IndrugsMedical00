@@ -42,13 +42,13 @@
                 Descripción del medicamento
             </p>
 
-            <label for="cantidad_solicitada" class="form-label fw-semibold cantidad-label-premium">Elija la cantidad</label>
+            <label for="cantidad_solicitada" class="form-label fw-semibold cantidad-label-premium">Elija la cantidad en tabletas, cada tableta tiene 10 pastillas </label>
             <input id="cantidad_solicitada"
                    type="number"
                    name="cantidad"
                    class="form-control input-premium w-50"
                    min="1"
-                   max="10"
+                   max="6"
                    required>
 
             <button id="boton_solicitar" class="btn btn-success btn-premium mt-3 px-4 py-2">
@@ -65,14 +65,16 @@
 <script th:inline="javascript">
     document.getElementById('boton_solicitar').addEventListener('click', function() {
         const cantidad = document.getElementById('cantidad_solicitada').value;
-        const idMedicamento = [[${medicamento.idMedicamento}]];
+
+        /* 🔥 CORRECCIÓN: Thymeleaf debe imprimir el valor ENTRE comillas */
+        const idMedicamento = /*[[${medicamento.idMedicamento}]]*/ 0;
 
         if (cantidad < 1 || cantidad > 10) {
             alert('Por favor, seleccione una cantidad entre 1 y 10');
             return;
         }
 
-        window.location.href = `/nuevo?idMedicamento=${idMedicamento}&cantidad=${cantidad}`;
+        window.location.href = "/nuevo?idMedicamento=" + idMedicamento + "&cantidad=" + cantidad;
     });
 </script>
 

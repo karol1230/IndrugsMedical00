@@ -120,23 +120,23 @@ public class OrdenController {
     public String guardarOrden(@ModelAttribute OrdenDTO ordenDTO,
                                @RequestParam("formulaFile") MultipartFile formulaFile,
                                @RequestParam("idMedicamento") Long idMedicamento,
-                               HttpSession session, Model model,
+                               HttpSession session,
+                               Model model,
                                RedirectAttributes redirectAttributes) {
 
+        // 👉 Usuario logueado desde la sesión
         Usuario usuario = (Usuario) session.getAttribute("usuarioLogueado");
         if (usuario == null) return "redirect:/login";
 
         try {
-
+            // Buscar medicamento
             MedicamentoDTO medicamento = medicamentosService.buscarPorIdMedicamento(idMedicamento);
             if (medicamento == null) {
                 model.addAttribute("error", "Medicamento no encontrado");
                 return "error";
             }
 
-
-
-            // Crear orden
+            // Configurar orden
             ordenDTO.setPacienteNombre(usuario.getNombre());
             ordenDTO.setNombreMedicamento(medicamento.getNombreMedicamento());
             ordenDTO.setEstadoOrden("ACTIVO");
@@ -145,19 +145,30 @@ public class OrdenController {
                 ordenDTO.setFechaEntrega(LocalDateTime.now().plusDays(1));
             }
 
+            // Guardar archivo de fórmula si existe
             if (formulaFile != null && !formulaFile.isEmpty()) {
                 String rutaArchivo = archivosService.guardarFormulaMedica(formulaFile);
                 ordenDTO.setFotoFormula(rutaArchivo);
             }
 
+            // Crear orden en la base de datos
             ordenService.crear(ordenDTO, usuario.getIdUsuario(), idMedicamento);
 
-            // ❌ ELIMINADO: ya no se descuenta stock aquí
-
-            redirectAttributes.addFlashAttribute("mensaje", "Orden creada exitosamente");
+            // Datos para la vista de confirmación
             model.addAttribute("orden", ordenDTO);
             model.addAttribute("medicamento", medicamento);
+            model.addAttribute("usuario", usuario);
+            model.addAttribute("nombrePaciente", usuario.getNombre());
+            model.addAttribute("correoPaciente", usuario.getCorreo());
+            model.addAttribute("telefonoPaciente", usuario.getTelefono());
+            model.addAttribute("direccionPaciente", usuario.getDireccion());
+            model.addAttribute("descripcionCantidad", ordenDTO.getCantidad() + " unidades");
+            model.addAttribute("fechaRegistro", LocalDateTime.now());
 
+            // Mensaje de éxito
+            redirectAttributes.addFlashAttribute("mensaje", "Orden creada exitosamente");
+
+            // 👉 Retornar la vista de confirmación
             return "pacientes/confirmacionPedido";
 
         } catch (Exception e) {
@@ -165,6 +176,7 @@ public class OrdenController {
             return "pacientes/4.pagina_domicilio";
         }
     }
+
 
 
 

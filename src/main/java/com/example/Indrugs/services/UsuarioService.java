@@ -39,4 +39,6 @@ public interface UsuarioService {
 
     // ----------- 🔥 Correos masivos -----------
     List<String> obtenerCorreosActivos();
+
+
 }

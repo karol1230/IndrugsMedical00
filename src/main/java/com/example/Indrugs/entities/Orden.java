@@ -50,6 +50,10 @@ public class Orden {
     @OneToOne(mappedBy = "orden", cascade = CascadeType.ALL, orphanRemoval = true)
     private Domicilio domicilio;
 
+    @OneToMany(mappedBy = "orden", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Pedido> pedidos;
+
+
     @ManyToMany
     @JoinTable(
             name = "ordenes_has_medicamentos",

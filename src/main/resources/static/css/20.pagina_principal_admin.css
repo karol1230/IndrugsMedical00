@@ -396,3 +396,40 @@ borderWidth: 2
     line-height: 1.6;
 }
 
+.contenido_dash {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+/* PARA QUE AMBAS TARJETAS SEAN ANCHAS */
+.ordenes_recientes,
+.domicilio {
+    width: 100%;
+    background: white;
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+
+.contenido_dash {
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+}
+
+.ordenes_recientes,
+.domicilio {
+    width: 95% !important;     /* <-- MISMO ANCHO QUE LA GRÁFICA */
+    max-width: 1300px !important;
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    margin-bottom: 40px !important;
+}
+
+

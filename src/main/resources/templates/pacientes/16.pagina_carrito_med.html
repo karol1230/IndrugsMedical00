@@ -34,7 +34,7 @@
           <th>Cantidad</th>
           <th>Medicamentos</th>
           <th>Estado</th>
-          <th>Acciones</th>
+
         </tr>
         </thead>
         <tbody>
@@ -52,9 +52,6 @@
             </ul>
           </td>
           <td th:text="${orden.estadoOrden}"></td>
-          <td>
-            <a th:href="@{/ordenes/eliminar/{idOrden}(idOrden=${orden.idOrden})}" class="btn btn-danger">Eliminar</a>
-          </td>
         </tr>
         </tbody>
       </table>
