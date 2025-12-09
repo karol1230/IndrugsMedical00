@@ -18,6 +18,13 @@
     <div th:insert="Layouts/header_footerAdmin :: error"></div>
     <h1 class="text-center mb-4">Gestión de Órdenes</h1>
 
+    <div class="text-center mb-4">
+        <a th:href="@{/admin/ordenes-asignadas}" class="btn btn-primary btn-lg">
+            <i class="fas fa-list-check"></i> Ver Órdenes Asignadas
+        </a>
+    </div>
+
+
     <div th:if="${ordenes != null and !ordenes.isEmpty()}">
         <table id="tabla1" class="table table-hover align-middle tabla-centrada">
         <thead class="table-dark text-center">

@@ -61,4 +61,5 @@ public class Orden {
             inverseJoinColumns = @JoinColumn(name = "ID_MEDICAMENTOS")
     )
     private List<Medicamentos> medicamentos;
+
 }

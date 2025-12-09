@@ -12,6 +12,9 @@ public class PedidoDTO {
     private String observaciones;
     private String estado;
     private String usuario; // nombre del domiciliario
+    private String correoPaciente;
+
+
 
     public PedidoDTO() {}
 
@@ -25,6 +28,7 @@ public class PedidoDTO {
         this.observaciones = observaciones;
         this.estado = estado;
         this.usuario = usuario;
+        this.correoPaciente = correoPaciente;
     }
 
     // GETTERS & SETTERS
@@ -51,4 +55,8 @@ public class PedidoDTO {
 
     public String getUsuario() { return usuario; }
     public void setUsuario(String usuario) { this.usuario = usuario; }
+
+    public String getCorreoPaciente() { return correoPaciente; }
+    public void setCorreoPaciente(String correoPaciente) { this.correoPaciente = correoPaciente; }
+
 }

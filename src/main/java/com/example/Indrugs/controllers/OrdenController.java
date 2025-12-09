@@ -2,9 +2,7 @@ package com.example.Indrugs.controllers;
 
 import com.example.Indrugs.DTO.MedicamentoDTO;
 import com.example.Indrugs.DTO.OrdenDTO;
-import com.example.Indrugs.DTO.InventarioDTO;
-import com.example.Indrugs.entities.Inventario;
-import com.example.Indrugs.entities.Usuario;
+import com.example.Indrugs.entities.*;
 import com.example.Indrugs.repositorios.InventarioRepository;
 import com.example.Indrugs.services.*;
 import jakarta.servlet.http.HttpSession;
@@ -14,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -35,9 +34,6 @@ public class OrdenController {
 
     @Autowired
     private UsuarioService usuarioService;
-
-    @Autowired
-    private InventarioService inventarioService;
 
     @Autowired
     private InventarioRepository inventarioRepository;
@@ -89,7 +85,6 @@ public class OrdenController {
         if (usuario == null) return "redirect:/login";
 
         try {
-
             MedicamentoDTO medicamento = medicamentosService.buscarPorIdMedicamento(idMedicamento);
             if (medicamento == null) {
                 model.addAttribute("error", "Medicamento no encontrado");
@@ -100,7 +95,9 @@ public class OrdenController {
             ordenDTO.setPacienteNombre(usuario.getNombre());
             ordenDTO.setCantidad(cantidad);
             ordenDTO.setNombreMedicamento(medicamento.getNombreMedicamento());
-            ordenDTO.setEstadoOrden("ACTIVO");
+
+            // 🔥 Estado inicial correcto
+            ordenDTO.setEstadoOrden("PENDIENTE_ASIGNACIÓN");
 
             model.addAttribute("orden", ordenDTO);
             model.addAttribute("usuarioLogueado", usuario);
@@ -124,51 +121,38 @@ public class OrdenController {
                                Model model,
                                RedirectAttributes redirectAttributes) {
 
-        // 👉 Usuario logueado desde la sesión
         Usuario usuario = (Usuario) session.getAttribute("usuarioLogueado");
         if (usuario == null) return "redirect:/login";
 
         try {
-            // Buscar medicamento
             MedicamentoDTO medicamento = medicamentosService.buscarPorIdMedicamento(idMedicamento);
             if (medicamento == null) {
                 model.addAttribute("error", "Medicamento no encontrado");
                 return "error";
             }
 
-            // Configurar orden
             ordenDTO.setPacienteNombre(usuario.getNombre());
             ordenDTO.setNombreMedicamento(medicamento.getNombreMedicamento());
-            ordenDTO.setEstadoOrden("ACTIVO");
+
+            // 🔥 Estado inicial correcto
+            ordenDTO.setEstadoOrden("PENDIENTE_ASIGNACIÓN");
 
             if (ordenDTO.getFechaEntrega() == null) {
                 ordenDTO.setFechaEntrega(LocalDateTime.now().plusDays(1));
             }
 
-            // Guardar archivo de fórmula si existe
             if (formulaFile != null && !formulaFile.isEmpty()) {
                 String rutaArchivo = archivosService.guardarFormulaMedica(formulaFile);
                 ordenDTO.setFotoFormula(rutaArchivo);
             }
 
-            // Crear orden en la base de datos
             ordenService.crear(ordenDTO, usuario.getIdUsuario(), idMedicamento);
 
-            // Datos para la vista de confirmación
-            model.addAttribute("orden", ordenDTO);
-            model.addAttribute("medicamento", medicamento);
-            model.addAttribute("usuario", usuario);
-            model.addAttribute("nombrePaciente", usuario.getNombre());
-            model.addAttribute("correoPaciente", usuario.getCorreo());
-            model.addAttribute("telefonoPaciente", usuario.getTelefono());
-            model.addAttribute("direccionPaciente", usuario.getDireccion());
-            model.addAttribute("descripcionCantidad", ordenDTO.getCantidad() + " unidades");
-            model.addAttribute("fechaRegistro", LocalDateTime.now());
-
-            // Mensaje de éxito
             redirectAttributes.addFlashAttribute("mensaje", "Orden creada exitosamente");
 
-            // 👉 Retornar la vista de confirmación
+            model.addAttribute("orden", ordenDTO);
+            model.addAttribute("medicamento", medicamento);
+
             return "pacientes/confirmacionPedido";
 
         } catch (Exception e) {
@@ -179,9 +163,8 @@ public class OrdenController {
 
 
 
-
     // ============================================================
-    // ADMINISTRADOR: ELIMINAR / ACEPTAR / DENEGAR
+    // ADMIN – ELIMINAR ORDEN
     // ============================================================
 
     @GetMapping("/ordenes/eliminar/{idOrden}")
@@ -204,41 +187,6 @@ public class OrdenController {
         return "redirect:/18.pagina_orden_admin";
     }
 
-    @GetMapping("/orden/admin/aceptar/{id}")
-    public String aceptarOrden(@PathVariable Long id, RedirectAttributes redirectAttributes) {
-
-        try {
-            OrdenDTO orden = ordenService.obtenerOrdenPorId(id);
-            orden.setEstadoOrden("Aceptada");
-
-            ordenService.crear(orden, orden.getPaciente(), orden.getIdMedicamento());
-
-            redirectAttributes.addFlashAttribute("mensaje", "Orden aceptada correctamente");
-
-        } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("error", "Error al aceptar la orden: " + e.getMessage());
-        }
-
-        return "redirect:/18.pagina_orden_admin";
-    }
-
-    @GetMapping("/orden/admin/denegar/{id}")
-    public String denegarOrden(@PathVariable Long id, RedirectAttributes redirectAttributes) {
-
-        try {
-            OrdenDTO orden = ordenService.obtenerOrdenPorId(id);
-            orden.setEstadoOrden("Denegada");
-
-            ordenService.crear(orden, orden.getPaciente(), orden.getIdMedicamento());
-
-            redirectAttributes.addFlashAttribute("mensaje", "Orden denegada correctamente");
-
-        } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("error", "Error al denegar la orden: " + e.getMessage());
-        }
-
-        return "redirect:/18.pagina_orden_admin";
-    }
 
 
     // ============================================================
@@ -266,30 +214,53 @@ public class OrdenController {
                                       RedirectAttributes redirectAttributes) {
 
         try {
-            pedidoService.crearPedidoDesdeOrden(idOrden, idDomiciliario);
+            Orden orden = ordenService.obtenerOrdenEntityPorId(idOrden);
+            Usuario domiciliario = usuarioService.obtenerUsuarioPorId(idDomiciliario);
 
-            OrdenDTO orden = ordenService.obtenerOrdenPorId(idOrden);
+            if (orden == null || domiciliario == null) {
+                redirectAttributes.addFlashAttribute("error", "Orden o domiciliario no válido");
+                return "redirect:/18.pagina_orden_admin";
+            }
 
-            // Actualizar stock
-            Inventario inventario = inventarioRepository.findAll().stream()
-                    .filter(inv -> inv.getIdMedicamento() != null &&
-                            inv.getIdMedicamento().getNombreMedicamento()
-                                    .equalsIgnoreCase(orden.getNombreMedicamento()))
-                    .findFirst()
-                    .orElse(null);
+            // Crear o actualizar domicilio
+            Domicilio domicilio = orden.getDomicilio();
+            if (domicilio == null) {
+                domicilio = new Domicilio();
+                domicilio.setOrden(orden); // Relación bidireccional
+                orden.setDomicilio(domicilio);
+            }
 
-            if (inventario != null && inventario.getStock() >= orden.getCantidad()) {
+            domicilio.setDomiciliario(domiciliario);
+            domicilio.setEstado("En camino");        // Estado interno
+            domicilio.setEstadoDomicilio("En camino"); // Estado que se muestra en la tabla
 
-                inventario.setStock(inventario.getStock() - orden.getCantidad());
-                inventario.setFechaSalida(LocalDateTime.now());
-                inventarioRepository.save(inventario);
+            ordenService.guardarOrden(orden); // Guarda orden y domicilio
 
-                redirectAttributes.addFlashAttribute("mensaje",
-                        "Domiciliario asignado y stock actualizado correctamente.");
+            // Actualizar stock del primer medicamento
+            Medicamentos med = orden.getMedicamentos().isEmpty() ? null : orden.getMedicamentos().get(0);
 
+            if (med != null) {
+                Inventario inventario = inventarioRepository.findAll().stream()
+                        .filter(inv -> inv.getIdMedicamento() != null &&
+                                inv.getIdMedicamento().getNombreMedicamento()
+                                        .equalsIgnoreCase(med.getNombreMedicamento()))
+                        .findFirst()
+                        .orElse(null);
+
+                if (inventario != null && inventario.getStock() >= orden.getCantidad()) {
+                    inventario.setStock(inventario.getStock() - orden.getCantidad());
+                    inventario.setFechaSalida(LocalDateTime.now());
+                    inventarioRepository.save(inventario);
+
+                    redirectAttributes.addFlashAttribute("mensaje",
+                            "Domiciliario asignado y stock actualizado correctamente.");
+                } else {
+                    redirectAttributes.addFlashAttribute("error",
+                            "No hay suficiente stock para este medicamento.");
+                }
             } else {
                 redirectAttributes.addFlashAttribute("error",
-                        "No hay suficiente stock para este medicamento.");
+                        "La orden no tiene medicamentos asignados.");
             }
 
         } catch (Exception e) {
@@ -301,17 +272,36 @@ public class OrdenController {
     }
 
 
+
+
     // ============================================================
-    // DOMICILIARIO: VER SUS PEDIDOS
+    // DOMICILIARIO – MIS PEDIDOS
     // ============================================================
 
-    @GetMapping("/pedidos-domiciliario") // ✅ ya no choca con el otro controller
+    @GetMapping("/pedidos-domiciliario")
     public String verPedidosDomiciliario(Model model, HttpSession session) {
         Usuario usuario = (Usuario) session.getAttribute("usuarioLogueado");
         if (usuario == null) return "redirect:/login";
 
         model.addAttribute("pedidos", pedidoService.listarPorDomiciliario(usuario));
         return "domiciliario/25.pedidos_asignados";
+    }
+
+    @GetMapping("/admin/ordenes-asignadas")
+    public String verOrdenesAsignadas(Model model) {
+        List<OrdenDTO> asignadas = ordenService.listarOrdenesAsignadas();
+        model.addAttribute("ordenes", asignadas);
+        return "administrador/ordenes_asignadas";
+    }
+
+    @GetMapping("/admin/orden/detalle/{idOrden}")
+    public String verDetalleOrden(@PathVariable Long idOrden, Model model) {
+        OrdenDTO orden = ordenService.obtenerOrdenPorId(idOrden);
+        if (orden == null) {
+            return "redirect:/admin/ordenes-asignadas"; // o página de error
+        }
+        model.addAttribute("orden", orden);
+        return "administrador/orden_detalle"; // Thymeleaf template
     }
 
 }

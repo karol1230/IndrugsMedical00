@@ -50,4 +50,13 @@ public interface OrdenService {
     List<OrdenDTO> ObtenerOrdenesRecientes();
 
     Map<String,Object> ObtenerResumenOrden();
+
+    void actualizarEstado(Long idOrden, String asignado);
+
+    List<OrdenDTO> listarOrdenesAsignadas();
+    // En OrdenService.java
+    public Orden obtenerOrdenEntityPorId(Long idOrden);
+
+
+    void guardarOrden(Orden orden);
 }

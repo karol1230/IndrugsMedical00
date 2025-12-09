@@ -85,7 +85,7 @@ public class OrdenServiceImpl implements OrdenService {
         orden.setFormulaMedica(ordenDTO.getFotoFormula());
 
         if (orden.getEstadoOrden() == null || orden.getEstadoOrden().isEmpty()) {
-            orden.setEstadoOrden("ACTIVO");
+            orden.setEstadoOrden("PENDIENTE_ASIGNACION");
         }
 
         ordenRepository.save(orden);
@@ -190,4 +190,81 @@ public class OrdenServiceImpl implements OrdenService {
     public void asignarMedicamentoAOrden(Long idOrden, Long idMedicamento, int cantidad) {
         // Puedes solicitarme implementarlo
     }
+
+    public void actualizarEstado(Long idOrden, String nuevoEstado) {
+        Orden orden = ordenRepository.findById(idOrden)
+                .orElseThrow(() -> new RuntimeException("Orden no encontrada"));
+
+        orden.setEstadoOrden(nuevoEstado);
+        ordenRepository.save(orden);
+    }
+
+
+    @Override
+    public Orden obtenerOrdenEntityPorId(Long idOrden) {
+        return ordenRepository.findById(idOrden).orElse(null);
+    }
+
+    @Override
+    public void guardarOrden(Orden orden) {
+        ordenRepository.save(orden);
+    }
+
+    @Override
+    public List<OrdenDTO> listarOrdenesAsignadas() {
+        List<Orden> ordenes = ordenRepository.findByEstadoOrden("ASIGNADA");
+
+        return ordenes.stream().map(orden -> {
+            OrdenDTO dto = new OrdenDTO();
+
+            dto.setIdOrden(orden.getIdOrden());
+
+            // Paciente
+            if (orden.getPaciente() != null) {
+                dto.setPacienteNombre(orden.getPaciente().getNombre());
+            }
+
+            dto.setDireccionOrden(orden.getDireccionOrden());
+            dto.setTelefonoOrden(orden.getTelefonoOrden());
+            dto.setFotoFormula(orden.getFotoFormula());
+            dto.setEpsOrden(orden.getEpsOrden());
+
+            // Lista de medicamentos
+            if (orden.getMedicamentos() != null) {
+                dto.setMedicamentos(
+                        orden.getMedicamentos()
+                                .stream()
+                                .map(Medicamentos::getNombreMedicamento)
+                                .toList()
+                );
+            }
+
+            // 🔵 DOMICILIARIO ASIGNADO Y ESTADO
+            Domicilio domicilio = orden.getDomicilio();
+            if (domicilio != null) {
+                // Nombre domiciliario
+                if (domicilio.getDomiciliario() != null) {
+                    dto.setNombreDomiciliario(domicilio.getDomiciliario().getNombre());
+                } else {
+                    dto.setNombreDomiciliario("No asignado");
+                }
+
+                // Estado domicilio
+                if (domicilio.getEstadoDomicilio() != null && !domicilio.getEstadoDomicilio().isEmpty()) {
+                    dto.setEstadoDomicilio(domicilio.getEstadoDomicilio());
+                } else {
+                    dto.setEstadoDomicilio("En camino"); // valor por defecto
+                }
+            } else {
+                dto.setNombreDomiciliario("No asignado");
+                dto.setEstadoDomicilio("No asignado");
+            }
+
+            return dto;
+        }).toList();
+    }
+
+
+
+
 }

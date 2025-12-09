@@ -74,7 +74,7 @@ public class PedidoServiceImpl implements PedidoService {
         pedido.setCorreoPaciente(orden.getPaciente().getCorreo());
 
         pedido.setHoraPedido(LocalDateTime.now());
-        pedido.setEstado("Asignado");
+        pedido.setEstado("ASIGNADO");
         pedido.setObservaciones("Pedido generado automáticamente desde la orden #" + idOrden);
 
         pedidoRepository.save(pedido);

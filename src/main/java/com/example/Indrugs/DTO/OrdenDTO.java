@@ -26,4 +26,9 @@ public class OrdenDTO {
 
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
     private LocalDateTime fechaEntrega; // Fecha y hora de entrega
+
+    private Long idDomiciliario;
+    private String nombreDomiciliario;
+    private String estadoDomicilio; // "En camino" o "Entregado"
+
 }

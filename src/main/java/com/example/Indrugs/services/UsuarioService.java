@@ -40,5 +40,6 @@ public interface UsuarioService {
     // ----------- 🔥 Correos masivos -----------
     List<String> obtenerCorreosActivos();
 
+    public Usuario obtenerUsuarioPorId(Long idUsuario);
 
 }

@@ -203,5 +203,11 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
 
+    @Override
+    public Usuario obtenerUsuarioPorId(Long idUsuario) {
+        return usuarioRepository.findById(idUsuario).orElse(null);
+    }
+
+
 
 }

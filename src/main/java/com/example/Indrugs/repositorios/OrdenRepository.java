@@ -12,4 +12,5 @@ public interface OrdenRepository extends JpaRepository<Orden, Long> {
         List<Orden> findTop4ByOrderByIdOrdenDesc();
         long countByEstadoOrden(String estadoOrden);
         List<Orden> findByPaciente_IdUsuario(Long idUsuario);
+
 }

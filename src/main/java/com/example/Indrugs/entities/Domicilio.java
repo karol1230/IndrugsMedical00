@@ -33,4 +33,14 @@ public class Domicilio {
     @JoinColumn(name = "ID_ORDENES")
     private Orden orden;
 
+    @ManyToOne
+    @JoinColumn(name = "ID_DOMICILIARIO")
+    private Usuario domiciliario;
+
+    @ManyToOne
+    @JoinColumn(name = "usuario_id")
+    private Usuario usuario;
+
+    @Column(length = 50)
+    private String estado; // "En camino" o "Entregado"
 }
