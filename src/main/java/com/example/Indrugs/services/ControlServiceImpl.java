@@ -4,12 +4,14 @@ import com.example.Indrugs.DTO.ControlDTO;
 import com.example.Indrugs.entities.Control;
 import com.example.Indrugs.mapper.ControlMapper;
 import com.example.Indrugs.repositorios.ControlRepository;
-import com.example.Indrugs.services.ControlService;
 import com.example.Indrugs.repositorios.MedicamentoRepository;
 import com.example.Indrugs.repositorios.UsuarioRepository;
+import com.example.Indrugs.services.ControlService;
+import com.example.Indrugs.services.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -20,13 +22,19 @@ public class ControlServiceImpl implements ControlService {
     private final ControlRepository controlRepository;
     private final MedicamentoRepository medicamentoRepository;
     private final UsuarioRepository usuarioRepository;
+    private final EmailService emailService;
 
     @Autowired
-    public ControlServiceImpl(ControlRepository controlRepository, MedicamentoRepository medicamentoRepository, UsuarioRepository usuarioRepository) {
+    public ControlServiceImpl(
+            ControlRepository controlRepository,
+            MedicamentoRepository medicamentoRepository,
+            UsuarioRepository usuarioRepository,
+            EmailService emailService) {
+
         this.controlRepository = controlRepository;
         this.medicamentoRepository = medicamentoRepository;
         this.usuarioRepository = usuarioRepository;
-
+        this.emailService = emailService;
     }
 
     @Override
@@ -39,23 +47,50 @@ public class ControlServiceImpl implements ControlService {
     @Override
     public void guardarControl(ControlDTO controlDTO) {
         Control control = ControlMapper.mapToEntity(controlDTO);
+
+        if (control.getAlarmaControl() != null && control.getFechaInicioTratamiento() != null) {
+            int frecuenciaHoras = 1; // default
+            try {
+                frecuenciaHoras = Integer.parseInt(control.getFrecuenciaMedic());
+            } catch (Exception ignored) {}
+
+            LocalDateTime ahora = LocalDateTime.now();
+            LocalDateTime alarmaHoy = LocalDateTime.of(ahora.toLocalDate(), control.getAlarmaControl());
+
+            if (alarmaHoy.isBefore(ahora)) {
+                // Si ya pasó la alarma de hoy, calcular la siguiente según frecuencia
+                while (!alarmaHoy.isAfter(ahora)) {
+                    alarmaHoy = alarmaHoy.plusHours(frecuenciaHoras);
+                }
+            }
+
+            control.setProximoEnvio(alarmaHoy);
+        }
+
+        control.setUltimoEnvio(null);
         controlRepository.save(control);
     }
+
 
     @Override
     public void actualizar(Long idControl, ControlDTO controlDTO) {
         Optional<Control> optionalControl = controlRepository.findById(idControl);
         if (optionalControl.isPresent()) {
             Control control = optionalControl.get();
-            // Actualiza los campos necesarios
-            control.setIdMedicamento(controlDTO.getIdMedicamento() != null ? medicamentoRepository.findById(controlDTO.getIdMedicamento()).orElse(null) : null);
-            control.setUsuario(controlDTO.getIdUsuario() != null ? usuarioRepository.findById(controlDTO.getIdUsuario()).orElse(null) : null);
+
+            control.setIdMedicamento(controlDTO.getIdMedicamento() != null ?
+                    medicamentoRepository.findById(controlDTO.getIdMedicamento()).orElse(null) : null);
+
+            control.setUsuario(controlDTO.getIdUsuario() != null ?
+                    usuarioRepository.findById(controlDTO.getIdUsuario()).orElse(null) : null);
+
             control.setCantidadMedic(controlDTO.getCantidadMedic());
             control.setProblemaSalud(controlDTO.getProblemaSalud());
             control.setFrecuenciaMedic(controlDTO.getFrecuenciaMedic());
             control.setFechaInicioTratamiento(controlDTO.getFechaInicioTratamiento());
             control.setFechaFinTratamiento(controlDTO.getFechaFinTratamiento());
             control.setAlarmaControl(controlDTO.getAlarmaControl());
+
             controlRepository.save(control);
         } else {
             throw new RuntimeException("Control no encontrado");
@@ -68,8 +103,9 @@ public class ControlServiceImpl implements ControlService {
                 .map(ControlMapper::mapToDto)
                 .orElseThrow(() -> new RuntimeException("Control no encontrado"));
     }
+
     @Override
     public void eliminarControl(Long idControl) {
-        controlRepository.deleteById(idControl); // Suponiendo que ControlRepository tiene un método deleteById
+        controlRepository.deleteById(idControl);
     }
 }

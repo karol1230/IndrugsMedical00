@@ -33,7 +33,7 @@
         .table thead th {
             text-align: center;
             font-weight: 600;
-            background-color: #4db6ac !important; /* azul verdoso lindo */
+            background-color: #004B3A; !important; /* azul verdoso lindo */
             color: white !important;
         }
         .table tbody td {
@@ -44,36 +44,27 @@
             background-color: #f2f7f6;
         }
         /* Badge de estado pastel */
-        .badge-estado {
-            padding: 0.5em 0.8em;
-            border-radius: 12px;
-            font-weight: 500;
-            min-width: 90px; /* ancho uniforme */
-            display: inline-block;
-            text-align: center;
-            white-space: nowrap; /* evita que el texto se rompa */
-        }
-        .bg-warning-pastel {
-            background-color: #fff9c4 !important;
-            color: #6b5500 !important;
-        }
-        .bg-primary-pastel {
-            background-color: #90caf9 !important;
-            color: #0d47a1 !important;
-        }
-        .bg-success-pastel {
-            background-color: #a5d6a7 !important;
-            color: #1b5e20 !important;
-        }
-        .btn-ver {
-            background-color: #b39ddb;
-            color: white;
+       .badge-estado {
+        border-radius: 12px;
+        font-weight: 500;
+        min-width: 90px;
+        display: inline-block;
+        text-align: center;
+        white-space: nowrap;
+
+        background-color: #ffffff !important; /* fondo blanco */
+        color: #000000 !important;            /* texto negro */
+        border: 1px solid #ccc;
+        display: contents !important;
+}
+
+
+            background-color: white;
+            color: black;
             border: none;
             transition: background-color 0.3s;
         }
-        .btn-ver:hover {
-            background-color: #9575cd;
-        }
+
         .alert {
             border-radius: 10px;
         }
@@ -87,7 +78,7 @@
 <header th:insert="~{Layouts/header_footerAdmin :: header}"></header>
 
 <div class="container mt-5">
-    <h2>Listado de PQRS Registradas</h2>
+    <h2>PQRS Registradas</h2>
 
     <!-- Mensaje dinámico -->
     <div th:if="${exito}" class="alert alert-success" role="alert">

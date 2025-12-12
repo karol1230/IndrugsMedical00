@@ -19,4 +19,9 @@ public class HomePageController {
     public String mostrarNosotros(){
         return "7.pagina_sobre_nosotros";
     }
+    @GetMapping("/500")
+    public String pagina500() {
+        return "500"; //
+    }
+
 }

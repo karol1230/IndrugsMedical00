@@ -63,7 +63,7 @@
             <li><a th:href="@{/10.pagina_mapa_nav}" style="color: white; text-decoration: none;">Mapa</a></li>
             <li style="color:white;">•</li>
 
-            <!-- SIN LOGIN -->
+            <!-- SIN LOGIN,  -->
             <li th:if="${session.usuarioLogueado == null}">
                 <a th:href="@{/login}" style="color:white;text-decoration:none; display:flex; align-items:center; gap:6px;">
                     <i class="fa-solid fa-user"></i> Iniciar sesión

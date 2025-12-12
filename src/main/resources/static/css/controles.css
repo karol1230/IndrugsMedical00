@@ -1,0 +1,141 @@
+/* =====================================================
+   CONTROLES MÉDICOS - ESTILOS MEJORADOS
+===================================================== */
+
+/* Body general */
+body {
+    font-family: 'Quicksand', sans-serif;
+    background-color: #f7f7f7;
+    margin: 0;
+}
+
+/* Contenedor principal */
+.contenido {
+    margin-top: 40px;
+    padding: 30px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Título */
+#titulo_control {
+    text-align: center;
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #00796b;
+    margin-bottom: 30px;
+}
+
+/* Listado de controles con grid */
+.listado-controles {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 30px;
+}
+
+/* Tarjetas de controles */
+.control-card {
+    background-color: #ffffff;
+    border-radius: 15px;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    padding: 20px;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: aparecer 0.6s forwards;
+}
+
+@keyframes aparecer {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Título dentro de la tarjeta */
+.control-card h5 {
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #00796b;
+    margin-bottom: 15px;
+}
+
+/* Iconos dentro de tarjeta */
+.control-card i {
+    margin-right: 10px;
+    color: #00796b;
+}
+
+/* Detalles de la tarjeta */
+.control-card .detail-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.control-card .detail-item span {
+    margin-left: 10px;
+}
+
+/* Botones dentro de tarjeta */
+.control-card .btn-control,
+.control-card .btn-eliminar {
+    background-color: #26a69a; /* Verde azulado */
+    color: white;
+    padding: 12px 20px;
+    border-radius: 30px;
+    font-weight: 600;
+    width: 100%;
+    text-align: center;
+    border: none;
+    transition: all 0.4s ease;
+    margin-top: 10px;
+    display: inline-block;
+    text-decoration: none;
+
+    /* Animación de aparición */
+    opacity: 0;
+    transform: translateY(15px);
+    animation: aparecer-boton 0.6s forwards;
+}
+
+@keyframes aparecer-boton {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.control-card .btn-control:hover,
+.control-card .btn-eliminar:hover {
+    background-color: #1e7e74; /* Verde más oscuro */
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2);
+    transform: translateY(-2px) scale(1.05);
+}
+
+/* No hay controles */
+.no-controles {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #888;
+    margin-top: 20px;
+}
+
+/* Alertas de éxito */
+.alert {
+    margin-bottom: 30px;
+}
+
+/* Responsive ajustes */
+@media (max-width: 768px) {
+    .listado-controles {
+        grid-template-columns: 1fr;
+    }
+
+    .contenido {
+        padding: 20px;
+        margin-top: 20px;
+    }
+}

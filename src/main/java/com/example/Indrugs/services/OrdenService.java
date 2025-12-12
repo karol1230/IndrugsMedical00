@@ -44,6 +44,9 @@ public interface OrdenService {
     // Total de órdenes registradas
     long countTotalOrdenes();
 
+    void denegarOrden(Long idOrden); // Método para denegar la orden
+
+
     // ---------------------------------------------------------------
     // RESUMENES Y LISTAS ESPECIALES
     // ---------------------------------------------------------------
@@ -59,4 +62,6 @@ public interface OrdenService {
 
 
     void guardarOrden(Orden orden);
+
+    void guardar(OrdenDTO orden);
 }

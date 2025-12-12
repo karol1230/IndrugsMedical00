@@ -38,7 +38,7 @@
                 <h1>👋 ¡Bienvenido, Administrador <span th:text="${nombreAdmin}"></span>!</h1>
                 <p>
                     Desde este panel podrás gestionar las funciones principales del sistema:
-                    usuarios, inventario, medicamentos, órdenes y PQRS.
+                    usuarios, inventario, medicamentos, órdenes, registrar y PQRS.
                 </p>
             </div>
         </section>
@@ -129,7 +129,7 @@
                     <table id="tabla2" class="table">
                         <thead class="table-dark">
                         <tr>
-                            <th>Rol</th>
+                            <th>Tipo de usuario</th>
                             <th>Nombre</th>
                             <th>Estado</th>
                         </tr>
@@ -184,7 +184,7 @@
             grafico = new Chart(ctx, {
                 type: 'bar',
                 data: {
-                    labels: ['Pacientes', 'Medicamentos', 'Órdenes Completadas', 'Activos', 'Inactivos'],
+                    labels: ['Pacientes', 'Medicamentos',  'Activos', 'Inactivos'],
 
                     /* 🎨 COLORES PASTEL PARA CADA COLUMNA */
                     datasets: [{
@@ -192,7 +192,6 @@
                         data: [
                             data.pacientes,
                             data.cantidadMedicamentos,
-                            data.ordenesCompletadas,
                             data.activos,
                             data.inactivos
                         ],
@@ -200,14 +199,12 @@
                         backgroundColor: [
                             'rgba(255, 179, 186, 0.7)',
                             'rgba(255, 223, 186, 0.7)',
-                            'rgba(255, 255, 186, 0.7)',
                             'rgba(186, 255, 201, 0.7)',
                             'rgba(186, 225, 255, 0.7)'
                         ],
                         borderColor: [
                             'rgba(255, 179, 186, 1)',
                             'rgba(255, 223, 186, 1)',
-                            'rgba(255, 255, 186, 1)',
                             'rgba(186, 255, 201, 1)',
                             'rgba(186, 225, 255, 1)'
                         ]

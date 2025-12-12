@@ -1,60 +1,39 @@
 <div th:fragment="header" xmlns:th="http://www.thymeleaf.org">
     <header class="cabeza_indrugs">
 
-        <!-- LOGO -->
-        <div class="contenedor_cabeza logo_nav_items">
+        <!-- LOGO + MENÚ PRINCIPAL en un mismo contenedor para alinearlos a la izquierda -->
+        <div class="contenedeor_cabeza">
+            <!-- LOGO -->
             <a th:href="@{/index}" class="logo">
                 <img class="img_indrugs_logo" th:src="@{/imagenes/logo.png}" alt="Logo">
                 INDRUGS MEDICA
             </a>
+
+            <!-- MENÚ PRINCIPAL -->
+            <nav class="menu">
+                <ul class="barra_2">
+                    <li><a class="enlace_barra" th:href="@{/1.pagina_principal_paciente}">Inicio</a></li>
+                    <li><a class="enlace_barra" th:href="@{/perfil}">Perfil</a></li>
+                    <li><a class="enlace_barra" th:href="@{/24.pagina_control}">Control</a></li>
+                    <li><a class="enlace_barra" th:href="@{/8.pagina_med}">Medicamentos</a></li>
+                    <li><a class="enlace_barra" th:href="@{/5.pagina_pqrs}">PQRS</a></li>
+                    <li><a class="enlace_barra" th:href="@{/16.pagina_carrito_med}">Mi carrito</a></li>
+
+                    <!-- Login / Logout -->
+                    <li th:if="${session.usuarioLogueado == null}">
+                        <a class="enlace_barra" th:href="@{/login}">Iniciar sesión</a>
+                    </li>
+                    <li th:if="${session.usuarioLogueado != null}">
+                        <a class="enlace_barra" th:href="@{/logout}">
+                            <i class="fa-solid fa-right-from-bracket"></i>
+                            Cerrar sesión
+                        </a>
+                    </li>
+                </ul>
+            </nav>
         </div>
 
-        <!-- MENÚ PRINCIPAL -->
-        <nav class="menu">
-            <ul class="barra_2">
-                <li class="item_barra"><a class="enlace_barra" th:href="@{/1.pagina_principal_paciente}">Inicio</a></li>
-                <li class="item_barra"><a class="enlace_barra" th:href="@{/24.pagina_control}">Control</a></li>
-                <li class="item_barra"><a class="enlace_barra" th:href="@{/8.pagina_med}">Medicamentos</a></li>
-                <li class="item_barra"><a class="enlace_barra" th:href="@{/5.pagina_pqrs}">PQRS</a></li>
-
-                <!-- Login / Logout -->
-                <li class="item_barra" th:if="${session.usuarioLogueado == null}">
-                    <a class="enlace_barra" th:href="@{/login}">Iniciar sesión</a>
-                </li>
-                <li class="item_barra" th:if="${session.usuarioLogueado != null}">
-                    <a class="enlace_barra" th:href="@{/logout}">
-                        <i class="fa-solid fa-right-from-bracket"></i>
-                        Cerrar sesión
-                    </a>
-                </li>
-            </ul>
-        </nav>
-
-        <!-- ICONOS DERECHA -->
-        <nav class="navegacion_1">
-            <ul class="barra_1">
-                <!-- Perfil del Paciente -->
-                <li th:if="${session.usuarioLogueado != null and session.usuarioLogueado.rol.idRol == 2}">
-                <a th:href="@{/perfil}" class="enlace_barra1" title="Mi Perfil">
-                    <i class="fa-solid fa-user icono_perfil" style="color:white; font-size:24px;"></i>
-
-                </a>
-                </li>
-
-                <!-- Carrito -->
-                <li class="item_barra1">
-                    <a th:href="@{/16.pagina_carrito_med}" class="enlace_barra1" title="Carrito">
-                        <img class="iconos" th:src="@{/Iconos/compras.png}" alt="Carrito">
-                    </a>
-                </li>
-            </ul>
-        </nav>
-
     </header>
-</div>
-
-
-
 </div>
 
 <div th:fragment="error" xmlns:th="http://www.thymeleaf.org">
@@ -67,22 +46,17 @@
     </div>
 </div>
 
-<footer th:fragment="footer" xmlns:th="http://www.thymeleaf.org"
-        style="background: linear-gradient(180deg, #00796b 0%, #00695c 100%);
-               color:#f1fffb; padding:20px 0; text-align:center;
-               font-family:'Poppins',sans-serif;">
-
-    <div style="margin-bottom:10px;">
+<footer th:fragment="footer">
+    <div style="margin-bottom:10px; text-align:center;">
         <img th:src="@{/imagenes/logo.png}" alt="Logo" style="width:60px; margin-bottom:5px;">
         <p style="font-size:1em; font-weight:500; margin:0;">
             © 2025 INDRUGS MEDICAL — Cuidado y bienestar para todos 💊
         </p>
     </div>
 
-    <div style="font-size:0.9em; line-height:1.6; ">
+    <div style="font-size:0.9em; line-height:1.6; text-align:center;">
         <p><strong>Dirección:</strong> Calle 82 B N° 95 D-14, Bogotá, Colombia</p>
         <p><strong>Teléfono:</strong> +57 (320) 456-7890</p>
         <p><strong>Email:</strong> indrugsmedica@gmail.com</p>
     </div>
-
 </footer>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pedidos del Domiciliario | INDRUGS</title>
+    <title>Pedidos del Domiciliario | INDRUGS MEDICA</title>
 
     <!-- 🔗 Estilos y librerías -->
     <script src="https://kit.fontawesome.com/14122cd484.js" crossorigin="anonymous"></script>
@@ -33,7 +33,7 @@
                 <tr>
                     <th>Paciente</th>
                     <th>Dirección</th>
-                    <th>Hora Pedido</th>
+                    <th>FECHA ENTREGA</th>
                     <th>Teléfono</th>
                     <th>Observaciones</th>
                     <th>Estado</th>
@@ -47,7 +47,7 @@
                     <td th:text="${pedido.direccion}">Dirección</td>
 
                     <!-- ✅ Corregido: usar horaPedido -->
-                    <td th:text="${#temporals.format(pedido.horaPedido, 'dd/MM/yyyy HH:mm')}">Hora</td>
+                    <td th:text="${#temporals.format(pedido.horaPedido, 'dd/MM/yyyy HH:mm')}"></td>
 
                     <td th:text="${pedido.telefono}">Teléfono</td>
                     <td th:text="${pedido.observaciones}">Observaciones</td>
@@ -60,24 +60,13 @@
                     </td>
 
                     <td>
-                        <form th:action="@{'/actualizar/pedido/' + ${pedido.id}}" method="post">
+                        <form th:action="@{'/domiciliario/pedido/actualizar/' + ${pedido.id}}" method="post">
+                        <button type="submit" name="estado" value="EN_CAMINO" class="btn btn-outline-warning btn-sm">EN CAMINO</button>
+                        <button type="submit" name="estado" value="HE_LLEGADO" class="btn btn-outline-secondary btn-sm">HE LLEGADO</button>
+                        <button type="submit" name="estado" value="ENTREGADO" class="btn btn-outline-success btn-sm">ENTREGADO</button>
+                    </form>
 
-                            <button type="submit" name="estado" value="EN_CAMINO"
-                                    class="btn btn-outline-warning btn-sm">
-                                EN CAMINO
-                            </button>
 
-                            <button type="submit" name="estado" value="HE_LLEGADO"
-                                    class="btn btn-outline-secondary btn-sm">
-                                HE LLEGADO
-                            </button>
-
-                            <button type="submit" name="estado" value="ENTREGADO"
-                                    class="btn btn-outline-success btn-sm">
-                                ENTREGADO
-                            </button>
-
-                        </form>
                     </td>
 
                 </tr>

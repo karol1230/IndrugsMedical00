@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface InventarioService {
 
-    // Leer todo el inventario
+    // Leer inventario
     List<InventarioDTO> read();
 
     // Crear inventario nuevo

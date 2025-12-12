@@ -1,0 +1,127 @@
+/* =====================================================
+   PERFIL DE USUARIO
+===================================================== */
+
+/* Espacio desde el header fijo */
+body {
+    padding-top: 140px; /* Ajusta según altura del header */
+    background: #e6f2f1;
+    font-family: 'Arial', sans-serif;
+    transition: background 0.3s;
+}
+
+/* Contenedor general del perfil */
+.perfil-container {
+    max-width: 600px;
+    margin: 180px auto 50px auto; /* ↑ aumenté el margen superior */
+    padding: 35px 45px;
+    border-radius: 15px;
+    background: #ffffff;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+    transition: all 0.4s ease-in-out;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: aparecer 0.6s forwards;
+}
+
+/* Animación de aparición */
+@keyframes aparecer {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.perfil-container h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #1e5d3b;
+    font-size: 30px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+/* Tabla estilo moderno */
+.perfil-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 12px;
+}
+
+.perfil-table td {
+    padding: 10px;
+    vertical-align: middle;
+}
+
+.perfil-table td:first-child {
+    font-weight: bold;
+    width: 40%;
+    color: #555;
+}
+
+/* Inputs estilizados */
+.perfil-table input {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1.5px solid #ccc;
+    border-radius: 10px;
+    font-size: 15px;
+    transition: all 0.3s ease-in-out;
+}
+
+.perfil-table input:focus {
+    border-color: #1e5d3b;
+    outline: none;
+    box-shadow: 0 0 8px rgba(30, 93, 59, 0.25);
+}
+
+/* Botón elegante */
+.perfil-container button {
+    padding: 12px 30px;
+    background-color: #1e5d3b;
+    color: #fff;
+    font-size: 16px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0 5px 15px rgba(30,93,59,0.3);
+}
+
+.perfil-container button:hover {
+    background-color: #16442a;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(30,93,59,0.4);
+}
+
+/* Rol no editable */
+.perfil-table td[th\\:text] {
+    font-weight: normal;
+    color: #333;
+}
+
+/* Mensaje de éxito */
+.mensaje-exito {
+    max-width: 600px;
+    margin: 0 auto 25px auto;
+    text-align: center;
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+    padding: 15px 20px;
+    border-radius: 12px;
+    font-weight: bold;
+    font-size: 16px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    opacity: 0;
+    transform: translateY(-10px);
+    animation: aparecer-mensaje 0.6s forwards;
+}
+
+/* Animación de mensaje */
+@keyframes aparecer-mensaje {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

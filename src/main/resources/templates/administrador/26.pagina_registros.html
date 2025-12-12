@@ -41,9 +41,13 @@
     <div class="contenido">
         <div class="datos_registrarse">
             <form th:action="@{/admin/registrar-usuario}" method="post" th:object="${usuarioNuevo}"
-                  class="form-grid needs-validation" novalidate>
+                  class="form-grid needs-validation" novalidate autocomplete="off">
 
-                <h1 class="full">Registrarse</h1>
+                <!-- fake fields -->
+                <input type="text" name="fakeusernameremembered" style="display:none">
+                <input type="password" name="fakepasswordremembered" style="display:none">
+
+                <h1 class="full">REGISTRAR USUARIO</h1>
 
                 <div th:if="${error}" class="full alert alert-danger">
                     <span th:text="${error}"></span>
@@ -55,7 +59,7 @@
 
                 <!-- Rol -->
                 <div>
-                    <label class="form-label">Rol</label>
+                    <label class="form-label">Tipo de Usuario</label>
                     <select class="form-select" th:field="*{rol}" required>
                         <option value="" disabled selected>Elija su rol</option>
                         <option value="2">Paciente</option>
@@ -69,7 +73,6 @@
                     <select class="form-select" th:field="*{tipoDoc}" required>
                         <option value="" disabled selected>Seleccione</option>
                         <option value="CC">Cédula de ciudadanía</option>
-                        <option value="TI">Tarjeta de identidad</option>
                     </select>
                 </div>
 
@@ -100,18 +103,18 @@
                 <!-- Teléfono -->
                 <div>
                     <label class="form-label">Teléfono</label>
-                    <input type="tel" class="form-control" th:field="*{telefono}" minlength="7" maxlength="10" required>
+                    <input type="tel" class="form-control" th:field="*{telefono}" minlength="7" maxlength="10" required autocomplete="off">
                 </div>
 
                 <!-- Contraseña -->
                 <div>
                     <label class="form-label">Contraseña</label>
-                    <input type="password" class="form-control" th:field="*{password}" minlength="8" required>
+                    <input type="password" class="form-control" th:field="*{password}" minlength="8" autocomplete="new-password">
                 </div>
 
                 <!-- Botón (fila completa) -->
                 <div class="full">
-                    <button class="btn btn-primary" type="submit">Registrarse</button>
+                    <button class="btn btn-primary" type="submit">Registrar</button>
                 </div>
 
             </form>

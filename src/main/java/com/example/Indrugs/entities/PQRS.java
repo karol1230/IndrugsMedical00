@@ -5,9 +5,9 @@ import lombok.Getter;
 import lombok.Setter;
 import java.time.LocalDateTime;
 
-@Entity
 @Getter
 @Setter
+@Entity
 @Table(name = "pqrs")
 public class PQRS {
 
@@ -16,29 +16,26 @@ public class PQRS {
     @Column(name = "ID_PQRS")
     private Long idPqrs;
 
-    @ManyToOne
-    @JoinColumn(name = "ID_USUARIOS")
-    private Usuario usuario;
-
-    @Column(name = "TIPO_SOLICITUD")
+    @Column(name = "TIPO_SOLICITUD", nullable = false)
     private String tipoPqrs;
 
-    @Column(name = "MOTIVO_PQRS")
+    @Column(name = "motivo_pqrs")
     private String motivo;
 
-    @Column(name = "FECHA_PQRS")
+    @ManyToOne
+    @JoinColumn(name = "ID_USUARIOS", nullable = false)
+    private Usuario usuario;
+
+    @Column(name = "FECHA_PQRS", nullable = false)
     private LocalDateTime fechaPqrs;
 
-    // NUEVO: Respuesta del administrador
-    @Column(name = "RESPUESTA", columnDefinition = "TEXT")
+    @Column(name = "estado")
+    private String estado;
+
+    @Column(name = "fecha_respuesta")
+    private LocalDateTime fechaRespuesta;
+
+    @Column(name = "respuesta", columnDefinition = "text")
     private String respuesta;
 
-    // NUEVO: Estado (Pendiente, Respondida)
-    @Column(name = "ESTADO")
-    private String estado = "Pendiente";
-
-    // NUEVO: Fecha de respuesta
-    @Column(name = "FECHA_RESPUESTA")
-    private LocalDateTime fechaRespuesta;
 }
-

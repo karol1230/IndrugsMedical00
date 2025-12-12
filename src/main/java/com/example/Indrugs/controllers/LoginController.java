@@ -42,8 +42,7 @@ public class LoginController {
                     return "redirect:/1.pagina_principal_paciente";
 
                 case "Domiciliario":
-                    // ✔ Debe coincidir con el mapping del DomiciliarioController
-                    return "redirect:/11.pagina_principal_domiciliario";
+                    return "redirect:/domiciliario/11.pagina_principal_domiciliario";
 
                 default:
                     redirectAttributes.addFlashAttribute("error", "Rol no encontrado");

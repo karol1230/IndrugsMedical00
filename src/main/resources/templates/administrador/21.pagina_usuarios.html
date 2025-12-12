@@ -39,7 +39,7 @@
 
 				<a th:href="@{/admin/correos-masivos}" onclick="return confirmarEnvio();">
 					<button class="btn-usuario">
-						<i class="fas fa-paper-plane"></i> Enviar correos masivos
+						<i class="fas fa-paper-plane"></i> Enviar correos
 					</button>
 				</a>
 			</div>
@@ -61,7 +61,7 @@
 					<option value="INACTIVO">Inactivo</option>
 				</select>
 
-				<button class="butn_filtro" onclick="cargarEstadisticasUsuarios()">Filtrar</button>
+				<<button class="butn_filtro" onclick="filtrarUsuarios()">Filtrar</button>
 			</div>
 
 		</div>
@@ -72,7 +72,7 @@
 				<table id="tabla1" class="table">
 					<thead class="table-dark">
 					<tr>
-						<th>Rol</th>
+						<th>Tipo de Usuario</th>
 						<th>Nombre</th>
 						<th>Tipo de documento</th>
 						<th>Número de documento</th>
@@ -119,6 +119,19 @@
         return confirm("¿Estás seguro de enviar los correos masivos?");
     }
 </script>
+<script>
+	function filtrarUsuarios() {
+
+        let rol = document.getElementById("filtroRol").value;
+        let estado = document.getElementById("filtroEstado").value;
+
+        // Redirige al controlador /21.pagina_usuarios con los parámetros
+        let url = "/21.pagina_usuarios?rol=" + rol + "&estado=" + estado;
+
+        window.location.href = url;
+    }
+</script>
+
 
 </body>
 </html>

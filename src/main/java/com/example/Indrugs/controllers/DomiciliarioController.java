@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 @Controller
-@RequestMapping
+@RequestMapping("/domiciliario")
 public class DomiciliarioController {
 
     private final UsuarioService usuarioService;
@@ -41,6 +41,9 @@ public class DomiciliarioController {
         this.emailService = emailService;
     }
 
+    // ===============================
+    // DASHBOARD DOMICILIARIO
+    // ===============================
     @GetMapping("/11.pagina_principal_domiciliario")
     public String mostrarPaginaDomiciliario(HttpSession session, Model model) {
         Usuario usuario = (Usuario) session.getAttribute("usuarioLogueado");
@@ -61,6 +64,9 @@ public class DomiciliarioController {
         return "domiciliario/11.pagina_principal_domiciliario";
     }
 
+    // ===============================
+    // TABLA DOMICILIOS
+    // ===============================
     @GetMapping("/15.pagina_domicilio_domi")
     public String mostrarTabla(HttpSession session, Model model) {
         Usuario usuario = (Usuario) session.getAttribute("usuarioLogueado");
@@ -74,45 +80,24 @@ public class DomiciliarioController {
     @GetMapping("/actualizar/domicilio/{idDomicilio}")
     public String cambiarEstado(@PathVariable Long idDomicilio) {
         domicilioService.actualizar(idDomicilio);
-        return "redirect:/15.pagina_domicilio_domi";
+        return "redirect:/domiciliario/15.pagina_domicilio_domi";
     }
-
-    @PostMapping("/domiciliario/pedido/actualizar/{id}")
-    public String actualizarEstado(
-            @PathVariable Long id,
-            @RequestParam("estado") String estado) {
-
-        pedidoService.actualizarEstado(id, estado);
-        return "redirect:/domiciliario/pedidos";
-    }
-
-    @GetMapping("/24.pagina_pedidos_domiciliario")
-    public String mostrarPedidos(HttpSession session, Model model) {
+    @GetMapping("/pedidos")
+    public String mostrarPedidosDomiciliario(HttpSession session, Model model) {
         Usuario usuario = (Usuario) session.getAttribute("usuarioLogueado");
         if (usuario == null) return "redirect:/login";
 
-        List<PedidoDTO> pedidos = pedidoService.listarPorDomiciliario(usuario);
-        model.addAttribute("pedidos", pedidos);
-        return "domiciliario/24.pagina_pedidos_domiciliario";
-    }
-
-    @GetMapping("/domiciliario/pedidos")
-    public String mostrarPedidosDomiciliario(Model model, HttpSession session) {
-
-        Usuario usuario = (Usuario) session.getAttribute("usuarioLogueado");
-
-        if (usuario == null) {
-            return "redirect:/login";
-        }
-        List<PedidoDTO> pedidos = pedidoService.obtenerPedidosAsignados(usuario.getIdUsuario());
-        model.addAttribute("pedidos", pedidos);
-
+        List<PedidoDTO> pedidosAsignados = pedidoService.obtenerPedidosAsignados(usuario.getIdUsuario());
+        model.addAttribute("pedidos", pedidosAsignados);
 
         return "domiciliario/24.pagina_pedidos_domiciliario";
     }
 
 
-    @PostMapping("/actualizar/pedido/{id}")
+    // ===============================
+    // ACTUALIZAR ESTADO PEDIDO
+    // ===============================
+    @PostMapping("/pedido/actualizar/{id}")
     public String actualizarEstadoPedido(@PathVariable Long id,
                                          @RequestParam String estado,
                                          RedirectAttributes redirectAttributes) {
@@ -121,34 +106,37 @@ public class DomiciliarioController {
 
         if (pedido == null) {
             redirectAttributes.addFlashAttribute("mensajeInfo", "El pedido no existe.");
-            return "redirect:/24.pagina_pedidos_domiciliario";
+            return "redirect:/domiciliario/pedidos";
         }
 
         // Actualizar estado
         pedidoService.actualizarEstado(id, estado);
 
-        // Si el estado es HE_LLEGADO, enviar correo
-        if (estado.equalsIgnoreCase("HE_LLEGADO")) {
+        // Verificar si el correo del paciente es válido antes de intentar enviar el correo
+        if (estado.equalsIgnoreCase("HE_LLEGADO") && isValidEmail(pedido.getCorreoPaciente())) {
+            String html = """
+            <h2>El domiciliario ha llegado</h2>
+            <p>Tu pedido ya está en la puerta. ¡Por favor abre para recibirlo!</p>
+            """;
 
-            String correoPaciente = pedido.getCorreoPaciente();
-
-            if (correoPaciente != null && !correoPaciente.isEmpty()) {
-
-                String html = """
-                    <h2>El domiciliario ha llegado</h2>
-                    <p>Tu pedido ya está en la puerta. ¡Por favor abre para recibirlo!</p>
-                    """;
-
-                emailService.enviarCorreoHtml(correoPaciente,
-                        "Tu pedido ha llegado",
-                        html);
-            }
+            emailService.enviarCorreoHtml(pedido.getCorreoPaciente(),
+                    "Tu pedido ha llegado",
+                    html);
 
             redirectAttributes.addFlashAttribute("mensajeExito", "Correo enviado exitosamente");
+        } else if (estado.equalsIgnoreCase("HE_LLEGADO")) {
+            redirectAttributes.addFlashAttribute("mensajeError", "El correo del paciente no está disponible o no es válido.");
         }
 
-        return "redirect:/24.pagina_pedidos_domiciliario";
+        return "redirect:/domiciliario/pedidos";
     }
+
+    // Método auxiliar para validar el formato del correo
+    private boolean isValidEmail(String email) {
+        return email != null && !email.trim().isEmpty() && email.contains("@");
+    }
+
+
 
 
 }

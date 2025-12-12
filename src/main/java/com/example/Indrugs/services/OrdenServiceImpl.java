@@ -161,6 +161,11 @@ public class OrdenServiceImpl implements OrdenService {
     }
 
     @Override
+    public void denegarOrden(Long idOrden) {
+
+    }
+
+    @Override
     public List<OrdenDTO> ObtenerOrdenesRecientes() {
         return ordenRepository.findTop4ByOrderByIdOrdenDesc()
                 .stream().map(OrdenMapper::toDTO).collect(Collectors.toList());
@@ -208,6 +213,11 @@ public class OrdenServiceImpl implements OrdenService {
     @Override
     public void guardarOrden(Orden orden) {
         ordenRepository.save(orden);
+    }
+
+    @Override
+    public void guardar(OrdenDTO orden) {
+
     }
 
     @Override

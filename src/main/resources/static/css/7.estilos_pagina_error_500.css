@@ -6,9 +6,9 @@ body {
     align-items: center;
     justify-content: center;
     margin: 0;
-    font-family: Quicksand, "Montserrat", sans-serif;
-    background-color: #022c5c;
-    color: white;
+    font-family: sans-serif;
+    background-color: #004B3A;
+    color: rgb(255, 255, 255);
     overflow: hidden;
 }
 
@@ -54,10 +54,10 @@ body {
 .btn-volver {
     display: inline-block;
     margin-top: 22px;
-    background: #4ae371;
+    background: #437043;
     padding: 10px 22px;
     border-radius: 8px;
-    color: #022c5c;
+    color: white;
     font-weight: 700;
     text-decoration: none;
     transition: 0.25s ease;

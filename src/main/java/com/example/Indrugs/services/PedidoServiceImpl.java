@@ -72,8 +72,9 @@ public class PedidoServiceImpl implements PedidoService {
 
         // ✔️ ESTA LÍNEA ES LA QUE HACE FALTA
         pedido.setCorreoPaciente(orden.getPaciente().getCorreo());
+        System.out.println("⏳ FECHA ENTREGA ORDEN = " + orden.getFechaEntrega());
 
-        pedido.setHoraPedido(LocalDateTime.now());
+        pedido.setHoraPedido(orden.getFechaEntrega());
         pedido.setEstado("ASIGNADO");
         pedido.setObservaciones("Pedido generado automáticamente desde la orden #" + idOrden);
 

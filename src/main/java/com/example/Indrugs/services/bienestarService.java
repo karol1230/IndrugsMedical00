@@ -49,9 +49,24 @@ public class bienestarService {
      */
     public void enviarCorreosBienestarMensual() {
 
-        String mes = "Noviembre 2025";
+        String mes = "Diciembre 2025";
         String telefonoSoporte = "3101234567";
-        String mensajeExtra = "Gracias por confiar en Indrugs Médica. ¡Cuida tu salud este mes!";
+        String mensajeExtra = "Hola,\n" +
+                "Esperamos que estés teniendo un gran día.\n" +
+                "\n" +
+                "En la vida diaria, cuidar de nuestra salud debería ser simple, cómodo y accesible. " +
+                "Por eso queremos recordarte que ahora puedes recibir tus medicamentos directamente en casa, sin filas, sin prisas y sin complicaciones." +
+                "Además, queremos acompañarte en cada paso con información clara y sencilla para que mantengas hábitos saludables todos los días:\n" +
+                "\n" +
+                "\uD83C\uDF3F Mantén una buena hidratación.\n" +
+                "\uD83D\uDE34 Dale prioridad al descanso.\n" +
+                "\uD83C\uDF4E Elige alimentos que te hagan sentir bien.\n" +
+                "\uD83D\uDEB6\u200D♂\uFE0F Muévete un poco cada día.\n" +
+                "\uD83D\uDC8A Y recuerda seguir siempre las indicaciones de tus profesionales de salud.\n" +
+                "\n" +
+                "Estamos aquí para hacerte la vida más fácil.\n" +
+                "Tu bienestar es nuestra prioridad." +
+                "Gracias por confiar en Indrugs Médica. ¡Cuida tu salud este mes!";
 
         enviarCorreosBienestarMensual(mes, telefonoSoporte, mensajeExtra);
     }

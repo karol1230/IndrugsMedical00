@@ -98,12 +98,17 @@ public class AdminisradorController {
         Usuario usuario = (Usuario) session.getAttribute("usuarioLogueado");
         if (usuario == null) return "redirect:/login";
 
+        // 🔥 FIX: convertir "Todos" en null para que no filtre
+        if ("Todos".equals(rol)) rol = null;
+        if ("Todos".equals(estado)) estado = null;
+
         List<UsuarioDTO> usuarios;
-        if (rol != null && !rol.isEmpty() && estado != null && !estado.isEmpty()) {
+
+        if (rol != null && estado != null) {
             usuarios = usuarioService.findByRolNombreAndEstado(rol, estado);
-        } else if (rol != null && !rol.isEmpty()) {
+        } else if (rol != null) {
             usuarios = usuarioService.findByRolNombre(rol);
-        } else if (estado != null && !estado.isEmpty()) {
+        } else if (estado != null) {
             usuarios = usuarioService.findByStatus(estado);
         } else {
             usuarios = usuarioService.read();

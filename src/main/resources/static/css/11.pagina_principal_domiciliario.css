@@ -1,378 +1,554 @@
-/*Barra resumen*/
-.cards{
-   position: relative;
-   width: 100%;
-   padding: 20px;
-   display: grid;
-   grid-template-columns: repeat(3, 1fr);
-   grid-gap: 30px; 
-   z-index: 1;
-}
-.cards a{
-    text-decoration: none;
-}
-.cards .card{
-    position: relative;
-    background: #ffff;
-    padding: 30px;
-    box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
-    border-radius: 20px;
-    display: flex;
-    justify-content: space-between;
-    cursor: pointer;
-    transition: 0.4s;
-}
-.cards .card:hover{
-    background: #6bd10c;
-}
-.cards .card .card_numeros{
-    position: relative;
-    font-weight: 700;
-    font-size: 2.5em;
-    color: black;
-    z-index: 1;
+    /* -----------------------------------------------------
+       HEADER PRINCIPAL
+    ----------------------------------------------------- */
+    .cabeza_indrugs {
+        background: #00796b;
+        width: 100%;
+        padding: 12px 0;
+        position: fixed;
+        top: 0;
+        z-index: 1000;
+        transition: 0.25s ease-in-out;
+        border-bottom: 3px solid rgba(255,255,255,0.15);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
 
-}
-.cards .card .card_nombre{
-    color: black;
-    font-size: 1.1em;
-    margin-top: 5px;
-    margin-right: 80px;
-    z-index: 1;
-}
-.cards .card .card_icono{
-    font-size:1em;
+    .cabeza_indrugs.scroll-active {
+        background: #006457;
+        border-bottom-color: rgba(255,255,255,0.28);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
 
-    z-index: 1;
-}
-.cards .card:hover .card_numeros,
-.cards .card:hover .card_nombre,
-.cards .card .card_icono{
-    color: #ffff;
+    /* -----------------------------------------------------
+       CONTENEDOR PRINCIPAL (Logo + Menú + Iconos)
+    ----------------------------------------------------- */
+    .contenedeor_cabeza {
+        width: 92%;
+        margin: auto;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start; /* todo a la izquierda */
+        gap: 20px; /* espacio entre logo y menú, ajustable */
 
-}
+    }
+    /* -----------------------------------------------------
+       MENÚ
+    ----------------------------------------------------- */
+    .menu {
+        display: flex; /* importante para alinear la barra_2 */
+        align-items: center;
+        margin-left: 0; /* quitar cualquier margen automático */
+    }
 
-/* Tabla_ordenes*/
-.contenido_dash{
-    position: relative;
-    width: 100%;
-    padding: 20px;
-    display: grid;
-    grid-template-columns: 2fr -2fr;
-    grid-gap: 80px;
-    margin-top: 5px;
-    z-index: 1;
-}
-.contenido_dash .ordenes_recientes,
-.contenido_dash .domicilio
-{
-    position: relative;
-    display: grid;
-    min-height: 500px;
-    background: white;
-    padding: 20px;
-    box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
-    border-radius: 20px;
-}
-/*BUTTON*/
-.botonD{
-    font-family:Quicksand;
-    background-color: rgb(255, 255, 255); /* El color de fondo*/
-    border: 1px solid rgb(206, 216, 208);/*Es lo grueso de la imagen*/
-    border-radius: 10px; /*El borde muy redondo,o muy cuadrado*/
-    height: 40px;
-    width: 100px;
-    box-shadow: 0px 2px 9px 2px rgba(139, 137, 137, 0.5);
-}
-.botonD:hover{
-    cursor: pointer;
-    background-color: rgb(107, 209, 12); /* El color de fondo*/
-}
-.cabeza1{
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-top:20px;
-    margin-bottom: -10%;
-}
-.cabeza1 h2{
-    font-weight: 700;
-}
-/* SECCIÓN DE BIENVENIDA DEL DOMICILIARIO */
-.bienvenida-domiciliario {
-  background: linear-gradient(135deg, #dff5f0, #eafcf8);
-  text-align: center;
-  padding: 50px 20px;
-  border-radius: 25px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  margin: 40px auto;
-  width: 85%;
-  animation: fadeIn 0.8s ease-in-out;
-}
+    .barra_2 {
+        list-style: none;
+        display: flex;
+        gap:96px; /* espacio entre items */
+        margin: 0;
+        padding: 0;
+        text-align: left;
+    }
 
-.bienvenida-domiciliario h1 {
-  color: #004d40;
-  font-size: 2.2rem;
-  margin-bottom: 10px;
-  font-weight: 700;
-}
+    .barra_2 li a {
+        color: white;
+        text-decoration: none;
+        font-size: 1.08em;
+        font-weight: 500;
+        padding: 10px 6px;
+        transition: 0.25s;
+        position: relative; /* <-- IMPORTANTE */
+    }
 
-.bienvenida-domiciliario p {
-  color: #333;
-  font-size: 1.1rem;
-  margin-bottom: 35px;
-}
+    .barra_2 li a::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -4px; /* distancia debajo del texto */
+        width: 0%;
+        height: 2px;
+        background: white;
+        transition: 0.3s ease-in-out;
+    }
 
-/* PANEL DE ESTADÍSTICAS */
-.resumen-domiciliario {
-  display: flex;
-  justify-content: center;
-  gap: 25px;
-  flex-wrap: wrap;
-}
-
-.info-box {
-  background-color: #ffffff;
-  border-radius: 20px;
-  padding: 25px 20px;
-  width: 220px;
-  text-align: center;
-  box-shadow: 0 5px 12px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s ease;
-}
-
-.info-box:hover {
-  transform: translateY(-5px);
-}
-
-.info-box i {
-  font-size: 2rem;
-  color: #009688;
-  margin-bottom: 10px;
-}
-
-.info-box p {
-  color: #333;
-  font-size: 1rem;
-  line-height: 1.4;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(15px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-.dashboard {
-    padding: 40px 0;
-    display: flex;
-    justify-content: center;
-}
-
-.cards {
-    display: flex;
-    justify-content: center;
-    gap: 2rem;
-    flex-wrap: wrap;
-}
-
-/* ==== TARJETAS PRINCIPALES ==== */
-.card {
-    background: #F9FAFB; /* gris muy suave */
-    border-radius: 22px;
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
-    width: 240px;
-    height: 260px;
-    text-align: center;
-    transition: all 0.3s ease;
-    cursor: pointer;
-    border: 1px solid #E0E7EA;
-}
-
-.card:hover {
-    transform: translateY(-8px);
-    background: linear-gradient(135deg, #3A86FF, #4DB6AC); /* azul a verde menta */
-    color: white;
-    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
-}
-
-/* ==== ENLACES ==== */
-.card a {
-    text-decoration: none;
-    color: inherit;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-}
-
-/* ==== ICONO ==== */
-.card_icono img {
-    width: 85px;
-    height: 85px;
-    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
-    margin-bottom: 15px;
-    transition: transform 0.3s ease, filter 0.3s ease;
-}
-
-.card:hover .card_icono img {
-    transform: scale(1.15);
-    filter: drop-shadow(0 6px 12px rgba(255, 255, 255, 0.4));
-}
-
-/* ==== TEXTO ==== */
-.card_info {
-    margin-top: 10px;
-}
-
-.card_numeros {
-    font-size: 2.8rem;
-    font-weight: 700;
-    color: #1E2A3A; /* azul oscuro elegante */
-    display: block;
-}
-
-.card_nombre {
-    font-size: 1rem;
-    font-weight: 500;
-    color: #3A86FF; /* azul principal INDRUGS */
-    letter-spacing: 0.6px;
-}
-
-/* ==== EFECTO AL PASAR EL MOUSE ==== */
-.card:hover .card_numeros,
-.card:hover .card_nombre {
-    color: #FFFFFF;
-}
+    .barra_2 li a:hover::after {
+        width: 100%;
+    }
 
 
-/* ===== SECCIÓN DE BIENVENIDA CENTRADA ===== */
-.bienvenida {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-}
+    .barra_2 li a:hover::after {
+        width: 100%;
+    }
 
-.contenedor-bienvenida {
-    background: #e6f7f3;
-    border-radius: 25px;
-    padding: 2.5rem 3rem;
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-    max-width: 700px;
-    width: 100%;
-    transition: all 0.3s ease;
-}
-
-.contenedor-bienvenida h1 {
-    font-size: 2.2rem;
-    color: #00796b;
-    font-weight: 700;
-}
-
-.contenedor-bienvenida p {
-    color: #555;
-    font-size: 1.1rem;
-}
-
-/* ===== TARJETAS DE RESUMEN ===== */
-.tarjeta {
-    background: #fff;
-    border-radius: 20px;
-    text-align: center;
-    padding: 2rem 1rem;
-    transition: all 0.3s ease;
-}
-
-.tarjeta:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-}
-
-.icono {
-    font-size: 2.5rem;
-    color: #00796b;
-    margin-bottom: 10px;
-}
-
-/* ===== SECCIÓN TABLAS UNA DEBAJO DE OTRA ===== */
-.seccion-tablas {
-    display: flex;
-    flex-direction: column; /* Coloca una debajo de la otra */
-    align-items: center;
-    gap: 2rem; /* Espacio entre tarjetas */
-    margin-top: 3rem;
-}
-
-/* ===== TARJETAS DE TABLAS ===== */
-.card {
-    width: 90%;
-    max-width: 800px;
-    border-radius: 20px;
-    overflow: hidden;
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s ease;
-}
-
-.card:hover {
-    transform: translateY(-5px);
-}
-
-/* ===== CABECERA DE TARJETAS ===== */
-.card-header {
-    background: linear-gradient(#00796b);
-    color: #fff;
-    font-weight: 600;
-    padding: 15px 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.card-header .btn {
-    background-color: #E0F2F1;
-    color: #008d4c;
-    border: none;
-    font-weight: 500;
-    transition: 0.3s;
-}
-
-.card-header .btn:hover {
-    background-color: #E0F2F1;
-    color: #E0F2F1;
-}
-
-/* ===== TABLAS ===== */
-.table thead {
-    background-color: #E0F2F1;
-    font-weight: 600;
-}
-
-.table tbody tr:hover {
-    background-color: #B2EBF2 !important;  /* azul claro */
-    transition: background-color 0.3s ease;
-}
-
-/* ===== BADGES (estados) ===== */
-.badge {
-    font-size: 0.9rem;
-    padding: 0.5em 0.8em;
-    border-radius: 10px;
-}
+    /* -----------------------------------------------------
+       ICONOS DERECHA
+    ----------------------------------------------------- */
 
 
-/* ===== CORRECCIÓN FINAL DEL COLOR DE HOVER EN TABLAS ===== */
-.table-hover tbody tr:hover,
-.table tbody tr:hover {
-    background-color: #C8E6C9 !important; /* Azul verdoso claro tipo INDRUGS */
-    transition: background-color 0.3s ease;
-}
+    .barra_1 {
+        list-style: none;
+        display: flex;
+        align-items: center;
+        gap: 25px;
+    }
 
-header {
-    padding-bottom: 90px;
-}
+    #iconos, .iconos {
+        width: 34px;
+        cursor: pointer;
+        transition: 0.25s ease;
+    }
+
+    #iconos:hover, .iconos:hover {
+        transform: scale(1.1);
+        opacity: 0.85;
+    }
+
+    /* -----------------------------------------------------
+       LÍNEA DECORATIVA ABAJO DEL HEADER
+    ----------------------------------------------------- */
+    .cabeza_indrugs::after {
+        content: "";
+        display: block;
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        height: 3px;
+        background: linear-gradient(to right,
+          transparent,
+          rgba(255,255,255,0.45),
+          transparent
+        );
+    }
+
+    /* -----------------------------------------------------
+       RESPONSIVE
+    ----------------------------------------------------- */
+    @media (max-width: 950px) {
+        .barra_2 {
+            gap: 20px;
+        }
+    }
+
+    @media (max-width: 780px) {
+        .menu {
+            display: none;
+        }
+
+        .logo {
+            font-size: 1.2em;
+        }
+
+        .img_indrugs_logo {
+            width: 42px;
+        }
+    }
+
+
+    /* -----------------------------------------------------
+       LOGO
+    ----------------------------------------------------- */
+    .logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        text-decoration: none;
+        color: white;
+        font-size: 1.4em;
+        font-weight: 700;
+        padding-right: 20px;
+        border-right: 2px solid rgba(255,255,255,0.2);
+    }
+
+    .logo:hover {
+        opacity: 0.9;
+    }
+
+    .img_indrugs_logo {
+        width: 52px;
+        filter: drop-shadow(0 2px 3px rgba(0,0,0,0.25));
+    }
+
+
+
+
+    /*Barra resumen*/
+    .cards{
+       position: relative;
+       width: 100%;
+       padding: 20px;
+       display: grid;
+       grid-template-columns: repeat(3, 1fr);
+       grid-gap: 30px;
+       z-index: 1;
+    }
+    .cards a{
+        text-decoration: none;
+    }
+    .cards .card{
+        position: relative;
+        background: #ffff;
+        padding: 30px;
+        box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+        border-radius: 20px;
+        display: flex;
+        justify-content: space-between;
+        cursor: pointer;
+        transition: 0.4s;
+    }
+    .cards .card:hover{
+        background: #6bd10c;
+    }
+    .cards .card .card_numeros{
+        position: relative;
+        font-weight: 700;
+        font-size: 2.5em;
+        color: black;
+        z-index: 1;
+
+    }
+    .cards .card .card_nombre{
+        color: black;
+        font-size: 1.1em;
+        margin-top: 5px;
+        margin-right: 80px;
+        z-index: 1;
+    }
+    .cards .card .card_icono{
+        font-size:1em;
+
+        z-index: 1;
+    }
+    .cards .card:hover .card_numeros,
+    .cards .card:hover .card_nombre,
+    .cards .card .card_icono{
+        color: #ffff;
+
+    }
+
+    /* Tabla_ordenes*/
+    .contenido_dash{
+        position: relative;
+        width: 100%;
+        padding: 20px;
+        display: grid;
+        grid-template-columns: 2fr -2fr;
+        grid-gap: 80px;
+        margin-top: 5px;
+        z-index: 1;
+    }
+    .contenido_dash .ordenes_recientes,
+    .contenido_dash .domicilio
+    {
+        position: relative;
+        display: grid;
+        min-height: 500px;
+        background: white;
+        padding: 20px;
+        box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+        border-radius: 20px;
+    }
+    /*BUTTON*/
+    .botonD{
+        font-family:Quicksand;
+        background-color: rgb(255, 255, 255); /* El color de fondo*/
+        border: 1px solid rgb(206, 216, 208);/*Es lo grueso de la imagen*/
+        border-radius: 10px; /*El borde muy redondo,o muy cuadrado*/
+        height: 40px;
+        width: 100px;
+        box-shadow: 0px 2px 9px 2px rgba(139, 137, 137, 0.5);
+    }
+    .botonD:hover{
+        cursor: pointer;
+        background-color: rgb(107, 209, 12); /* El color de fondo*/
+    }
+    .cabeza1{
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-top:20px;
+        margin-bottom: -10%;
+    }
+    .cabeza1 h2{
+        font-weight: 700;
+    }
+    /* SECCIÓN DE BIENVENIDA DEL DOMICILIARIO */
+    .bienvenida-domiciliario {
+      background: linear-gradient(135deg, #dff5f0, #eafcf8);
+      text-align: center;
+      padding: 50px 20px;
+      border-radius: 25px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      margin: 40px auto;
+      width: 85%;
+      animation: fadeIn 0.8s ease-in-out;
+    }
+
+    .bienvenida-domiciliario h1 {
+      color: #004d40;
+      font-size: 2.2rem;
+      margin-bottom: 10px;
+      font-weight: 700;
+    }
+
+    .bienvenida-domiciliario p {
+      color: #333;
+      font-size: 1.1rem;
+      margin-bottom: 35px;
+    }
+
+    /* PANEL DE ESTADÍSTICAS */
+    .resumen-domiciliario {
+      display: flex;
+      justify-content: center;
+      gap: 25px;
+      flex-wrap: wrap;
+    }
+
+    .info-box {
+      background-color: #ffffff;
+      border-radius: 20px;
+      padding: 25px 20px;
+      width: 220px;
+      text-align: center;
+      box-shadow: 0 5px 12px rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s ease;
+    }
+
+    .info-box:hover {
+      transform: translateY(-5px);
+    }
+
+    .info-box i {
+      font-size: 2rem;
+      color: #009688;
+      margin-bottom: 10px;
+    }
+
+    .info-box p {
+      color: #333;
+      font-size: 1rem;
+      line-height: 1.4;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(15px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .dashboard {
+        padding: 40px 0;
+        display: flex;
+        justify-content: center;
+    }
+
+    .cards {
+        display: flex;
+        justify-content: center;
+        gap: 2rem;
+        flex-wrap: wrap;
+    }
+
+    /* ==== TARJETAS PRINCIPALES ==== */
+    .card {
+        background: #F9FAFB; /* gris muy suave */
+        border-radius: 22px;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+        width: 240px;
+        height: 260px;
+        text-align: center;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        border: 1px solid #E0E7EA;
+    }
+
+    .card:hover {
+        transform: translateY(-8px);
+        background: linear-gradient(135deg, #3A86FF, #4DB6AC); /* azul a verde menta */
+        color: white;
+        box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+    }
+
+    /* ==== ENLACES ==== */
+    .card a {
+        text-decoration: none;
+        color: inherit;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+    }
+
+    /* ==== ICONO ==== */
+    .card_icono img {
+        width: 85px;
+        height: 85px;
+        filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+        margin-bottom: 15px;
+        transition: transform 0.3s ease, filter 0.3s ease;
+    }
+
+    .card:hover .card_icono img {
+        transform: scale(1.15);
+        filter: drop-shadow(0 6px 12px rgba(255, 255, 255, 0.4));
+    }
+
+    /* ==== TEXTO ==== */
+    .card_info {
+        margin-top: 10px;
+    }
+
+    .card_numeros {
+        font-size: 2.8rem;
+        font-weight: 700;
+        color: #1E2A3A; /* azul oscuro elegante */
+        display: block;
+    }
+
+    .card_nombre {
+        font-size: 1rem;
+        font-weight: 500;
+        color: #3A86FF; /* azul principal INDRUGS */
+        letter-spacing: 0.6px;
+    }
+
+    /* ==== EFECTO AL PASAR EL MOUSE ==== */
+    .card:hover .card_numeros,
+    .card:hover .card_nombre {
+        color: #FFFFFF;
+    }
+
+
+    /* ===== SECCIÓN DE BIENVENIDA CENTRADA ===== */
+    .bienvenida {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+
+    .contenedor-bienvenida {
+        background: #e6f7f3;
+        border-radius: 25px;
+        padding: 2.5rem 3rem;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        max-width: 700px;
+        width: 100%;
+        transition: all 0.3s ease;
+    }
+
+    .contenedor-bienvenida h1 {
+        font-size: 2.2rem;
+        color: #00796b;
+        font-weight: 700;
+    }
+
+    .contenedor-bienvenida p {
+        color: #555;
+        font-size: 1.1rem;
+    }
+
+    /* ===== TARJETAS DE RESUMEN ===== */
+    .tarjeta {
+        background: #fff;
+        border-radius: 20px;
+        text-align: center;
+        padding: 2rem 1rem;
+        transition: all 0.3s ease;
+    }
+
+    .tarjeta:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    }
+
+    .icono {
+        font-size: 2.5rem;
+        color: #00796b;
+        margin-bottom: 10px;
+    }
+
+    /* ===== SECCIÓN TABLAS UNA DEBAJO DE OTRA ===== */
+    .seccion-tablas {
+        display: flex;
+        flex-direction: column; /* Coloca una debajo de la otra */
+        align-items: center;
+        gap: 2rem; /* Espacio entre tarjetas */
+        margin-top: 3rem;
+    }
+
+    /* ===== TARJETAS DE TABLAS ===== */
+    .card {
+        width: 90%;
+        max-width: 800px;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s ease;
+    }
+
+    .card:hover {
+        transform: translateY(-5px);
+    }
+
+    /* ===== CABECERA DE TARJETAS ===== */
+    .card-header {
+        background: #0D4F13;       /* color sólido */
+        color: black;
+        font-weight: 600;
+        padding: 15px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+
+    .card-header .btn {
+        background-color: #E0F2F1;
+        color: #008d4c;
+        border: none;
+        font-weight: 500;
+        transition: 0.3s;
+    }
+
+    .card-header .btn:hover {
+        background-color: #E0F2F1;
+        color: #E0F2F1;
+    }
+
+    /* ===== TABLAS ===== */
+    .table thead {
+        background-color: #E0F2F1;
+        font-weight: 600;
+    }
+
+    .table tbody tr:hover {
+        background-color: #B2EBF2 !important;  /* azul claro */
+        transition: background-color 0.3s ease;
+    }
+
+    /* ===== BADGES (estados) ===== */
+    .badge {
+        font-size: 0.9rem;
+        padding: 0.5em 0.8em;
+        border-radius: 10px;
+    }
+
+
+    /* ===== CORRECCIÓN FINAL DEL COLOR DE HOVER EN TABLAS ===== */
+    .table-hover tbody tr:hover,
+    .table tbody tr:hover {
+        background-color: #C8E6C9 !important; /* Azul verdoso claro tipo INDRUGS */
+        transition: background-color 0.3s ease;
+    }
+
+    header {
+        padding-bottom: 90px;
+    }

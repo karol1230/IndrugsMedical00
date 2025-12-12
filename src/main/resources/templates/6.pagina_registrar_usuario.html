@@ -42,6 +42,7 @@
             <form th:action="@{/admin/registrar-usuario}"
                   method="post"
                   th:object="${usuarioNuevo}"
+                  autocomplete="off"
                   class="form-grid needs-validation"
                   novalidate>
 
@@ -58,12 +59,10 @@
 
                 <!-- Rol -->
                 <div>
-                    <label class="form-label">Rol</label>
-                    <select class="form-select" th:field="*{rol}" required>
-                        <option value="" disabled selected>Elija su rol</option>
-                        <option value="2">Paciente</option>
-                    </select>
+                    <label class="form-label">Tipo de usuario</label>
+                    <input type="text" class="form-control" value="Paciente" readonly>
                 </div>
+
 
                 <!-- Tipo doc -->
                 <div>

@@ -42,5 +42,11 @@ public class Control {
 
     @Column(name = "ALARMA_CONTROL")
     private LocalTime alarmaControl;
+
+    @Column(name = "ULTIMO_ENVIO")
+    private LocalDateTime ultimoEnvio;
+
+    @Column(name = "PROXIMO_ENVIO")
+    private LocalDateTime proximoEnvio; // 📌 NUEVO CAMPO
 }
 

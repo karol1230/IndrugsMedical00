@@ -58,7 +58,7 @@ public class PQRSserviceImpl implements PQRSservice {
 
     @Override
     public List<PQRSDTO> listarPorUsuario(Long idUsuario) {
-        return pqrsRepository.findByUsuarioIdUsuario(idUsuario)
+        return pqrsRepository.findByUsuario_IdUsuario(idUsuario)
                 .stream()
                 .map(PQRSMapper::toDTO)
                 .toList();

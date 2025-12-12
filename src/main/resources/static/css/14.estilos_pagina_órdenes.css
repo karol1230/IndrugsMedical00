@@ -76,7 +76,8 @@ h1 {
     font-weight: 600;
     text-transform: uppercase;
     padding: 14px;
-    border-bottom: 2px solid #80cbc4; /* línea sutil debajo del encabezado */
+    border-bottom: 2px solid #80cbc4;
+    background-color: #1B8E85;     /* línea sutil debajo del encabezado */
 }
 
 /* 🌿 Filas */

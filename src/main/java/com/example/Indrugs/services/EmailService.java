@@ -20,6 +20,7 @@ public class EmailService {
     private UsuarioService usuarioService;
 
 
+
     // =====================================================
     //  MÉTODO CENTRAL (EL QUE REALMENTE ENVÍA)
     // =====================================================
@@ -35,10 +36,10 @@ public class EmailService {
 
             mailSender.send(mensaje);
 
-            System.out.println("📨 Correo enviado a → " + destinatario);
+            System.out.println("Correo enviado a → " + destinatario);
 
         } catch (Exception e) {
-            System.out.println("❌ Error SMTP a " + destinatario + " → " + e.getMessage());
+            System.out.println("Error SMTP a " + destinatario + " → " + e.getMessage());
         }
     }
 
@@ -84,6 +85,7 @@ public class EmailService {
         enviarCorreo(correo, "Bienvenido a INDRUGS MEDICA",
                 "<html><body><h2>¡Bienvenido " + nombre + "!</h2><p>Registro exitoso.</p></body></html>");
     }
+
 
     public void enviarCorreoPqrsRespuesta(String destinatario, String asunto, String contenidoHtml) {
         enviarCorreo(destinatario, asunto, contenidoHtml);

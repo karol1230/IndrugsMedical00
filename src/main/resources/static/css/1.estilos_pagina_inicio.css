@@ -114,7 +114,9 @@ body {
     font-family: 'Nunito', sans-serif;
 
 }
-
+.table-dark{
+background: white;
+}
 
 /* =====================================================
    SECCIONES DE CATEGORÍAS Y PRODUCTOS

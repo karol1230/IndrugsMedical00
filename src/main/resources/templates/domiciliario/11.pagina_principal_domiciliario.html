@@ -21,64 +21,14 @@
         <!-- Bienvenida -->
         <section class="bienvenida text-center mb-5">
             <div class="contenedor-bienvenida">
-                <h1 class="fw-bold">👋 ¡Bienvenido, Domiciliario <span th:text="${nombreDomiciliario}">Domiciliario</span>!</h1>
+                <h1 class="fw-bold" style="color: #0D4F13">¡Bienvenido, Domiciliario <span th:text="${nombreDomiciliario}">Domiciliario</span>!</h1>
                 <p class="text-muted">Gestiona tus pedidos, revisa tus entregas y sigue creciendo con INDRUGS.</p>
-            </div>
-        </section>
-
-        <!-- Tarjetas de resumen -->
-        <section class="resumen row g-4 mb-5">
-            <div class="col-md-4">
-                <div class="tarjeta shadow-sm">
-                    <i class="fa-solid fa-motorcycle icono"></i>
-                    <h3 th:text="${totalDomiciliosActivos}">0</h3>
-                    <p>Domicilios activos</p>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="tarjeta shadow-sm">
-                    <i class="fa-solid fa-file-lines icono"></i>
-                    <h3 th:text="${cantidadOrdenes}">1</h3>
-                    <p>Órdenes activas</p>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="tarjeta shadow-sm">
-                    <i class="fa-solid fa-truck icono"></i>
-                    <h3>3</h3>
-                    <p>Vehículos asignados</p>
-                </div>
             </div>
         </section>
 
         <!-- Tablas modernas (una debajo de la otra) -->
         <section class="seccion-tablas">
-            <div class="card shadow border-0 rounded-4">
-                <div class="card-header bg-success text-white d-flex justify-content-between align-items-center rounded-top-4">
-                    <h5 class="m-0">Órdenes recientes</h5>
-                    <a th:href="@{/14.pagina_ordenes}" class="btn btn-light btn-sm">Ver todas</a>
-                </div>
-                <div class="card-body p-0">
-                    <table class="table align-middle mb-0">
-                        <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Usuario</th>
-                            <th>Fecha</th>
-                            <th>Estado</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr th:each="orden : ${ordenesRecientes}">
-                            <td th:text="${orden.idOrden}">1</td>
-                            <td th:text="${orden.pacienteNombre}">Juan Pérez</td>
-                            <td th:text="${orden.fechaEntrega}">2025-11-10</td>
-                            <td><span class="badge bg-success" th:text="${orden.estadoOrden}">Activo</span></td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+
 
             <div class="card shadow border-0 rounded-4">
                 <div class="card-header bg-success text-white d-flex justify-content-between align-items-center rounded-top-4">
